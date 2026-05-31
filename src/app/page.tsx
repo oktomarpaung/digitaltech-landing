@@ -142,6 +142,13 @@ const navItems = [
   { label: "Tentang Kami", href: "#tentang" },
 ];
 
+const floatingNavItems = [
+  { label: "Produk", href: "#produk" },
+  { label: "Fitur", href: "#fitur" },
+  { label: "Solusi", href: "#solusi" },
+  { label: "Harga", href: "#harga" },
+];
+
 const benefits = ["Aman & Terpercaya", "Cepat & Stabil", "Insight Real-time"];
 const dashboardStats = [
   ["Total Tes", "1.245"],
@@ -214,6 +221,26 @@ function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
         d="M22.91 18.89c-.37-.18-2.2-1.08-2.54-1.2-.34-.12-.59-.18-.84.19-.25.37-.96 1.2-1.18 1.44-.22.25-.43.28-.8.1-.37-.19-1.57-.58-2.99-1.84a11.13 11.13 0 0 1-2.07-2.57c-.22-.37-.02-.57.16-.75.17-.17.37-.43.56-.65.18-.22.25-.37.37-.62.12-.25.06-.46-.03-.65-.09-.18-.84-2.02-1.15-2.76-.3-.72-.61-.62-.84-.63h-.72c-.25 0-.65.09-.99.46-.34.37-1.3 1.27-1.3 3.09 0 1.82 1.33 3.58 1.52 3.83.19.25 2.62 4 6.35 5.6.89.38 1.58.61 2.12.78.89.28 1.71.24 2.35.15.72-.11 2.2-.9 2.51-1.77.31-.87.31-1.61.22-1.77-.09-.15-.34-.24-.71-.43Z"
       />
     </svg>
+  );
+}
+
+function FloatingSectionNav() {
+  return (
+    <nav
+      className="fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-2 rounded-3xl border border-slate-200 bg-white/80 p-2 shadow-lg shadow-slate-200/60 backdrop-blur-xl lg:flex"
+      aria-label="Navigasi section"
+    >
+      {floatingNavItems.map((item) => (
+        <a
+          key={item.href}
+          href={item.href}
+          className="group flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-cyan-500 opacity-0 transition-opacity group-hover:opacity-100" />
+          {item.label}
+        </a>
+      ))}
+    </nav>
   );
 }
 
@@ -531,6 +558,8 @@ export default function Home() {
           </motion.div>
         ) : null}
       </header>
+
+      <FloatingSectionNav />
 
       <section className="relative overflow-hidden bg-gradient-to-b from-white via-cyan-50/60 to-slate-50">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(6,182,212,0.16),transparent_30%),radial-gradient(circle_at_88%_18%,rgba(37,99,235,0.16),transparent_28%)]" />
