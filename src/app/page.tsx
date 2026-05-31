@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { useState } from "react";
 import {
   ArrowRight,
   BarChart3,
@@ -8,21 +10,23 @@ import {
   Check,
   ClipboardCheck,
   CloudCog,
-  DatabaseZap,
   GraduationCap,
-  Layers3,
   LockKeyhole,
+  Menu,
+  MessageCircle,
   MonitorSmartphone,
   ShieldCheck,
   Sparkles,
   TabletSmartphone,
   UsersRound,
+  X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 type Product = {
   name: string;
   description: string;
+  features: string[];
   icon: LucideIcon;
 };
 
@@ -35,62 +39,62 @@ type Feature = {
 type PricingPlan = {
   name: string;
   price: string;
-  description: string;
-  features: string[];
+  modules: string;
   highlighted?: boolean;
+};
+
+type ImplementationPackage = {
+  name: string;
+  price: string;
+  description: string;
 };
 
 const products: Product[] = [
   {
     name: "CBT Assess",
-    description:
-      "Platform Computer Based Test untuk bank soal, blueprint, ujian online, analisis soal, dan rekap nilai institusi.",
+    description: "Computer Based Test untuk ujian online yang aman dan fleksibel.",
+    features: ["Berbagai tipe soal", "Acak soal & opsi", "Proctoring online", "Laporan hasil instan"],
     icon: ClipboardCheck,
   },
   {
-    name: "OSCE Assess",
-    description:
-      "Sistem penilaian OSCE digital dengan station management, rubrik terstruktur, scoring real-time, dan rekap otomatis.",
-    icon: GraduationCap,
+    name: "Tutor Assess",
+    description: "Penilaian kinerja tutor/pendidik secara objektif dan terstruktur.",
+    features: ["Instrumen penilaian lengkap", "Observasi & feedback", "Rekap otomatis", "Analitik kinerja tutor"],
+    icon: BookOpenCheck,
   },
   {
-    name: "Tutor Assess",
-    description:
-      "Solusi penilaian tutorial, PBL, dan aktivitas pembelajaran berbasis rubrik untuk dosen, tutor, dan pengelola blok.",
-    icon: BookOpenCheck,
+    name: "OSCE Assess",
+    description: "Objective Structured Clinical Examination secara digital dan terstandar.",
+    features: ["Manajemen station OSCE", "Penilaian real-time", "Rubrik terstruktur", "Laporan komprehensif"],
+    icon: GraduationCap,
   },
 ];
 
 const features: Feature[] = [
   {
-    title: "Paperless Assessment",
-    description: "Kurangi proses manual dengan alur asesmen digital dari persiapan hingga evaluasi.",
-    icon: Layers3,
-  },
-  {
-    title: "Rekap Otomatis",
-    description: "Nilai, laporan, dan ringkasan performa tersaji cepat tanpa rekap spreadsheet berulang.",
-    icon: DatabaseZap,
-  },
-  {
-    title: "Dashboard Modern",
-    description: "Pantau aktivitas asesmen, status peserta, dan hasil evaluasi dalam antarmuka yang bersih.",
-    icon: BarChart3,
-  },
-  {
-    title: "Aman dan Terintegrasi",
-    description: "Dirancang untuk autentikasi, role access, dan integrasi dengan kebutuhan sistem kampus.",
+    title: "Keamanan Tinggi",
+    description: "Role access, alur audit, dan pengamanan data untuk operasional asesmen institusi.",
     icon: ShieldCheck,
   },
   {
-    title: "Mobile Friendly",
-    description: "Pengalaman responsif untuk admin, dosen, penguji, tutor, dan peserta asesmen.",
-    icon: TabletSmartphone,
+    title: "Akses Fleksibel",
+    description: "Digunakan oleh admin, dosen, penguji, tutor, dan peserta di berbagai perangkat.",
+    icon: MonitorSmartphone,
   },
   {
-    title: "Mudah Dikembangkan",
-    description: "Arsitektur modular untuk menyesuaikan workflow, laporan, dan kebutuhan institusi.",
+    title: "Analitik Cerdas",
+    description: "Pantau hasil, progres, dan insight performa asesmen secara real-time.",
+    icon: BarChart3,
+  },
+  {
+    title: "Konfigurasi Mudah",
+    description: "Modul, rubrik, laporan, dan workflow dapat disesuaikan dengan kebutuhan.",
     icon: CloudCog,
+  },
+  {
+    title: "Dukungan Profesional",
+    description: "Pendampingan implementasi, training, dan maintenance untuk tim institusi.",
+    icon: UsersRound,
   },
 ];
 
@@ -98,25 +102,22 @@ const pricingPlans: PricingPlan[] = [
   {
     name: "Standard",
     price: "Rp25 Juta",
-    description: "Fondasi asesmen digital untuk ujian berbasis komputer.",
-    features: ["CBT Assess", "Manajemen peserta", "Rekap hasil ujian", "Dashboard admin"],
+    modules: "CBT Assess",
   },
   {
     name: "Professional",
     price: "Rp35 Juta",
-    description: "Paket untuk institusi yang membutuhkan ujian dan penilaian tutorial.",
-    features: ["CBT Assess", "Tutor Assess", "Rubrik penilaian", "Laporan performa"],
+    modules: "CBT Assess + Tutor Assess",
   },
   {
     name: "Enterprise",
     price: "Rp60 Juta",
-    description: "Paket unggulan untuk asesmen terpadu lintas skenario akademik.",
-    features: ["CBT Assess", "OSCE Assess", "Tutor Assess", "Integrasi dan workflow lanjutan"],
+    modules: "CBT Assess + OSCE Assess + Tutor Assess",
     highlighted: true,
   },
 ];
 
-const implementationPackages = [
+const implementationPackages: ImplementationPackage[] = [
   {
     name: "Instalasi & Training",
     price: "Rp5 Juta",
@@ -125,7 +126,7 @@ const implementationPackages = [
   {
     name: "Customisasi Minor",
     price: "Rp5-15 Juta",
-    description: "Penyesuaian tampilan, laporan, field data, dan alur sederhana sesuai kebutuhan.",
+    description: "Penyesuaian tampilan, laporan, field data, dan alur minor sesuai kebutuhan.",
   },
   {
     name: "Maintenance Tahunan",
@@ -136,15 +137,49 @@ const implementationPackages = [
 
 const navItems = [
   { label: "Produk", href: "#produk" },
-  { label: "Keunggulan", href: "#keunggulan" },
+  { label: "Fitur", href: "#fitur" },
+  { label: "Solusi", href: "#solusi" },
   { label: "Harga", href: "#harga" },
-  { label: "Tentang", href: "#tentang" },
+  { label: "Tentang Kami", href: "#tentang" },
 ];
+
+const benefits = ["Aman & Terpercaya", "Cepat & Stabil", "Insight Real-time"];
+const dashboardStats = [
+  ["Total Tes", "1.245"],
+  ["Peserta", "8.764"],
+  ["Selesai", "6.321"],
+  ["Rata-rata Nilai", "82.4"],
+];
+const socialProof = [
+  "Fakultas Kedokteran",
+  "Program Profesi Dokter",
+  "Institusi Kesehatan",
+  "Rumah Sakit Pendidikan",
+  "Pusat CBT",
+];
+const demoFields = ["Nama", "Institusi", "Jabatan", "Nomor WhatsApp", "Email"];
+const productOptions = ["CBT Assess", "OSCE Assess", "Tutor Assess", "Bundle Enterprise"];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 22 },
   visible: { opacity: 1, y: 0 },
 };
+
+function Logo() {
+  return (
+    <a href="#home" className="inline-flex items-center" aria-label="DigitalTech Nusantara">
+      <Image
+        src="/logo-dtn.png"
+        alt="DigitalTech Nusantara"
+        width={1718}
+        height={916}
+        priority
+        sizes="(min-width: 768px) 280px, 180px"
+        className="h-auto w-[180px] object-contain sm:w-[200px] md:w-[280px]"
+      />
+    </a>
+  );
+}
 
 function SectionHeader({
   eyebrow,
@@ -164,222 +199,250 @@ function SectionHeader({
       variants={fadeUp}
       className="mx-auto mb-12 max-w-3xl text-center"
     >
-      <p className="text-sm font-semibold uppercase text-cyan-300">{eyebrow}</p>
-      <h2 className="mt-3 text-3xl font-black text-white sm:text-4xl lg:text-5xl">{title}</h2>
-      <p className="mt-5 text-base leading-8 text-slate-300 sm:text-lg">{description}</p>
+      <p className="text-sm font-bold uppercase tracking-wide text-cyan-600">{eyebrow}</p>
+      <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+        {title}
+      </h2>
+      <p className="mt-5 text-base leading-8 text-slate-600 sm:text-lg">{description}</p>
     </motion.div>
   );
 }
 
-function Logo() {
+function DashboardMockup() {
   return (
-    <a href="#home" className="flex items-center gap-3" aria-label="DigitalTech Nusantara">
-      <div className="relative flex h-11 w-11 items-center justify-center rounded-lg border border-cyan-300/40 bg-cyan-400 text-sm font-black text-slate-950 shadow-lg shadow-cyan-500/20">
-        DT
+    <motion.div
+      initial={{ opacity: 0, scale: 0.96, y: 28 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ delay: 0.12, duration: 0.7, ease: "easeOut" }}
+      className="relative"
+    >
+      <div className="absolute -inset-6 rounded-[2rem] bg-cyan-200/40 blur-3xl" />
+      <div className="relative rounded-2xl border border-slate-200 bg-white/85 p-3 shadow-2xl shadow-blue-200/60 backdrop-blur">
+        <div className="rounded-xl border border-slate-200 bg-slate-50">
+          <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+            <div className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-red-400" />
+              <span className="h-3 w-3 rounded-full bg-yellow-400" />
+              <span className="h-3 w-3 rounded-full bg-green-400" />
+            </div>
+            <div className="rounded-full bg-cyan-100 px-3 py-1 text-xs font-bold text-cyan-700">
+              Live Dashboard
+            </div>
+          </div>
+
+          <div className="grid gap-3 p-4 sm:grid-cols-2">
+            {dashboardStats.map(([label, value]) => (
+              <div key={label} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                <p className="text-xs font-semibold text-slate-500">{label}</p>
+                <p className="mt-2 text-2xl font-black text-slate-950">{value}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mx-4 mb-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div className="mb-4 flex items-center justify-between">
+              <p className="text-sm font-black text-slate-950">Progress Asesmen</p>
+              <BarChart3 className="h-5 w-5 text-cyan-600" />
+            </div>
+            <div className="space-y-3">
+              {[
+                ["CBT Assess", "92%"],
+                ["Tutor Assess", "78%"],
+                ["OSCE Assess", "84%"],
+              ].map(([label, width]) => (
+                <div key={label}>
+                  <div className="mb-2 flex justify-between text-xs font-medium text-slate-600">
+                    <span>{label}</span>
+                    <span>{width}</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-slate-100">
+                    <div className="h-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-600" style={{ width }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="leading-tight">
-        <p className="text-base font-bold text-white">DigitalTech</p>
-        <p className="text-xs font-medium text-slate-400">Nusantara</p>
+
+      <div className="absolute -bottom-7 left-4 hidden w-32 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl shadow-slate-200/80 sm:block">
+        <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-slate-200" />
+        <div className="rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 p-3">
+          <TabletSmartphone className="h-6 w-6 text-cyan-600" />
+          <p className="mt-4 text-lg font-black text-slate-950">98%</p>
+          <p className="text-xs text-slate-600">Mobile ready</p>
+        </div>
       </div>
-    </a>
+
+      <div className="absolute -right-2 -top-6 max-w-[190px] rounded-2xl border border-cyan-100 bg-white/95 p-4 shadow-xl shadow-cyan-100/80 backdrop-blur sm:-right-8">
+        <LockKeyhole className="h-7 w-7 text-cyan-600" />
+        <p className="mt-3 text-sm font-black text-slate-950">Keamanan Terjamin</p>
+        <p className="mt-1 text-xs leading-5 text-slate-600">Data terenkripsi end-to-end</p>
+      </div>
+    </motion.div>
   );
 }
 
 export default function Home() {
-  return (
-    <main
-      id="home"
-      className="min-h-screen overflow-hidden bg-[#0F172A] text-white"
-    >
-      <div className="fixed inset-0 -z-10 bg-[linear-gradient(120deg,rgba(6,182,212,0.18),transparent_28%,transparent_72%,rgba(6,182,212,0.12))]" />
-      <div className="fixed inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:72px_72px]" />
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0F172A]/88 backdrop-blur-xl">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
+  return (
+    <main id="home" className="min-h-screen overflow-hidden bg-slate-50 text-slate-950">
+      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/85 backdrop-blur-xl">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 sm:px-6 lg:px-8">
           <Logo />
 
-          <div className="hidden items-center gap-8 md:flex">
+          <div className="hidden items-center gap-7 lg:flex">
             {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-sm font-medium text-slate-300 transition hover:text-cyan-300"
-              >
+              <a key={item.href} href={item.href} className="text-sm font-semibold text-slate-600 transition hover:text-cyan-600">
                 {item.label}
               </a>
             ))}
           </div>
 
-          <a
-            href="#demo"
-            className="hidden rounded-lg bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 md:inline-flex"
+          <div className="hidden items-center gap-3 lg:flex">
+            <a href="#" className="rounded-lg px-5 py-3 text-sm font-bold text-slate-700 transition hover:bg-slate-100">
+              Login
+            </a>
+            <a href="#demo" className="rounded-lg bg-[#0F172A] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-slate-300/70 transition hover:bg-cyan-600">
+              Coba Demo
+            </a>
+          </div>
+
+          <button
+            type="button"
+            aria-label={isMenuOpen ? "Tutup menu" : "Buka menu"}
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((current) => !current)}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm transition hover:border-cyan-300 lg:hidden"
           >
-            Request Demo
-          </a>
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </nav>
+
+        {isMenuOpen ? (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="mx-5 mb-4 rounded-xl border border-slate-200 bg-white p-3 shadow-xl shadow-slate-200/80 lg:hidden"
+          >
+            {[...navItems, { label: "Login", href: "#" }, { label: "Coba Demo", href: "#demo" }].map((item) => (
+              <a
+                key={`${item.label}-${item.href}`}
+                href={item.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center justify-between rounded-lg px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-cyan-50 hover:text-cyan-700"
+              >
+                {item.label}
+                <ArrowRight className="h-4 w-4 text-cyan-600" />
+              </a>
+            ))}
+          </motion.div>
+        ) : null}
       </header>
 
-      <section className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pb-20 pt-16 sm:px-6 sm:pt-20 lg:grid-cols-[1.02fr_0.98fr] lg:px-8 lg:pb-28 lg:pt-24">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.65, ease: "easeOut" }}
-          variants={fadeUp}
-        >
-          <div className="inline-flex items-center gap-2 rounded-lg border border-cyan-300/25 bg-cyan-300/10 px-3 py-2 text-sm font-semibold text-cyan-200">
-            <Sparkles className="h-4 w-4" />
-            Platform asesmen digital untuk institusi modern
-          </div>
-
-          <h1 className="mt-7 max-w-4xl text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
-            Empowering Digital Assessment
-          </h1>
-
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-            PT DigitalTech Nusantara membantu institusi pendidikan mengelola CBT, OSCE,
-            dan penilaian tutorial secara paperless, terukur, aman, dan terintegrasi.
-          </p>
-
-          <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-            <a
-              href="#demo"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-400 px-6 py-4 text-base font-bold text-slate-950 shadow-xl shadow-cyan-500/20 transition hover:bg-cyan-300"
-            >
-              Request Demo
-              <ArrowRight className="h-5 w-5" />
-            </a>
-            <a
-              href="#produk"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/5 px-6 py-4 text-base font-bold text-white transition hover:border-cyan-300/60 hover:bg-white/10"
-            >
-              Lihat Produk
-            </a>
-          </div>
-
-          <div className="mt-10 grid max-w-xl grid-cols-3 gap-3">
-            {["CBT", "OSCE", "Tutor"].map((item) => (
-              <div key={item} className="rounded-lg border border-white/10 bg-white/[0.04] p-4">
-                <p className="text-2xl font-black text-white">{item}</p>
-                <p className="mt-1 text-xs font-medium text-slate-400">Assess Suite</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 28 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ delay: 0.12, duration: 0.7, ease: "easeOut" }}
-          className="relative"
-        >
-          <div className="relative rounded-lg border border-white/12 bg-slate-900/80 p-3 shadow-2xl shadow-black/40 backdrop-blur">
-            <div className="rounded-lg border border-white/10 bg-[#0F172A] p-4">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <div>
-                  <p className="text-sm font-semibold text-slate-400">Assessment Command Center</p>
-                  <p className="mt-1 text-xl font-black text-white">Dashboard Institusi</p>
-                </div>
-                <div className="rounded-lg bg-cyan-400 px-3 py-2 text-xs font-black text-slate-950">
-                  LIVE
-                </div>
-              </div>
-
-              <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                {[
-                  ["Peserta Aktif", "1.248"],
-                  ["Ujian Berjalan", "32"],
-                  ["Rekap Selesai", "98%"],
-                ].map(([label, value]) => (
-                  <div key={label} className="rounded-lg border border-white/10 bg-white/[0.04] p-4">
-                    <p className="text-xs font-medium text-slate-400">{label}</p>
-                    <p className="mt-2 text-2xl font-black text-white">{value}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-5 grid gap-3 lg:grid-cols-[1.1fr_0.9fr]">
-                <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4">
-                  <div className="mb-4 flex items-center justify-between">
-                    <p className="text-sm font-bold text-white">Performa Asesmen</p>
-                    <BarChart3 className="h-5 w-5 text-cyan-300" />
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      ["CBT Assess", "92%"],
-                      ["OSCE Assess", "84%"],
-                      ["Tutor Assess", "78%"],
-                    ].map(([label, width]) => (
-                      <div key={label}>
-                        <div className="mb-2 flex justify-between text-xs text-slate-300">
-                          <span>{label}</span>
-                          <span>{width}</span>
-                        </div>
-                        <div className="h-2 rounded-full bg-slate-800">
-                          <div className="h-2 rounded-full bg-cyan-400" style={{ width }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-lg border border-cyan-300/20 bg-cyan-300/10 p-4">
-                  <LockKeyhole className="h-8 w-8 text-cyan-200" />
-                  <p className="mt-4 text-lg font-black text-white">Secure Workflow</p>
-                  <p className="mt-2 text-sm leading-6 text-slate-300">
-                    Akses berbasis role untuk admin, dosen, penguji, tutor, dan peserta.
-                  </p>
-                </div>
-              </div>
+      <section className="relative overflow-hidden bg-gradient-to-b from-white via-cyan-50/60 to-slate-50">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(6,182,212,0.16),transparent_30%),radial-gradient(circle_at_88%_18%,rgba(37,99,235,0.16),transparent_28%)]" />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pb-20 pt-14 sm:px-6 sm:pt-18 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:pb-28 lg:pt-24">
+          <motion.div initial="hidden" animate="visible" transition={{ duration: 0.65, ease: "easeOut" }} variants={fadeUp}>
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white px-4 py-2 text-sm font-black text-cyan-700 shadow-sm">
+              <Sparkles className="h-4 w-4" />
+              Assess Suite
             </div>
-          </div>
-        </motion.div>
-      </section>
 
-      <section id="produk" className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <SectionHeader
-          eyebrow="Produk"
-          title="Satu ekosistem untuk asesmen akademik digital"
-          description="Setiap produk dirancang untuk mengurangi pekerjaan administratif, mempercepat rekap, dan membuat kualitas asesmen lebih mudah dipantau."
-        />
+            <h1 className="mt-6 max-w-4xl text-5xl font-black leading-[1.05] tracking-tight text-slate-950 max-[420px]:text-[2.7rem] lg:text-[4rem]">
+              Platform Asesmen Digital{" "}
+              <span className="bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">
+                Terintegrasi
+              </span>
+            </h1>
 
-        <div className="grid gap-5 md:grid-cols-3">
-          {products.map((product, index) => {
-            const Icon = product.icon;
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+              Solusi asesmen modern untuk pendidikan dan profesional. Aman, fleksibel, dan didukung teknologi terkini.
+            </p>
 
-            return (
-              <motion.article
-                key={product.name}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ delay: index * 0.08, duration: 0.5, ease: "easeOut" }}
-                variants={fadeUp}
-                className="group rounded-lg border border-white/10 bg-white/[0.04] p-6 transition hover:border-cyan-300/50 hover:bg-white/[0.07]"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-300/12 text-cyan-300 ring-1 ring-cyan-300/20">
-                  <Icon className="h-6 w-6" />
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="#produk" className="inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-[#0F172A] px-6 font-bold text-white shadow-xl shadow-slate-300/80 transition hover:bg-cyan-600">
+                Jelajahi Produk
+                <ArrowRight className="h-5 w-5" />
+              </a>
+              <a href="#demo" className="inline-flex h-14 items-center justify-center rounded-lg border border-slate-200 bg-white px-6 font-bold text-slate-950 shadow-sm transition hover:border-cyan-300 hover:bg-cyan-50">
+                Coba Demo
+              </a>
+            </div>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              {benefits.map((benefit) => (
+                <div key={benefit} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm font-bold text-slate-700 shadow-sm">
+                  <Check className="h-4 w-4 text-cyan-600" />
+                  {benefit}
                 </div>
-                <h3 className="mt-7 text-2xl font-black text-white">{product.name}</h3>
-                <p className="mt-4 leading-7 text-slate-300">{product.description}</p>
-                <div className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-cyan-300">
-                  Pelajari modul
-                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                </div>
-              </motion.article>
-            );
-          })}
+              ))}
+            </div>
+          </motion.div>
+
+          <DashboardMockup />
         </div>
       </section>
 
-      <section id="keunggulan" className="border-y border-white/10 bg-white/[0.03] px-5 py-20 sm:px-6 lg:px-8">
+      <section id="produk" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
+        <div id="solusi" className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="Solusi / Produk"
+            title="Tiga Solusi, Satu Platform"
+            description="Pilih modul asesmen yang sesuai dengan kebutuhan institusi Anda."
+          />
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {products.map((product, index) => {
+              const Icon = product.icon;
+
+              return (
+                <motion.article
+                  key={product.name}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ delay: index * 0.08, duration: 0.5, ease: "easeOut" }}
+                  variants={fadeUp}
+                  className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70 transition hover:-translate-y-1 hover:border-cyan-300 hover:shadow-xl hover:shadow-cyan-100/70"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 ring-1 ring-cyan-100">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-7 text-2xl font-black text-slate-950">{product.name}</h3>
+                  <p className="mt-4 leading-7 text-slate-600">{product.description}</p>
+
+                  <div className="mt-6 space-y-3">
+                    {product.features.map((feature) => (
+                      <div key={feature} className="flex items-start gap-3 text-sm font-medium text-slate-700">
+                        <Check className="mt-0.5 h-4 w-4 flex-none text-cyan-600" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <a href="#demo" className="mt-7 inline-flex items-center gap-2 text-sm font-black text-cyan-700">
+                    Pelajari Selengkapnya
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                  </a>
+                </motion.article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section id="fitur" className="border-y border-slate-200 bg-cyan-50/60 px-5 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Keunggulan"
-            title="Dibangun untuk operasional asesmen yang serius"
-            description="Mulai dari ujian rutin hingga skenario klinis dan tutorial, DigitalTech Nusantara membantu proses asesmen berjalan lebih konsisten."
+            title="Teknologi untuk Asesmen yang Lebih Baik"
+            description="Dibangun untuk membantu institusi menjalankan asesmen yang aman, efisien, dan mudah dikembangkan."
           />
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-5">
             {features.map((feature, index) => {
               const Icon = feature.icon;
 
@@ -388,14 +451,14 @@ export default function Home() {
                   key={feature.title}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
+                  viewport={{ once: true, amount: 0.25 }}
                   transition={{ delay: index * 0.04, duration: 0.5, ease: "easeOut" }}
                   variants={fadeUp}
-                  className="rounded-lg border border-white/10 bg-[#0F172A]/70 p-6"
+                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/70"
                 >
-                  <Icon className="h-7 w-7 text-cyan-300" />
-                  <h3 className="mt-5 text-xl font-black text-white">{feature.title}</h3>
-                  <p className="mt-3 leading-7 text-slate-300">{feature.description}</p>
+                  <Icon className="h-7 w-7 text-cyan-600" />
+                  <h3 className="mt-5 text-lg font-black text-slate-950">{feature.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">{feature.description}</p>
                 </motion.div>
               );
             })}
@@ -403,185 +466,198 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="harga" className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8">
-        <SectionHeader
-          eyebrow="Paket Harga"
-          title="Pilih paket sesuai cakupan asesmen institusi"
-          description="Paket lisensi dirancang jelas untuk kebutuhan bertahap, dari CBT hingga ekosistem asesmen lengkap."
-        />
+      <section id="harga" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="Harga"
+            title="Paket yang Fleksibel untuk Institusi"
+            description="Pilih paket sesuai cakupan asesmen. Tim kami dapat membantu menyiapkan proposal berdasarkan kebutuhan implementasi."
+          />
 
-        <div className="grid gap-5 lg:grid-cols-3">
-          {pricingPlans.map((plan) => (
-            <motion.article
-              key={plan.name}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              variants={fadeUp}
-              className={`relative rounded-lg border p-6 ${
-                plan.highlighted
-                  ? "border-cyan-300 bg-cyan-300/10 shadow-2xl shadow-cyan-500/15"
-                  : "border-white/10 bg-white/[0.04]"
-              }`}
-            >
-              {plan.highlighted ? (
-                <div className="absolute right-5 top-5 rounded-lg bg-cyan-300 px-3 py-1 text-xs font-black text-slate-950">
-                  Unggulan
-                </div>
-              ) : null}
-
-              <h3 className="text-2xl font-black text-white">{plan.name}</h3>
-              <p className="mt-4 min-h-14 leading-7 text-slate-300">{plan.description}</p>
-              <p className="mt-7 text-4xl font-black text-cyan-300">{plan.price}</p>
-
-              <div className="mt-7 space-y-4">
-                {plan.features.map((feature) => (
-                  <div key={feature} className="flex items-start gap-3 text-slate-200">
-                    <Check className="mt-0.5 h-5 w-5 flex-none text-cyan-300" />
-                    <span>{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <a
-                href="#demo"
-                className={`mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3 font-bold transition ${
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {pricingPlans.map((plan) => (
+              <motion.article
+                key={plan.name}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                variants={fadeUp}
+                className={`relative rounded-2xl border p-6 ${
                   plan.highlighted
-                    ? "bg-cyan-300 text-slate-950 hover:bg-white"
-                    : "border border-white/15 bg-white/5 text-white hover:border-cyan-300/60"
+                    ? "border-cyan-400 bg-cyan-50 shadow-xl shadow-cyan-100/80"
+                    : "border-slate-200 bg-white shadow-sm shadow-slate-200/70"
                 }`}
               >
-                Konsultasi Paket
-                <ArrowRight className="h-4 w-4" />
-              </a>
-            </motion.article>
-          ))}
+                {plan.highlighted ? (
+                  <div className="absolute right-5 top-5 rounded-full bg-[#0F172A] px-3 py-1 text-xs font-black text-white">
+                    Paling Direkomendasikan
+                  </div>
+                ) : null}
+
+                <h3 className="text-2xl font-black text-slate-950">{plan.name}</h3>
+                <p className="mt-6 text-4xl font-black text-slate-950">{plan.price}</p>
+                <p className="mt-3 leading-7 text-slate-600">{plan.modules}</p>
+
+                <div className="mt-8 grid gap-3">
+                  <a href="#demo" className="inline-flex h-12 items-center justify-center rounded-lg bg-[#0F172A] px-5 font-bold text-white transition hover:bg-cyan-600">
+                    Minta Proposal
+                  </a>
+                  <a href="#demo" className="inline-flex h-12 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 font-bold text-slate-950 transition hover:border-cyan-300 hover:bg-cyan-50">
+                    Jadwalkan Demo
+                  </a>
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="border-y border-white/10 bg-white/[0.03] px-5 py-20 sm:px-6 lg:px-8">
+      <section className="border-y border-slate-200 bg-slate-50 px-5 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Paket Implementasi"
-            title="Pendampingan agar sistem siap digunakan"
-            description="Tim kami membantu proses awal, pelatihan, dan pemeliharaan supaya adopsi platform berjalan lancar."
+            eyebrow="Implementasi"
+            title="Pendampingan agar Sistem Siap Digunakan"
+            description="Dari instalasi hingga maintenance, tim kami membantu transisi digital berjalan lebih rapi."
           />
 
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {implementationPackages.map((item) => (
-              <div key={item.name} className="rounded-lg border border-white/10 bg-[#0F172A]/70 p-6">
-                <p className="text-sm font-semibold uppercase text-cyan-300">Implementasi</p>
-                <h3 className="mt-3 text-xl font-black text-white">{item.name}</h3>
-                <p className="mt-5 text-3xl font-black text-white">{item.price}</p>
-                <p className="mt-4 leading-7 text-slate-300">{item.description}</p>
+              <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70">
+                <p className="text-sm font-bold uppercase text-cyan-600">Paket Implementasi</p>
+                <h3 className="mt-3 text-xl font-black text-slate-950">{item.name}</h3>
+                <p className="mt-5 text-3xl font-black text-slate-950">{item.price}</p>
+                <p className="mt-4 leading-7 text-slate-600">{item.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section
-        id="tentang"
-        className="mx-auto grid max-w-7xl gap-10 px-5 py-20 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8"
-      >
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.55, ease: "easeOut" }}
-          variants={fadeUp}
-        >
-          <p className="text-sm font-semibold uppercase text-cyan-300">Tentang Kami</p>
-          <h2 className="mt-3 text-3xl font-black text-white sm:text-4xl">
-            Mitra teknologi untuk transformasi asesmen pendidikan.
-          </h2>
-        </motion.div>
+      <section className="bg-white px-5 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="Social Proof"
+            title="Dirancang untuk Institusi Pendidikan dan Kesehatan"
+            description="Platform ini disiapkan untuk berbagai kebutuhan asesmen akademik, profesi, dan layanan kesehatan."
+          />
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.55, ease: "easeOut" }}
-          variants={fadeUp}
-          className="rounded-lg border border-white/10 bg-white/[0.04] p-6 sm:p-8"
-        >
-          <p className="text-lg leading-8 text-slate-300">
-            PT DigitalTech Nusantara berfokus pada pengembangan solusi SaaS untuk
-            assessment digital. Kami membantu institusi pendidikan membangun proses
-            ujian dan penilaian yang lebih efisien, transparan, dan siap berkembang
-            sesuai kebutuhan akademik.
-          </p>
-
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {[
-              { icon: MonitorSmartphone, label: "SaaS Modern" },
-              { icon: UsersRound, label: "Tim Institusi" },
-              { icon: LockKeyhole, label: "Data Aman" },
-            ].map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <div key={item.label} className="rounded-lg border border-white/10 bg-[#0F172A]/70 p-4">
-                  <Icon className="h-6 w-6 text-cyan-300" />
-                  <p className="mt-3 font-bold text-white">{item.label}</p>
-                </div>
-              );
-            })}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {socialProof.map((item) => (
+              <div key={item} className="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center font-black text-slate-700">
+                {item}
+              </div>
+            ))}
           </div>
-        </motion.div>
+        </div>
       </section>
 
-      <section id="demo" className="px-5 pb-20 sm:px-6 lg:px-8">
+      <section id="tentang" className="border-y border-slate-200 bg-cyan-50/60 px-5 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.55, ease: "easeOut" }} variants={fadeUp}>
+            <p className="text-sm font-bold uppercase tracking-wide text-cyan-600">Tentang Kami</p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
+              Partner Teknologi untuk Transformasi Asesmen
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            variants={fadeUp}
+            className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70 sm:p-8"
+          >
+            <p className="text-lg leading-8 text-slate-600">
+              PT DigitalTech Nusantara adalah perusahaan pengembang platform asesmen digital yang membantu institusi
+              pendidikan dan kesehatan mengelola CBT, OSCE, dan Tutorial Assessment secara modern, paperless, aman,
+              dan terintegrasi.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      <section id="demo" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           variants={fadeUp}
-          className="mx-auto max-w-7xl overflow-hidden rounded-lg border border-cyan-300/25 bg-cyan-300/10"
+          className="mx-auto max-w-7xl overflow-hidden rounded-2xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-white shadow-xl shadow-cyan-100/70"
         >
-          <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center lg:p-10">
+          <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:p-10">
             <div>
-              <p className="text-sm font-semibold uppercase text-cyan-200">Request Demo</p>
-              <h2 className="mt-3 text-3xl font-black text-white sm:text-4xl">
+              <p className="text-sm font-bold uppercase text-cyan-600">Request Demo</p>
+              <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
                 Siap melihat DigitalTech Assess Suite bekerja untuk institusi Anda?
               </h2>
-              <p className="mt-4 max-w-3xl leading-8 text-slate-300">
-                Jadwalkan demo untuk membahas kebutuhan CBT, OSCE, Tutor Assess,
-                implementasi, dan opsi pengembangan sesuai workflow akademik Anda.
+              <p className="mt-4 max-w-3xl leading-8 text-slate-600">
+                Isi form singkat berikut untuk mulai berdiskusi tentang kebutuhan CBT, OSCE, Tutor Assess, atau Bundle Enterprise.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <a
-                href="mailto:hello@digitaltechnusantara.id?subject=Request%20Demo%20DigitalTech%20Assess%20Suite"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-4 font-black text-slate-950 transition hover:bg-cyan-200"
-              >
-                Email Demo
+            <form className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+              <div className="grid gap-4 sm:grid-cols-2">
+                {demoFields.map((field) => (
+                  <label key={field} className={field === "Email" ? "sm:col-span-2" : undefined}>
+                    <span className="text-sm font-bold text-slate-700">{field}</span>
+                    <input
+                      type={field === "Email" ? "email" : "text"}
+                      placeholder={field}
+                      className="mt-2 h-12 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-100"
+                    />
+                  </label>
+                ))}
+
+                <label className="sm:col-span-2">
+                  <span className="text-sm font-bold text-slate-700">Produk yang diminati</span>
+                  <select className="mt-2 h-12 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-slate-950 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-100">
+                    {productOptions.map((option) => (
+                      <option key={option}>{option}</option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <button type="button" className="mt-5 inline-flex h-14 w-full items-center justify-center gap-2 rounded-lg bg-cyan-500 px-5 font-black text-white transition hover:bg-cyan-600">
+                Kirim Permintaan Demo
                 <ArrowRight className="h-5 w-5" />
-              </a>
-              <a
-                href="https://digitaltechnusantara.id"
-                className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 px-6 py-4 font-bold text-white transition hover:border-cyan-300/60"
-              >
-                digitaltechnusantara.id
-              </a>
-            </div>
+              </button>
+            </form>
           </div>
         </motion.div>
       </section>
 
-      <footer className="border-t border-white/10 px-5 py-10 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <Logo />
-          <div className="flex flex-col gap-2 text-sm text-slate-400 sm:flex-row sm:items-center sm:gap-4">
-            <span>&copy; 2026 PT DigitalTech Nusantara</span>
-            <span className="hidden text-slate-600 sm:inline">|</span>
-            <span>Empowering Digital Assessment</span>
-            <span className="hidden text-slate-600 sm:inline">|</span>
-            <span>digitaltechnusantara.id</span>
+      <a
+        href="https://wa.me/6280000000000"
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-4 right-4 z-50 inline-flex h-12 max-w-[calc(100vw-2rem)] items-center justify-center gap-2 rounded-lg bg-cyan-500 px-4 text-sm font-black text-white shadow-2xl shadow-cyan-300/60 transition hover:bg-cyan-600 sm:bottom-6 sm:right-6 sm:h-14 sm:px-5"
+      >
+        <MessageCircle className="h-5 w-5" />
+        <span>Request Demo</span>
+      </a>
+
+      <footer className="border-t border-slate-200 bg-white px-5 py-10 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-[1fr_auto] md:items-center">
+          <div>
+            <Logo />
+            <p className="mt-4 text-sm font-semibold text-slate-600">Platform Asesmen Digital Terintegrasi</p>
           </div>
+
+          <div className="flex flex-col gap-4 text-sm font-semibold text-slate-600 sm:flex-row sm:items-center">
+            {navItems.slice(0, 4).map((item) => (
+              <a key={item.href} href={item.href} className="transition hover:text-cyan-600">
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="mx-auto mt-8 max-w-7xl border-t border-slate-200 pt-6 text-sm text-slate-500">
+          &copy; 2026 PT DigitalTech Nusantara. All rights reserved.
         </div>
       </footer>
     </main>
