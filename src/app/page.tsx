@@ -159,6 +159,26 @@ const socialProof = [
 ];
 const demoFields = ["Nama", "Institusi", "Jabatan", "Nomor WhatsApp", "Email"];
 const productOptions = ["CBT Assess", "OSCE Assess", "Tutor Assess", "Bundle Enterprise"];
+const platformPreviews = [
+  {
+    title: "CBT Assess Dashboard Preview",
+    description: "Ringkasan ujian, peserta, progress, dan hasil asesmen dalam satu dashboard.",
+    type: "cbt",
+    icon: ClipboardCheck,
+  },
+  {
+    title: "Tutor Assess Rubric Preview",
+    description: "Rubrik observasi tutor dengan indikator, feedback, dan rekap kinerja.",
+    type: "tutor",
+    icon: BookOpenCheck,
+  },
+  {
+    title: "OSCE Assess Station Preview",
+    description: "Manajemen station OSCE, status penguji, dan skor real-time.",
+    type: "osce",
+    icon: GraduationCap,
+  },
+];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 22 },
@@ -208,6 +228,139 @@ function SectionHeader({
   );
 }
 
+function ProductIllustration({ productName }: { productName: string }) {
+  if (productName === "Tutor Assess") {
+    return (
+      <div className="rounded-2xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-white p-4">
+        <div className="mb-4 flex items-center justify-between">
+          <div className="h-3 w-24 rounded-full bg-cyan-200" />
+          <BookOpenCheck className="h-5 w-5 text-cyan-600" />
+        </div>
+        <div className="space-y-3">
+          {["Komunikasi", "Fasilitasi", "Feedback"].map((item, index) => (
+            <div key={item} className="rounded-xl border border-slate-200 bg-white p-3">
+              <div className="mb-2 flex items-center justify-between text-xs font-bold text-slate-600">
+                <span>{item}</span>
+                <span>{index + 3}/4</span>
+              </div>
+              <div className="h-2 rounded-full bg-slate-100">
+                <div
+                  className="h-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-600"
+                  style={{ width: `${72 + index * 8}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (productName === "OSCE Assess") {
+    return (
+      <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-4">
+        <div className="grid grid-cols-3 gap-2">
+          {["S1", "S2", "S3", "S4", "S5", "S6"].map((station, index) => (
+            <div
+              key={station}
+              className={`rounded-xl border p-3 text-center text-xs font-black ${
+                index % 3 === 0
+                  ? "border-cyan-200 bg-cyan-100 text-cyan-700"
+                  : "border-slate-200 bg-white text-slate-600"
+              }`}
+            >
+              {station}
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 rounded-xl border border-slate-200 bg-white p-3">
+          <div className="mb-2 flex items-center justify-between text-xs font-bold text-slate-600">
+            <span>Station Active</span>
+            <span>84%</span>
+          </div>
+          <div className="h-2 rounded-full bg-slate-100">
+            <div className="h-2 w-[84%] rounded-full bg-gradient-to-r from-cyan-400 to-blue-600" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-white p-4">
+      <div className="mb-4 grid grid-cols-3 gap-2">
+        {["Tes", "Aktif", "Nilai"].map((item) => (
+          <div key={item} className="rounded-xl bg-white p-3 text-xs font-black text-slate-600 shadow-sm">
+            {item}
+          </div>
+        ))}
+      </div>
+      <div className="rounded-xl border border-slate-200 bg-white p-3">
+        <svg className="h-20 w-full" viewBox="0 0 260 90" role="img" aria-label="CBT dashboard chart">
+          <path d="M8 72 C 54 26, 82 38, 116 48 S 174 76, 218 20 252 34" fill="none" stroke="#06B6D4" strokeWidth="7" strokeLinecap="round" />
+          <path d="M8 72 C 54 26, 82 38, 116 48 S 174 76, 218 20 252 34" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+function PlatformPreview({ type }: { type: string }) {
+  if (type === "tutor") {
+    return (
+      <div className="space-y-3 rounded-2xl border border-slate-200 bg-white p-4">
+        {["Persiapan Diskusi", "Aktivasi Kelompok", "Feedback Tutor", "Refleksi"].map((item, index) => (
+          <div key={item} className="grid grid-cols-[1fr_auto] gap-3 rounded-xl bg-slate-50 p-3">
+            <span className="text-sm font-bold text-slate-700">{item}</span>
+            <span className="rounded-full bg-cyan-100 px-2 py-1 text-xs font-black text-cyan-700">{index + 1}.0</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (type === "osce") {
+    return (
+      <div className="rounded-2xl border border-slate-200 bg-white p-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {["Anamnesis", "Pemeriksaan", "Diagnosis", "Tindakan", "Komunikasi", "Etika"].map((station, index) => (
+            <div
+              key={station}
+              className={`rounded-xl border p-3 ${
+                index < 3 ? "border-cyan-200 bg-cyan-50" : "border-slate-200 bg-slate-50"
+              }`}
+            >
+              <p className="text-xs font-black text-slate-950">Station {index + 1}</p>
+              <p className="mt-1 text-xs text-slate-600">{station}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4">
+      <div className="grid grid-cols-3 gap-3">
+        {["Ujian", "Peserta", "Skor"].map((item, index) => (
+          <div key={item} className="rounded-xl bg-slate-50 p-3">
+            <p className="text-xs font-bold text-slate-500">{item}</p>
+            <p className="mt-2 text-lg font-black text-slate-950">{["32", "1.245", "82.4"][index]}</p>
+          </div>
+        ))}
+      </div>
+      <div className="mt-4 overflow-hidden rounded-xl border border-slate-200">
+        {["Farmakologi", "Anatomi", "Klinis"].map((row, index) => (
+          <div key={row} className="grid grid-cols-[1fr_auto] border-b border-slate-100 bg-white px-3 py-2 last:border-b-0">
+            <span className="text-sm font-bold text-slate-700">{row}</span>
+            <span className="text-sm font-black text-cyan-700">{90 - index * 6}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function DashboardMockup() {
   return (
     <motion.div
@@ -241,9 +394,30 @@ function DashboardMockup() {
 
           <div className="mx-4 mb-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
-              <p className="text-sm font-black text-slate-950">Progress Asesmen</p>
+              <p className="text-sm font-black text-slate-950">Insight Real-time</p>
               <BarChart3 className="h-5 w-5 text-cyan-600" />
             </div>
+            <svg className="mb-4 h-24 w-full" viewBox="0 0 420 120" role="img" aria-label="Grafik tren asesmen">
+              <defs>
+                <linearGradient id="heroChartGradient" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="0%" stopColor="#06B6D4" />
+                  <stop offset="100%" stopColor="#2563EB" />
+                </linearGradient>
+              </defs>
+              {[20, 50, 80, 110].map((y) => (
+                <line key={y} x1="0" x2="420" y1={y} y2={y} stroke="#E2E8F0" strokeWidth="1" />
+              ))}
+              <motion.path
+                d="M8 88 C 62 46, 92 58, 132 72 S 210 104, 258 42 320 48 412 24"
+                fill="none"
+                stroke="url(#heroChartGradient)"
+                strokeLinecap="round"
+                strokeWidth="7"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ delay: 0.45, duration: 1.4, ease: "easeInOut" }}
+              />
+            </svg>
             <div className="space-y-3">
               {[
                 ["CBT Assess", "92%"],
@@ -359,7 +533,8 @@ export default function Home() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-              Solusi asesmen modern untuk pendidikan dan profesional. Aman, fleksibel, dan didukung teknologi terkini.
+              Solusi asesmen modern untuk institusi pendidikan dan kesehatan. Kelola CBT, OSCE, dan penilaian tutorial
+              dalam satu ekosistem digital yang aman, fleksibel, dan terintegrasi.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -408,7 +583,8 @@ export default function Home() {
                   variants={fadeUp}
                   className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70 transition hover:-translate-y-1 hover:border-cyan-300 hover:shadow-xl hover:shadow-cyan-100/70"
                 >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 ring-1 ring-cyan-100">
+                  <ProductIllustration productName={product.name} />
+                  <div className="mt-6 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 ring-1 ring-cyan-100">
                     <Icon className="h-6 w-6" />
                   </div>
                   <h3 className="mt-7 text-2xl font-black text-slate-950">{product.name}</h3>
@@ -427,6 +603,46 @@ export default function Home() {
                     Pelajari Selengkapnya
                     <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                   </a>
+                </motion.article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-slate-200 bg-slate-50 px-5 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="Preview Platform"
+            title="Preview Platform DigitalTech Assess Suite"
+            description="Ilustrasi antarmuka sementara untuk menggambarkan pengalaman dashboard, rubrik, dan station digital sebelum screenshot asli aplikasi dipasang."
+          />
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            {platformPreviews.map((preview, index) => {
+              const Icon = preview.icon;
+
+              return (
+                <motion.article
+                  key={preview.title}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ delay: index * 0.08, duration: 0.5, ease: "easeOut" }}
+                  variants={fadeUp}
+                  className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/70"
+                >
+                  <div className="mb-5 flex items-center justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 ring-1 ring-cyan-100">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-600">
+                      Preview
+                    </span>
+                  </div>
+                  <PlatformPreview type={preview.type} />
+                  <h3 className="mt-6 text-xl font-black text-slate-950">{preview.title}</h3>
+                  <p className="mt-3 leading-7 text-slate-600">{preview.description}</p>
                 </motion.article>
               );
             })}
