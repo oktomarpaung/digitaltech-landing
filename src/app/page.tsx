@@ -190,12 +190,12 @@ function Logo() {
     <a href="#home" className="inline-flex items-center" aria-label="DigitalTech Nusantara">
       <Image
         src="/logo-dtn.png"
-        alt="DigitalTech Nusantara"
-        width={1718}
-        height={916}
+        alt="PT DigitalTech Nusantara"
+        width={240}
+        height={80}
         priority
-        sizes="(min-width: 768px) 230px, 160px"
-        className="h-auto w-[160px] object-contain sm:w-[170px] md:w-[230px]"
+        sizes="(min-width: 768px) 230px, 170px"
+        className="h-auto w-[170px] object-contain md:w-[230px]"
       />
     </a>
   );
