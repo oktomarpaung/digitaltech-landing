@@ -11,11 +11,13 @@ import {
   ClipboardCheck,
   CloudCog,
   GraduationCap,
+  PackageCheck,
   LockKeyhole,
   Menu,
   MonitorSmartphone,
   ShieldCheck,
   Sparkles,
+  Stethoscope,
   TabletSmartphone,
   UsersRound,
   X,
@@ -39,6 +41,15 @@ type PricingPlan = {
   name: string;
   price: string;
   description: string;
+  icon: LucideIcon;
+  accent: {
+    border: string;
+    background: string;
+    iconBackground: string;
+    text: string;
+    softHover: string;
+    shadow: string;
+  };
   highlighted?: boolean;
 };
 
@@ -102,21 +113,57 @@ const pricingPlans: PricingPlan[] = [
     name: "CBT Assess",
     price: "Rp25 Juta",
     description: "Platform Computer Based Test untuk ujian online, bank soal, rekap nilai, dan analisis hasil.",
+    icon: ClipboardCheck,
+    accent: {
+      border: "border-blue-200",
+      background: "from-blue-50 to-white",
+      iconBackground: "bg-blue-100",
+      text: "text-blue-600",
+      softHover: "hover:bg-blue-50 hover:border-blue-300",
+      shadow: "hover:shadow-blue-100/80",
+    },
   },
   {
     name: "OSCE Assess",
     price: "Rp35 Juta",
     description: "Platform penilaian OSCE digital untuk station, rubrik, penguji, dan rekap hasil real-time.",
+    icon: Stethoscope,
+    accent: {
+      border: "border-teal-200",
+      background: "from-teal-50 to-white",
+      iconBackground: "bg-teal-100",
+      text: "text-teal-600",
+      softHover: "hover:bg-teal-50 hover:border-teal-300",
+      shadow: "hover:shadow-teal-100/80",
+    },
   },
   {
     name: "Tutor Assess",
     price: "Rp15 Juta",
     description: "Platform penilaian tutorial/PBL berbasis rubrik untuk tutor, dosen, dan pengelola blok.",
+    icon: BookOpenCheck,
+    accent: {
+      border: "border-purple-200",
+      background: "from-purple-50 to-white",
+      iconBackground: "bg-purple-100",
+      text: "text-purple-600",
+      softHover: "hover:bg-purple-50 hover:border-purple-300",
+      shadow: "hover:shadow-purple-100/80",
+    },
   },
   {
     name: "Bundle 3 Produk",
     price: "Rp60 Juta",
     description: "Paket lengkap CBT Assess, OSCE Assess, dan Tutor Assess untuk ekosistem asesmen terintegrasi.",
+    icon: PackageCheck,
+    accent: {
+      border: "border-cyan-300",
+      background: "from-cyan-50 to-white",
+      iconBackground: "bg-cyan-100",
+      text: "text-cyan-600",
+      softHover: "hover:bg-cyan-50 hover:border-cyan-400",
+      shadow: "shadow-cyan-100/80 hover:shadow-cyan-200/80",
+    },
     highlighted: true,
   },
 ];
@@ -736,7 +783,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="harga" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
+      <section id="harga" className="bg-white px-5 py-20 sm:px-6 lg:px-8 xl:pr-28">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Harga"
@@ -744,41 +791,50 @@ export default function Home() {
             description="Pilih paket sesuai cakupan asesmen. Tim kami dapat membantu menyiapkan proposal berdasarkan kebutuhan implementasi."
           />
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {pricingPlans.map((plan) => (
-              <motion.article
-                key={plan.name}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                variants={fadeUp}
-                className={`relative rounded-2xl border p-6 ${
-                  plan.highlighted
-                    ? "border-cyan-400 bg-cyan-50 shadow-xl shadow-cyan-100/80"
-                    : "border-slate-200 bg-white shadow-sm shadow-slate-200/70"
-                }`}
-              >
-                {plan.highlighted ? (
-                  <div className="absolute right-5 top-5 rounded-full bg-[#0F172A] px-3 py-1 text-xs font-black text-white">
-                    Paling Direkomendasikan
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+            {pricingPlans.map((plan) => {
+              const Icon = plan.icon;
+
+              return (
+                <motion.article
+                  key={plan.name}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  variants={fadeUp}
+                  className={`relative flex h-full flex-col rounded-3xl border bg-gradient-to-br p-6 shadow-sm shadow-slate-200/70 transition hover:-translate-y-1 hover:shadow-xl ${plan.accent.border} ${plan.accent.background} ${plan.accent.shadow}`}
+                >
+                  {plan.highlighted ? (
+                    <div className="absolute right-5 top-5 rounded-full bg-cyan-500 px-3 py-1 text-xs font-black text-white shadow-lg shadow-cyan-200">
+                      Paling Direkomendasikan
+                    </div>
+                  ) : null}
+
+                  <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${plan.accent.iconBackground}`}>
+                    <Icon className={`h-7 w-7 ${plan.accent.text}`} />
                   </div>
-                ) : null}
+                  <h3 className="mt-6 text-2xl font-black text-slate-950">{plan.name}</h3>
+                  <p className={`mt-5 text-4xl font-black ${plan.accent.text}`}>{plan.price}</p>
+                  <p className="mt-4 flex-1 leading-7 text-slate-600">{plan.description}</p>
 
-                <h3 className="text-2xl font-black text-slate-950">{plan.name}</h3>
-                <p className="mt-6 text-4xl font-black text-slate-950">{plan.price}</p>
-                <p className="mt-3 min-h-28 leading-7 text-slate-600">{plan.description}</p>
-
-                <div className="mt-8 grid gap-3">
-                  <a href="#demo" className="inline-flex h-12 items-center justify-center rounded-lg bg-[#0F172A] px-5 font-bold text-white transition hover:bg-cyan-600">
-                    Minta Proposal
-                  </a>
-                  <a href="#demo" className="inline-flex h-12 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 font-bold text-slate-950 transition hover:border-cyan-300 hover:bg-cyan-50">
-                    Jadwalkan Demo
-                  </a>
-                </div>
-              </motion.article>
-            ))}
+                  <div className="mt-8 grid gap-3">
+                    <a
+                      href="#demo"
+                      className="inline-flex h-12 items-center justify-center rounded-lg bg-slate-950 px-5 font-bold text-white transition hover:bg-slate-800"
+                    >
+                      Minta Proposal
+                    </a>
+                    <a
+                      href="#demo"
+                      className={`inline-flex h-12 items-center justify-center rounded-lg border bg-white/70 px-5 font-bold text-slate-950 transition ${plan.accent.border} ${plan.accent.softHover}`}
+                    >
+                      Jadwalkan Demo
+                    </a>
+                  </div>
+                </motion.article>
+              );
+            })}
           </div>
         </div>
       </section>
