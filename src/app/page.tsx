@@ -13,7 +13,6 @@ import {
   GraduationCap,
   LockKeyhole,
   Menu,
-  MessageCircle,
   MonitorSmartphone,
   ShieldCheck,
   Sparkles,
@@ -200,6 +199,21 @@ function Logo() {
         className="h-auto w-[170px] object-contain md:w-[230px]"
       />
     </a>
+  );
+}
+
+function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" aria-hidden="true">
+      <path
+        fill="#25D366"
+        d="M16 3.2c-7.05 0-12.8 5.64-12.8 12.58 0 2.38.68 4.69 1.96 6.68L3.2 28.8l6.54-1.9A12.96 12.96 0 0 0 16 28.36c7.05 0 12.8-5.64 12.8-12.58S23.05 3.2 16 3.2Z"
+      />
+      <path
+        fill="#fff"
+        d="M22.91 18.89c-.37-.18-2.2-1.08-2.54-1.2-.34-.12-.59-.18-.84.19-.25.37-.96 1.2-1.18 1.44-.22.25-.43.28-.8.1-.37-.19-1.57-.58-2.99-1.84a11.13 11.13 0 0 1-2.07-2.57c-.22-.37-.02-.57.16-.75.17-.17.37-.43.56-.65.18-.22.25-.37.37-.62.12-.25.06-.46-.03-.65-.09-.18-.84-2.02-1.15-2.76-.3-.72-.61-.62-.84-.63h-.72c-.25 0-.65.09-.99.46-.34.37-1.3 1.27-1.3 3.09 0 1.82 1.33 3.58 1.52 3.83.19.25 2.62 4 6.35 5.6.89.38 1.58.61 2.12.78.89.28 1.71.24 2.35.15.72-.11 2.2-.9 2.51-1.77.31-.87.31-1.61.22-1.77-.09-.15-.34-.24-.71-.43Z"
+      />
+    </svg>
   );
 }
 
@@ -858,7 +872,7 @@ export default function Home() {
         rel="noreferrer"
         className="fixed bottom-3 right-3 z-50 inline-flex h-10 max-w-[calc(100vw-1.5rem)] items-center justify-center gap-2 rounded-lg bg-cyan-500 px-3 text-xs font-black text-white shadow-2xl shadow-cyan-300/60 transition hover:bg-cyan-600 sm:bottom-6 sm:right-6 sm:h-14 sm:px-5 sm:text-sm"
       >
-        <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+        <WhatsAppIcon className="h-4 w-4 sm:h-5 sm:w-5" />
         <span>Request Demo</span>
       </a>
 
@@ -867,7 +881,15 @@ export default function Home() {
           <div>
             <Logo />
             <p className="mt-4 text-sm font-semibold text-slate-600">Platform Asesmen Digital Terintegrasi</p>
-            <p className="mt-2 text-sm font-semibold text-slate-600">WhatsApp: +62 813-9788-650</p>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition hover:text-cyan-700"
+            >
+              <WhatsAppIcon className="h-5 w-5" />
+              WhatsApp Demo: 0813-9788-650
+            </a>
           </div>
 
           <div className="flex flex-col gap-4 text-sm font-semibold text-slate-600 sm:flex-row sm:items-center">
