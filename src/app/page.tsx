@@ -73,27 +73,27 @@ const products: Product[] = [
 const features: Feature[] = [
   {
     title: "Keamanan Tinggi",
-    description: "Role access, alur audit, dan pengamanan data untuk operasional asesmen institusi.",
+    description: "Role access untuk admin, dosen, penguji, tutor, dan peserta dalam satu sistem terkontrol.",
     icon: ShieldCheck,
   },
   {
     title: "Akses Fleksibel",
-    description: "Digunakan oleh admin, dosen, penguji, tutor, dan peserta di berbagai perangkat.",
+    description: "Workflow asesmen terstruktur yang mudah diakses lintas perangkat dan skenario ujian.",
     icon: MonitorSmartphone,
   },
   {
     title: "Analitik Cerdas",
-    description: "Pantau hasil, progres, dan insight performa asesmen secara real-time.",
+    description: "Dashboard pemantauan real-time untuk melihat progres, status peserta, dan performa modul.",
     icon: BarChart3,
   },
   {
     title: "Konfigurasi Mudah",
-    description: "Modul, rubrik, laporan, dan workflow dapat disesuaikan dengan kebutuhan.",
+    description: "Rekap nilai otomatis, rubrik, dan pengaturan ujian dapat disesuaikan kebutuhan institusi.",
     icon: CloudCog,
   },
   {
     title: "Dukungan Profesional",
-    description: "Pendampingan implementasi, training, dan maintenance untuk tim institusi.",
+    description: "Export laporan dan pendampingan operasional untuk tim akademik, admin, dan manajemen.",
     icon: UsersRound,
   },
 ];
@@ -194,8 +194,8 @@ function Logo() {
         width={1718}
         height={916}
         priority
-        sizes="(min-width: 768px) 280px, 180px"
-        className="h-auto w-[180px] object-contain sm:w-[200px] md:w-[280px]"
+        sizes="(min-width: 768px) 230px, 160px"
+        className="h-auto w-[160px] object-contain sm:w-[170px] md:w-[230px]"
       />
     </a>
   );
@@ -547,6 +547,10 @@ export default function Home() {
               </a>
             </div>
 
+            <p className="mt-4 max-w-xl text-sm font-semibold leading-6 text-slate-500">
+              Dirancang untuk Fakultas Kedokteran, Program Profesi Dokter, Pusat CBT, dan Institusi Kesehatan.
+            </p>
+
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {benefits.map((benefit) => (
                 <div key={benefit} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm font-bold text-slate-700 shadow-sm">
@@ -850,9 +854,9 @@ export default function Home() {
         href="https://wa.me/6280000000000"
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-4 right-4 z-50 inline-flex h-12 max-w-[calc(100vw-2rem)] items-center justify-center gap-2 rounded-lg bg-cyan-500 px-4 text-sm font-black text-white shadow-2xl shadow-cyan-300/60 transition hover:bg-cyan-600 sm:bottom-6 sm:right-6 sm:h-14 sm:px-5"
+        className="fixed bottom-3 right-3 z-50 inline-flex h-10 max-w-[calc(100vw-1.5rem)] items-center justify-center gap-2 rounded-lg bg-cyan-500 px-3 text-xs font-black text-white shadow-2xl shadow-cyan-300/60 transition hover:bg-cyan-600 sm:bottom-6 sm:right-6 sm:h-14 sm:px-5 sm:text-sm"
       >
-        <MessageCircle className="h-5 w-5" />
+        <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
         <span>Request Demo</span>
       </a>
 
