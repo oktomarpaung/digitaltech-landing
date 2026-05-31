@@ -159,6 +159,8 @@ const socialProof = [
 ];
 const demoFields = ["Nama", "Institusi", "Jabatan", "Nomor WhatsApp", "Email"];
 const productOptions = ["CBT Assess", "OSCE Assess", "Tutor Assess", "Bundle Enterprise"];
+const whatsappUrl =
+  "https://wa.me/628139788650?text=Halo%20DigitalTech%20Nusantara%2C%20saya%20ingin%20request%20demo%20CBT%2C%20OSCE%2C%20atau%20Tutor%20Assess.";
 const platformPreviews = [
   {
     title: "CBT Assess Dashboard Preview",
@@ -851,7 +853,7 @@ export default function Home() {
       </section>
 
       <a
-        href="https://wa.me/6280000000000"
+        href={whatsappUrl}
         target="_blank"
         rel="noreferrer"
         className="fixed bottom-3 right-3 z-50 inline-flex h-10 max-w-[calc(100vw-1.5rem)] items-center justify-center gap-2 rounded-lg bg-cyan-500 px-3 text-xs font-black text-white shadow-2xl shadow-cyan-300/60 transition hover:bg-cyan-600 sm:bottom-6 sm:right-6 sm:h-14 sm:px-5 sm:text-sm"
@@ -865,6 +867,7 @@ export default function Home() {
           <div>
             <Logo />
             <p className="mt-4 text-sm font-semibold text-slate-600">Platform Asesmen Digital Terintegrasi</p>
+            <p className="mt-2 text-sm font-semibold text-slate-600">WhatsApp: +62 813-9788-650</p>
           </div>
 
           <div className="flex flex-col gap-4 text-sm font-semibold text-slate-600 sm:flex-row sm:items-center">
