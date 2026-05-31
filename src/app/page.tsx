@@ -38,7 +38,7 @@ type Feature = {
 type PricingPlan = {
   name: string;
   price: string;
-  modules: string;
+  description: string;
   highlighted?: boolean;
 };
 
@@ -99,19 +99,24 @@ const features: Feature[] = [
 
 const pricingPlans: PricingPlan[] = [
   {
-    name: "Standard",
+    name: "CBT Assess",
     price: "Rp25 Juta",
-    modules: "CBT Assess",
+    description: "Platform Computer Based Test untuk ujian online, bank soal, rekap nilai, dan analisis hasil.",
   },
   {
-    name: "Professional",
+    name: "OSCE Assess",
     price: "Rp35 Juta",
-    modules: "CBT Assess + Tutor Assess",
+    description: "Platform penilaian OSCE digital untuk station, rubrik, penguji, dan rekap hasil real-time.",
   },
   {
-    name: "Enterprise",
+    name: "Tutor Assess",
+    price: "Rp15 Juta",
+    description: "Platform penilaian tutorial/PBL berbasis rubrik untuk tutor, dosen, dan pengelola blok.",
+  },
+  {
+    name: "Bundle 3 Produk",
     price: "Rp60 Juta",
-    modules: "CBT Assess + OSCE Assess + Tutor Assess",
+    description: "Paket lengkap CBT Assess, OSCE Assess, dan Tutor Assess untuk ekosistem asesmen terintegrasi.",
     highlighted: true,
   },
 ];
@@ -164,7 +169,7 @@ const socialProof = [
   "Pusat CBT",
 ];
 const demoFields = ["Nama", "Institusi", "Jabatan", "Nomor WhatsApp", "Email"];
-const productOptions = ["CBT Assess", "OSCE Assess", "Tutor Assess", "Bundle Enterprise"];
+const productOptions = ["Pilih produk yang diminati", "CBT Assess", "OSCE Assess", "Tutor Assess", "Bundle 3 Produk"];
 const whatsappUrl =
   "https://wa.me/628139788650?text=Halo%20DigitalTech%20Nusantara%2C%20saya%20ingin%20request%20demo%20CBT%2C%20OSCE%2C%20atau%20Tutor%20Assess.";
 const platformPreviews = [
@@ -618,7 +623,7 @@ export default function Home() {
             description="Pilih modul asesmen yang sesuai dengan kebutuhan institusi Anda."
           />
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             {products.map((product, index) => {
               const Icon = product.icon;
 
@@ -762,7 +767,7 @@ export default function Home() {
 
                 <h3 className="text-2xl font-black text-slate-950">{plan.name}</h3>
                 <p className="mt-6 text-4xl font-black text-slate-950">{plan.price}</p>
-                <p className="mt-3 leading-7 text-slate-600">{plan.modules}</p>
+                <p className="mt-3 min-h-28 leading-7 text-slate-600">{plan.description}</p>
 
                 <div className="mt-8 grid gap-3">
                   <a href="#demo" className="inline-flex h-12 items-center justify-center rounded-lg bg-[#0F172A] px-5 font-bold text-white transition hover:bg-cyan-600">
@@ -859,7 +864,7 @@ export default function Home() {
                 Siap melihat DigitalTech Assess Suite bekerja untuk institusi Anda?
               </h2>
               <p className="mt-4 max-w-3xl leading-8 text-slate-600">
-                Isi form singkat berikut untuk mulai berdiskusi tentang kebutuhan CBT, OSCE, Tutor Assess, atau Bundle Enterprise.
+                Isi form singkat berikut untuk mulai berdiskusi tentang kebutuhan CBT, OSCE, Tutor Assess, atau Bundle 3 Produk.
               </p>
             </div>
 
@@ -879,8 +884,10 @@ export default function Home() {
                 <label className="sm:col-span-2">
                   <span className="text-sm font-bold text-slate-700">Produk yang diminati</span>
                   <select className="mt-2 h-12 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-slate-950 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-100">
-                    {productOptions.map((option) => (
-                      <option key={option}>{option}</option>
+                    {productOptions.map((option, index) => (
+                      <option key={option} value={index === 0 ? "" : option} disabled={index === 0}>
+                        {option}
+                      </option>
                     ))}
                   </select>
                 </label>
