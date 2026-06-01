@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   BarChart3,
@@ -59,6 +59,12 @@ type ImplementationPackage = {
   description: string;
 };
 
+type ProductScreenshot = {
+  title: string;
+  description: string;
+  src: string;
+};
+
 const products: Product[] = [
   {
     name: "CBT Assess",
@@ -77,6 +83,34 @@ const products: Product[] = [
     description: "Objective Structured Clinical Examination secara digital dan terstandar.",
     features: ["Manajemen station OSCE", "Penilaian real-time", "Rubrik terstruktur", "Laporan komprehensif"],
     icon: GraduationCap,
+  },
+];
+
+const cbtScreenshots: ProductScreenshot[] = [
+  {
+    title: "Dashboard Admin",
+    description: "Pantau bank soal, ujian aktif, peserta, hasil, dan analisis dari satu halaman.",
+    src: "/screenshots/cbt/cbt-dashboard.png",
+  },
+  {
+    title: "Ujian Peserta",
+    description: "Tampilan ujian online dengan timer, lampiran gambar/PDF, navigasi soal, dan submit.",
+    src: "/screenshots/cbt/cbt-ujian-peserta.png",
+  },
+  {
+    title: "Bank Soal",
+    description: "Kelola soal, import Excel, filter topik, status soal, tingkat kesulitan, dan kunci jawaban.",
+    src: "/screenshots/cbt/cbt-bank-soal.png",
+  },
+  {
+    title: "Hasil Ujian",
+    description: "Rekap nilai, status submit, skor, detail jawaban, dan export hasil.",
+    src: "/screenshots/cbt/cbt-hasil-ujian.png",
+  },
+  {
+    title: "Analisis Butir",
+    description: "Evaluasi tingkat kesukaran, daya beda, distribusi opsi, dan rekomendasi revisi soal.",
+    src: "/screenshots/cbt/cbt-analisis-butir.png",
   },
 ];
 
@@ -552,6 +586,237 @@ function DashboardMockup() {
   );
 }
 
+function ProductBenefitList({ product }: { product: Product }) {
+  return (
+    <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/70">
+      <p className="text-sm font-black uppercase tracking-wide text-cyan-600">Benefit utama</p>
+      <div className="mt-4 space-y-3">
+        {product.features.map((feature) => (
+          <div key={feature} className="flex items-start gap-3 text-sm font-semibold text-slate-700">
+            <Check className="mt-0.5 h-4 w-4 flex-none text-cyan-600" />
+            <span>{feature}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ProductShowcase() {
+  const [activeProductIndex, setActiveProductIndex] = useState(0);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+
+  const activeProduct = products[activeProductIndex];
+  const isCbtProduct = activeProduct.name === "CBT Assess";
+  const currentScreenshot = cbtScreenshots[activeSlide];
+
+  useEffect(() => {
+    if (!isCbtProduct) {
+      return undefined;
+    }
+
+    const interval = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % cbtScreenshots.length);
+    }, 3600);
+
+    return () => window.clearInterval(interval);
+  }, [isCbtProduct]);
+
+  const goToPrevious = () => {
+    setActiveSlide((current) => (current - 1 + cbtScreenshots.length) % cbtScreenshots.length);
+  };
+
+  const goToNext = () => {
+    setActiveSlide((current) => (current + 1) % cbtScreenshots.length);
+  };
+
+  const selectProduct = (index: number) => {
+    setActiveProductIndex(index);
+    setActiveSlide(0);
+    setLightboxOpen(false);
+  };
+
+  return (
+    <section id="produk" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
+      <div id="solusi" className="mx-auto max-w-7xl xl:pr-24">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            variants={fadeUp}
+          >
+            <p className="text-sm font-black uppercase tracking-wide text-cyan-600">Product Showcase</p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+              Satu Ekosistem untuk Asesmen Akademik Digital
+            </h2>
+            <p className="mt-5 text-base leading-8 text-slate-600 sm:text-lg">
+              Lihat bagaimana DigitalTech Nusantara membantu institusi mengelola CBT, OSCE, dan penilaian tutorial
+              secara paperless, terukur, dan terintegrasi.
+            </p>
+
+            <div className="mt-7 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+              {products.map((product, index) => {
+                const isActive = index === activeProductIndex;
+
+                return (
+                  <button
+                    key={product.name}
+                    type="button"
+                    onClick={() => selectProduct(index)}
+                    className={`rounded-full border px-4 py-3 text-sm font-black transition-all ${
+                      isActive
+                        ? "border-cyan-400 bg-cyan-500 text-white shadow-lg shadow-cyan-100"
+                        : "border-slate-200 bg-white text-slate-700 hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-700"
+                    }`}
+                  >
+                    {product.name}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="mt-7 hidden lg:block">
+              <ProductBenefitList product={activeProduct} />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            variants={fadeUp}
+            className="min-w-0"
+          >
+            <div className="rounded-3xl border border-slate-200 bg-white p-3 shadow-2xl shadow-cyan-100/70">
+              <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <span className="h-3 w-3 rounded-full bg-red-400" />
+                  <span className="h-3 w-3 rounded-full bg-yellow-400" />
+                  <span className="h-3 w-3 rounded-full bg-green-400" />
+                </div>
+                <span className="rounded-full bg-cyan-50 px-3 py-1 text-xs font-black text-cyan-700">
+                  {activeProduct.name}
+                </span>
+              </div>
+
+              {isCbtProduct ? (
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setLightboxOpen(true)}
+                    className="relative mt-3 block aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-100 text-left"
+                    aria-label={`Perbesar screenshot ${currentScreenshot.title}`}
+                  >
+                    <Image
+                      src={currentScreenshot.src}
+                      alt={currentScreenshot.title}
+                      fill
+                      sizes="(min-width: 1024px) 620px, 100vw"
+                      className="object-contain"
+                      priority={activeSlide === 0}
+                    />
+                  </button>
+
+                  <div className="grid gap-4 px-1 py-5 md:grid-cols-[1fr_auto] md:items-center">
+                    <div>
+                      <h3 className="text-xl font-black text-slate-950">{currentScreenshot.title}</h3>
+                      <p className="mt-2 leading-7 text-slate-600">{currentScreenshot.description}</p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={goToPrevious}
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
+                        aria-label="Screenshot sebelumnya"
+                      >
+                        <ArrowRight className="h-4 w-4 rotate-180" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={goToNext}
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
+                        aria-label="Screenshot berikutnya"
+                      >
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-center gap-2 pb-3">
+                    {cbtScreenshots.map((screenshot, index) => (
+                      <button
+                        key={screenshot.src}
+                        type="button"
+                        onClick={() => setActiveSlide(index)}
+                        className={`h-2 rounded-full transition-all ${
+                          index === activeSlide ? "w-8 bg-cyan-500" : "w-2 bg-slate-300 hover:bg-cyan-300"
+                        }`}
+                        aria-label={`Tampilkan ${screenshot.title}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="mt-3 rounded-2xl bg-slate-50 p-4">
+                  <ProductIllustration productName={activeProduct.name} />
+                  <div className="mt-5 rounded-2xl border border-dashed border-slate-300 bg-white p-5 text-center">
+                    <h3 className="text-xl font-black text-slate-950">{activeProduct.name} Preview</h3>
+                    <p className="mt-2 leading-7 text-slate-600">Screenshot produk akan ditambahkan.</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+
+          <div className="lg:hidden">
+            <ProductBenefitList product={activeProduct} />
+          </div>
+        </div>
+      </div>
+
+      {lightboxOpen && isCbtProduct ? (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm"
+          onClick={() => setLightboxOpen(false)}
+          role="presentation"
+        >
+          <div
+            className="relative w-full max-w-6xl rounded-3xl bg-white p-3 shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setLightboxOpen(false)}
+              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-950 text-white shadow-lg"
+              aria-label="Tutup preview screenshot"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-100">
+              <Image
+                src={currentScreenshot.src}
+                alt={currentScreenshot.title}
+                fill
+                sizes="100vw"
+                className="object-contain"
+              />
+            </div>
+            <div className="p-4">
+              <h3 className="text-2xl font-black text-slate-950">{currentScreenshot.title}</h3>
+              <p className="mt-2 leading-7 text-slate-600">{currentScreenshot.description}</p>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -662,54 +927,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="produk" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
-        <div id="solusi" className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow="Solusi / Produk"
-            title="Tiga Solusi, Satu Platform"
-            description="Pilih modul asesmen yang sesuai dengan kebutuhan institusi Anda."
-          />
-
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {products.map((product, index) => {
-              const Icon = product.icon;
-
-              return (
-                <motion.article
-                  key={product.name}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.25 }}
-                  transition={{ delay: index * 0.08, duration: 0.5, ease: "easeOut" }}
-                  variants={fadeUp}
-                  className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70 transition hover:-translate-y-1 hover:border-cyan-300 hover:shadow-xl hover:shadow-cyan-100/70"
-                >
-                  <ProductIllustration productName={product.name} />
-                  <div className="mt-6 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 ring-1 ring-cyan-100">
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="mt-7 text-2xl font-black text-slate-950">{product.name}</h3>
-                  <p className="mt-4 leading-7 text-slate-600">{product.description}</p>
-
-                  <div className="mt-6 space-y-3">
-                    {product.features.map((feature) => (
-                      <div key={feature} className="flex items-start gap-3 text-sm font-medium text-slate-700">
-                        <Check className="mt-0.5 h-4 w-4 flex-none text-cyan-600" />
-                        <span>{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <a href="#demo" className="mt-7 inline-flex items-center gap-2 text-sm font-black text-cyan-700">
-                    Pelajari Selengkapnya
-                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                  </a>
-                </motion.article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <ProductShowcase />
 
       <section className="border-y border-slate-200 bg-slate-50 px-5 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
