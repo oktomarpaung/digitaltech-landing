@@ -313,14 +313,14 @@ function WhatsAppIcon({ className = "h-5 w-5" }: { className?: string }) {
 function FloatingSectionNav() {
   return (
     <nav
-      className="fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-2 rounded-3xl border border-slate-200 bg-white/80 p-2 shadow-lg shadow-slate-200/60 backdrop-blur-xl lg:flex"
+      className="fixed right-4 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-1.5 rounded-3xl border border-slate-200 bg-white/65 p-1.5 shadow-lg shadow-slate-200/50 backdrop-blur-xl lg:flex"
       aria-label="Navigasi section"
     >
       {floatingNavItems.map((item) => (
         <a
           key={item.href}
           href={item.href}
-          className="group flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600"
+          className="group flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-cyan-500 opacity-0 transition-opacity group-hover:opacity-100" />
           {item.label}
@@ -639,8 +639,8 @@ function ProductShowcase() {
 
   return (
     <section id="produk" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
-      <div id="solusi" className="mx-auto max-w-7xl xl:pr-24">
-        <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
+      <div id="solusi" className="mx-auto max-w-7xl xl:pr-32">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -678,6 +678,14 @@ function ProductShowcase() {
               })}
             </div>
 
+            <a
+              href="#demo"
+              className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 text-sm font-black text-white shadow-lg shadow-slate-200/80 transition-all hover:-translate-y-0.5 hover:bg-slate-800"
+            >
+              Jadwalkan Demo
+              <ArrowRight className="h-4 w-4" />
+            </a>
+
             <div className="mt-7 hidden lg:block">
               <ProductBenefitList product={activeProduct} />
             </div>
@@ -691,7 +699,7 @@ function ProductShowcase() {
             variants={fadeUp}
             className="min-w-0"
           >
-            <div className="rounded-3xl border border-slate-200 bg-white p-3 shadow-2xl shadow-cyan-100/70">
+            <div className="rounded-3xl border border-slate-200 bg-white p-2 shadow-2xl shadow-cyan-100/70 sm:p-3">
               <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
                 <div className="flex items-center gap-2">
                   <span className="h-3 w-3 rounded-full bg-red-400" />
@@ -708,14 +716,14 @@ function ProductShowcase() {
                   <button
                     type="button"
                     onClick={() => setLightboxOpen(true)}
-                    className="relative mt-3 block aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-100 text-left"
+                    className="relative mt-3 block aspect-[16/9] min-h-[260px] w-full overflow-hidden rounded-2xl bg-slate-100 text-left sm:min-h-[360px] lg:min-h-[430px]"
                     aria-label={`Perbesar screenshot ${currentScreenshot.title}`}
                   >
                     <Image
                       src={currentScreenshot.src}
                       alt={currentScreenshot.title}
                       fill
-                      sizes="(min-width: 1024px) 620px, 100vw"
+                      sizes="(min-width: 1280px) 760px, (min-width: 1024px) 64vw, 100vw"
                       className="object-contain"
                       priority={activeSlide === 0}
                     />
@@ -723,15 +731,16 @@ function ProductShowcase() {
 
                   <div className="grid gap-4 px-1 py-5 md:grid-cols-[1fr_auto] md:items-center">
                     <div>
-                      <h3 className="text-xl font-black text-slate-950">{currentScreenshot.title}</h3>
-                      <p className="mt-2 leading-7 text-slate-600">{currentScreenshot.description}</p>
+                      <h3 className="text-lg font-black text-slate-950 sm:text-xl">{currentScreenshot.title}</h3>
+                      <p className="mt-2 text-sm leading-7 text-slate-600 sm:text-base">{currentScreenshot.description}</p>
+                      <p className="mt-2 text-xs font-semibold text-slate-400">Klik gambar untuk memperbesar</p>
                     </div>
 
                     <div className="flex items-center gap-2">
                       <button
                         type="button"
                         onClick={goToPrevious}
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
                         aria-label="Screenshot sebelumnya"
                       >
                         <ArrowRight className="h-4 w-4 rotate-180" />
@@ -739,7 +748,7 @@ function ProductShowcase() {
                       <button
                         type="button"
                         onClick={goToNext}
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
                         aria-label="Screenshot berikutnya"
                       >
                         <ArrowRight className="h-4 w-4" />
@@ -900,12 +909,18 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href="#produk" className="inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-[#0F172A] px-6 font-bold text-white shadow-xl shadow-slate-300/80 transition hover:bg-cyan-600">
-                Jelajahi Produk
+              <a
+                href="#demo"
+                className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-6 font-bold text-white shadow-lg shadow-slate-300/80 transition-all hover:-translate-y-0.5 hover:bg-slate-800"
+              >
+                Coba Demo
                 <ArrowRight className="h-5 w-5" />
               </a>
-              <a href="#demo" className="inline-flex h-14 items-center justify-center rounded-lg border border-slate-200 bg-white px-6 font-bold text-slate-950 shadow-sm transition hover:border-cyan-300 hover:bg-cyan-50">
-                Coba Demo
+              <a
+                href="#produk"
+                className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 font-bold text-slate-950 shadow-sm transition hover:border-cyan-300 hover:bg-cyan-50"
+              >
+                Jelajahi Produk
               </a>
             </div>
 
@@ -1038,7 +1053,9 @@ export default function Home() {
 
                   <div className="mt-8 grid gap-3">
                     <a
-                      href="#demo"
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noreferrer"
                       className="inline-flex h-12 items-center justify-center rounded-lg bg-slate-950 px-5 font-bold text-white transition hover:bg-slate-800"
                     >
                       Minta Proposal
@@ -1122,14 +1139,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="demo" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
+      <section id="demo" className="bg-white px-5 py-20 pb-28 sm:px-6 sm:pb-24 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           variants={fadeUp}
-          className="mx-auto max-w-7xl overflow-hidden rounded-2xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-white shadow-xl shadow-cyan-100/70"
+          className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-cyan-100 bg-gradient-to-br from-cyan-50 via-white to-blue-50 shadow-2xl shadow-cyan-100/70"
         >
           <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:p-10">
             <div>
@@ -1138,11 +1155,31 @@ export default function Home() {
                 Siap melihat DigitalTech Assess Suite bekerja untuk institusi Anda?
               </h2>
               <p className="mt-4 max-w-3xl leading-8 text-slate-600">
-                Isi form singkat berikut untuk mulai berdiskusi tentang kebutuhan CBT, OSCE, Tutor Assess, atau Bundle 3 Produk.
+                Isi form singkat berikut atau hubungi kami melalui WhatsApp untuk berdiskusi tentang CBT Assess,
+                OSCE Assess, Tutor Assess, atau Bundle 3 Produk.
               </p>
+
+              <div className="mt-7 grid gap-3">
+                {["Demo produk", "Konsultasi kebutuhan", "Proposal implementasi"].map((item) => (
+                  <div key={item} className="flex items-center gap-3 rounded-2xl border border-cyan-100 bg-white/80 px-4 py-3 text-sm font-black text-slate-700 shadow-sm">
+                    <Check className="h-4 w-4 text-cyan-600" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-7 inline-flex items-center gap-2 rounded-2xl border border-green-200 bg-white px-5 py-3 text-sm font-black text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-green-50"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+                Hubungi langsung via WhatsApp: 0813-9788-650
+              </a>
             </div>
 
-            <form className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+            <form className="rounded-3xl border border-slate-200 bg-white p-4 shadow-xl shadow-slate-200/70 sm:p-6">
               <div className="grid gap-4 sm:grid-cols-2">
                 {demoFields.map((field) => (
                   <label key={field} className={field === "Email" ? "sm:col-span-2" : undefined}>
@@ -1167,10 +1204,25 @@ export default function Home() {
                 </label>
               </div>
 
-              <button type="button" className="mt-5 inline-flex h-14 w-full items-center justify-center gap-2 rounded-lg bg-cyan-500 px-5 font-black text-white transition hover:bg-cyan-600">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 font-black text-white shadow-lg shadow-cyan-200/70 transition-all hover:-translate-y-0.5 hover:from-cyan-600 hover:to-blue-700"
+              >
                 Kirim Permintaan Demo
                 <ArrowRight className="h-5 w-5" />
-              </button>
+              </a>
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-green-200 bg-white px-5 py-3 text-sm font-black text-slate-700 transition hover:bg-green-50"
+              >
+                <WhatsAppIcon className="h-5 w-5" />
+                Hubungi via WhatsApp
+              </a>
             </form>
           </div>
         </motion.div>
@@ -1180,7 +1232,8 @@ export default function Home() {
         href={whatsappUrl}
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-3 right-3 z-50 inline-flex h-10 max-w-[calc(100vw-1.5rem)] items-center justify-center gap-2 rounded-lg bg-cyan-500 px-3 text-xs font-black text-white shadow-2xl shadow-cyan-300/60 transition hover:bg-cyan-600 sm:bottom-6 sm:right-6 sm:h-14 sm:px-5 sm:text-sm"
+        aria-label="Request demo via WhatsApp"
+        className="fixed bottom-4 right-4 z-50 inline-flex h-11 max-w-[calc(100vw-2rem)] items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#25D366] to-teal-500 px-3.5 text-xs font-black text-white shadow-2xl shadow-green-200/70 transition-all hover:-translate-y-1 hover:from-green-500 hover:to-teal-600 sm:bottom-8 sm:right-8 sm:h-14 sm:px-5 sm:text-sm"
       >
         <WhatsAppIcon className="h-4 w-4 sm:h-5 sm:w-5" />
         <span>Request Demo</span>
