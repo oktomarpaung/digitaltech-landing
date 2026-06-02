@@ -252,7 +252,7 @@ const socialProof = [
 const demoFields = ["Nama", "Institusi", "Jabatan", "Nomor WhatsApp", "Email"];
 const productOptions = ["Pilih produk yang diminati", "CBT Assess", "OSCE Assess", "Tutor Assess", "Bundle 3 Produk"];
 const whatsappUrl =
-  "https://wa.me/628139788650?text=Halo%20DigitalTech%20Nusantara%2C%20saya%20ingin%20request%20demo%20CBT%2C%20OSCE%2C%20atau%20Tutor%20Assess.";
+  "https://wa.me/628139788650?text=Halo%20PT%20DigitalTech%20Solusi%20Nusantara%2C%20saya%20ingin%20request%20demo%20CBT%2C%20OSCE%2C%20atau%20Tutor%20Assess.";
 const platformPreviews = [
   {
     title: "CBT Assess Dashboard Preview",
@@ -281,10 +281,10 @@ const fadeUp = {
 
 function Logo() {
   return (
-    <a href="#home" className="inline-flex items-center" aria-label="DigitalTech Nusantara">
+    <a href="#home" className="inline-flex items-center" aria-label="PT DigitalTech Solusi Nusantara">
       <Image
         src="/logo-dtn.png"
-        alt="PT DigitalTech Nusantara"
+        alt="PT DigitalTech Solusi Nusantara"
         width={240}
         height={80}
         priority
@@ -653,7 +653,7 @@ function ProductShowcase() {
               Satu Ekosistem untuk Asesmen Akademik Digital
             </h2>
             <p className="mt-5 text-base leading-8 text-slate-600 sm:text-lg">
-              Lihat bagaimana DigitalTech Nusantara membantu institusi mengelola CBT, OSCE, dan penilaian tutorial
+              Lihat bagaimana DigitalTech Solusi Nusantara membantu institusi mengelola CBT, OSCE, dan penilaian tutorial
               secara paperless, terukur, dan terintegrasi.
             </p>
 
@@ -1131,7 +1131,7 @@ export default function Home() {
             className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/70 sm:p-8"
           >
             <p className="text-lg leading-8 text-slate-600">
-              PT DigitalTech Nusantara adalah perusahaan pengembang platform asesmen digital yang membantu institusi
+              PT DigitalTech Solusi Nusantara adalah perusahaan pengembang platform asesmen digital yang membantu institusi
               pendidikan dan kesehatan mengelola CBT, OSCE, dan Tutorial Assessment secara modern, paperless, aman,
               dan terintegrasi.
             </p>
@@ -1265,7 +1265,7 @@ export default function Home() {
         </div>
 
         <div className="mx-auto mt-8 max-w-7xl border-t border-slate-200 pt-6 text-sm text-slate-500">
-          &copy; 2026 PT DigitalTech Nusantara. All rights reserved.
+          &copy; 2026 PT DigitalTech Solusi Nusantara. All rights reserved.
         </div>
       </footer>
     </main>
