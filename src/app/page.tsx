@@ -1143,7 +1143,7 @@ export default function Home() {
           <SectionHeader
             eyebrow="Preview Platform"
             title="Preview Platform DigitalTech Assess Suite"
-            description="Cuplikan antarmuka asli untuk CBT Assess, Tutor Assess, dan OSCE Assess yang dapat dipakai sebagai bahan presentasi produk."
+            description="Lihat tampilan nyata CBT Assess, Tutor Assess, dan OSCE Assess dalam satu ekosistem asesmen digital yang terintegrasi."
           />
 
           <div className="grid gap-6 lg:grid-cols-3">
