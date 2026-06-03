@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "echo \"Static export only. Run npm run build and upload the contents of out/ to public_html.\"",
+    "package:hostinger": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package-hostinger-static.ps1",
+    "build:hostinger": "npm run build && npm run package:hostinger",
     "lint": "eslint"
   },
   "dependencies": {
