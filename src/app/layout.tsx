@@ -13,8 +13,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://digitaltechsolusi.com"),
   title: "DigitalTech Solusi Nusantara | Platform Asesmen Digital",
-  description: "CBT Assess, OSCE Assess, dan Tutor Assess untuk institusi pendidikan dan kesehatan.",
+  description:
+    "Platform asesmen digital terintegrasi untuk CBT Assess, OSCE Assess, dan Tutor Assess bagi institusi pendidikan dan kesehatan.",
+  alternates: {
+    canonical: "https://digitaltechsolusi.com",
+  },
+  openGraph: {
+    title: "DigitalTech Solusi Nusantara | Platform Asesmen Digital",
+    description:
+      "Platform asesmen digital terintegrasi untuk CBT Assess, OSCE Assess, dan Tutor Assess bagi institusi pendidikan dan kesehatan.",
+    url: "https://digitaltechsolusi.com",
+    siteName: "DigitalTech Solusi Nusantara",
+    type: "website",
+    images: [
+      {
+        url: "https://digitaltechsolusi.com/og-digitaltech.png",
+        width: 1200,
+        height: 630,
+        alt: "DigitalTech Solusi Nusantara Platform Asesmen Digital",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DigitalTech Solusi Nusantara | Platform Asesmen Digital",
+    description:
+      "Platform asesmen digital terintegrasi untuk CBT Assess, OSCE Assess, dan Tutor Assess bagi institusi pendidikan dan kesehatan.",
+    images: ["https://digitaltechsolusi.com/og-digitaltech.png"],
+  },
 };
 
 export default function RootLayout({
