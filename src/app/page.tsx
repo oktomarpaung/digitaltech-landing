@@ -25,6 +25,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 
 type Product = {
+  id: "cbt" | "tutor" | "osce";
   name: string;
   description: string;
   features: string[];
@@ -63,22 +64,26 @@ type ProductScreenshot = {
   title: string;
   description: string;
   src: string;
+  alt: string;
 };
 
 const products: Product[] = [
   {
+    id: "cbt",
     name: "CBT Assess",
     description: "Computer Based Test untuk ujian online yang aman dan fleksibel.",
     features: ["Berbagai tipe soal", "Acak soal & opsi", "Proctoring online", "Laporan hasil instan"],
     icon: ClipboardCheck,
   },
   {
+    id: "tutor",
     name: "Tutor Assess",
     description: "Penilaian kinerja tutor/pendidik secara objektif dan terstruktur.",
     features: ["Instrumen penilaian lengkap", "Observasi & feedback", "Rekap otomatis", "Analitik kinerja tutor"],
     icon: BookOpenCheck,
   },
   {
+    id: "osce",
     name: "OSCE Assess",
     description: "Objective Structured Clinical Examination secara digital dan terstandar.",
     features: ["Manajemen station OSCE", "Penilaian real-time", "Rubrik terstruktur", "Laporan komprehensif"],
@@ -88,31 +93,114 @@ const products: Product[] = [
 
 const cbtScreenshots: ProductScreenshot[] = [
   {
-    title: "Dashboard Admin",
-    description: "Pantau bank soal, ujian aktif, peserta, hasil, dan analisis dari satu halaman.",
-    src: "/screenshots/cbt/cbt-dashboard.png",
-  },
-  {
     title: "Ujian Peserta",
     description: "Tampilan ujian online dengan timer, lampiran gambar/PDF, navigasi soal, dan submit.",
     src: "/screenshots/cbt/cbt-ujian-peserta.png",
+    alt: "CBT Assess ujian online peserta screenshot",
   },
   {
-    title: "Bank Soal",
-    description: "Kelola soal, import Excel, filter topik, status soal, tingkat kesulitan, dan kunci jawaban.",
-    src: "/screenshots/cbt/cbt-bank-soal.png",
+    title: "Dashboard Admin",
+    description: "Pantau bank soal, ujian aktif, peserta, hasil, dan analisis dari satu halaman.",
+    src: "/screenshots/cbt/cbt-dashboard.png",
+    alt: "CBT Assess dashboard admin screenshot",
   },
   {
     title: "Hasil Ujian",
     description: "Rekap nilai, status submit, skor, detail jawaban, dan export hasil.",
     src: "/screenshots/cbt/cbt-hasil-ujian.png",
+    alt: "CBT Assess hasil ujian screenshot",
+  },
+  {
+    title: "Bank Soal",
+    description: "Kelola soal, import Excel, filter topik, status soal, tingkat kesulitan, dan kunci jawaban.",
+    src: "/screenshots/cbt/cbt-bank-soal.png",
+    alt: "CBT Assess bank soal screenshot",
   },
   {
     title: "Analisis Butir",
     description: "Evaluasi tingkat kesukaran, daya beda, distribusi opsi, dan rekomendasi revisi soal.",
     src: "/screenshots/cbt/cbt-analisis-butir.png",
+    alt: "CBT Assess analisis butir screenshot",
   },
 ];
+
+const tutorScreenshots: ProductScreenshot[] = [
+  {
+    title: "Form Penilaian Tutorial",
+    description: "Penilaian tutorial/PBL berbasis rubrik dengan skor, catatan, dan indikator performa.",
+    src: "/screenshots/tutor/tutor-form-penilaian-2.png",
+    alt: "Tutor Assess form penilaian tutorial screenshot",
+  },
+  {
+    title: "Dashboard Tutor",
+    description: "Pantau aktivitas penilaian tutor, status asesmen, dan ringkasan performa dari dashboard.",
+    src: "/screenshots/tutor/tutor-dashboard.png",
+    alt: "Tutor Assess dashboard screenshot",
+  },
+  {
+    title: "Master Data",
+    description: "Kelola data tutor, kelompok, peserta, dan konfigurasi penilaian tutorial.",
+    src: "/screenshots/tutor/tutor-master-data.png",
+    alt: "Tutor Assess master data screenshot",
+  },
+  {
+    title: "Rubrik Penilaian",
+    description: "Atur rubrik penilaian tutorial/PBL agar evaluasi lebih konsisten dan terstruktur.",
+    src: "/screenshots/tutor/tutor-rubrik.png",
+    alt: "Tutor Assess rubrik penilaian screenshot",
+  },
+  {
+    title: "Form Penilaian Detail",
+    description: "Input skor dan feedback tutor secara detail untuk kebutuhan rekap dan evaluasi.",
+    src: "/screenshots/tutor/tutor-form-penilaian-1.png",
+    alt: "Tutor Assess form penilaian detail screenshot",
+  },
+  {
+    title: "Login Tutor",
+    description: "Akses sistem penilaian tutor dengan tampilan login yang ringkas dan profesional.",
+    src: "/screenshots/tutor/tutor-login.png",
+    alt: "Tutor Assess login screenshot",
+  },
+];
+
+const osceScreenshots: ProductScreenshot[] = [
+  {
+    title: "Form Penguji OSCE",
+    description: "Penguji dapat menilai peserta secara real-time menggunakan rubrik station digital.",
+    src: "/screenshots/osce/osce-form-penguji.png",
+    alt: "OSCE Assess form penguji screenshot",
+  },
+  {
+    title: "Dashboard OSCE",
+    description: "Pantau station, peserta, penguji, dan progres penilaian OSCE dari dashboard terpusat.",
+    src: "/screenshots/osce/osce-dashboard.png",
+    alt: "OSCE Assess dashboard screenshot",
+  },
+  {
+    title: "Manajemen Station",
+    description: "Kelola station OSCE, skenario, alur rotasi, dan kebutuhan asesmen klinis.",
+    src: "/screenshots/osce/osce-station.png",
+    alt: "OSCE Assess station screenshot",
+  },
+  {
+    title: "Rubrik OSCE",
+    description: "Susun rubrik terstruktur untuk menjaga standar penilaian antar station.",
+    src: "/screenshots/osce/osce-rubrik.png",
+    alt: "OSCE Assess rubrik screenshot",
+  },
+  {
+    title: "QR Code Akses",
+    description: "Dukung alur akses cepat untuk peserta atau penguji melalui QR code.",
+    src: "/screenshots/osce/osce-qr-code.png",
+    alt: "OSCE Assess QR code screenshot",
+  },
+];
+
+const productScreenshots: Record<Product["id"], ProductScreenshot[]> = {
+  cbt: cbtScreenshots,
+  tutor: tutorScreenshots,
+  osce: osceScreenshots,
+};
 
 const features: Feature[] = [
   {
@@ -253,27 +341,6 @@ const demoFields = ["Nama", "Institusi", "Jabatan", "Nomor WhatsApp", "Email"];
 const productOptions = ["Pilih produk yang diminati", "CBT Assess", "OSCE Assess", "Tutor Assess", "Bundle 3 Produk"];
 const whatsappUrl =
   "https://wa.me/628139788650?text=Halo%20PT%20DigitalTech%20Solusi%20Nusantara%2C%20saya%20ingin%20request%20demo%20CBT%2C%20OSCE%2C%20atau%20Tutor%20Assess.";
-const platformPreviews = [
-  {
-    title: "CBT Assess Dashboard Preview",
-    description: "Ringkasan ujian, peserta, progress, dan hasil asesmen dalam satu dashboard.",
-    type: "cbt",
-    icon: ClipboardCheck,
-  },
-  {
-    title: "Tutor Assess Rubric Preview",
-    description: "Rubrik observasi tutor dengan indikator, feedback, dan rekap kinerja.",
-    type: "tutor",
-    icon: BookOpenCheck,
-  },
-  {
-    title: "OSCE Assess Station Preview",
-    description: "Manajemen station OSCE, status penguji, dan skor real-time.",
-    type: "osce",
-    icon: GraduationCap,
-  },
-];
-
 const fadeUp = {
   hidden: { opacity: 0, y: 22 },
   visible: { opacity: 1, y: 0 },
@@ -354,139 +421,6 @@ function SectionHeader({
       </h2>
       <p className="mt-5 text-base leading-8 text-slate-600 sm:text-lg">{description}</p>
     </motion.div>
-  );
-}
-
-function ProductIllustration({ productName }: { productName: string }) {
-  if (productName === "Tutor Assess") {
-    return (
-      <div className="rounded-2xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-white p-4">
-        <div className="mb-4 flex items-center justify-between">
-          <div className="h-3 w-24 rounded-full bg-cyan-200" />
-          <BookOpenCheck className="h-5 w-5 text-cyan-600" />
-        </div>
-        <div className="space-y-3">
-          {["Komunikasi", "Fasilitasi", "Feedback"].map((item, index) => (
-            <div key={item} className="rounded-xl border border-slate-200 bg-white p-3">
-              <div className="mb-2 flex items-center justify-between text-xs font-bold text-slate-600">
-                <span>{item}</span>
-                <span>{index + 3}/4</span>
-              </div>
-              <div className="h-2 rounded-full bg-slate-100">
-                <div
-                  className="h-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-600"
-                  style={{ width: `${72 + index * 8}%` }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (productName === "OSCE Assess") {
-    return (
-      <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-4">
-        <div className="grid grid-cols-3 gap-2">
-          {["S1", "S2", "S3", "S4", "S5", "S6"].map((station, index) => (
-            <div
-              key={station}
-              className={`rounded-xl border p-3 text-center text-xs font-black ${
-                index % 3 === 0
-                  ? "border-cyan-200 bg-cyan-100 text-cyan-700"
-                  : "border-slate-200 bg-white text-slate-600"
-              }`}
-            >
-              {station}
-            </div>
-          ))}
-        </div>
-        <div className="mt-4 rounded-xl border border-slate-200 bg-white p-3">
-          <div className="mb-2 flex items-center justify-between text-xs font-bold text-slate-600">
-            <span>Station Active</span>
-            <span>84%</span>
-          </div>
-          <div className="h-2 rounded-full bg-slate-100">
-            <div className="h-2 w-[84%] rounded-full bg-gradient-to-r from-cyan-400 to-blue-600" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="rounded-2xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-white p-4">
-      <div className="mb-4 grid grid-cols-3 gap-2">
-        {["Tes", "Aktif", "Nilai"].map((item) => (
-          <div key={item} className="rounded-xl bg-white p-3 text-xs font-black text-slate-600 shadow-sm">
-            {item}
-          </div>
-        ))}
-      </div>
-      <div className="rounded-xl border border-slate-200 bg-white p-3">
-        <svg className="h-20 w-full" viewBox="0 0 260 90" role="img" aria-label="CBT dashboard chart">
-          <path d="M8 72 C 54 26, 82 38, 116 48 S 174 76, 218 20 252 34" fill="none" stroke="#06B6D4" strokeWidth="7" strokeLinecap="round" />
-          <path d="M8 72 C 54 26, 82 38, 116 48 S 174 76, 218 20 252 34" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-      </div>
-    </div>
-  );
-}
-
-function PlatformPreview({ type }: { type: string }) {
-  if (type === "tutor") {
-    return (
-      <div className="space-y-3 rounded-2xl border border-slate-200 bg-white p-4">
-        {["Persiapan Diskusi", "Aktivasi Kelompok", "Feedback Tutor", "Refleksi"].map((item, index) => (
-          <div key={item} className="grid grid-cols-[1fr_auto] gap-3 rounded-xl bg-slate-50 p-3">
-            <span className="text-sm font-bold text-slate-700">{item}</span>
-            <span className="rounded-full bg-cyan-100 px-2 py-1 text-xs font-black text-cyan-700">{index + 1}.0</span>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  if (type === "osce") {
-    return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-4">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {["Anamnesis", "Pemeriksaan", "Diagnosis", "Tindakan", "Komunikasi", "Etika"].map((station, index) => (
-            <div
-              key={station}
-              className={`rounded-xl border p-3 ${
-                index < 3 ? "border-cyan-200 bg-cyan-50" : "border-slate-200 bg-slate-50"
-              }`}
-            >
-              <p className="text-xs font-black text-slate-950">Station {index + 1}</p>
-              <p className="mt-1 text-xs text-slate-600">{station}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4">
-      <div className="grid grid-cols-3 gap-3">
-        {["Ujian", "Peserta", "Skor"].map((item, index) => (
-          <div key={item} className="rounded-xl bg-slate-50 p-3">
-            <p className="text-xs font-bold text-slate-500">{item}</p>
-            <p className="mt-2 text-lg font-black text-slate-950">{["32", "1.245", "82.4"][index]}</p>
-          </div>
-        ))}
-      </div>
-      <div className="mt-4 overflow-hidden rounded-xl border border-slate-200">
-        {["Farmakologi", "Anatomi", "Klinis"].map((row, index) => (
-          <div key={row} className="grid grid-cols-[1fr_auto] border-b border-slate-100 bg-white px-3 py-2 last:border-b-0">
-            <span className="text-sm font-bold text-slate-700">{row}</span>
-            <span className="text-sm font-black text-cyan-700">{90 - index * 6}%</span>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -608,27 +542,23 @@ function ProductShowcase() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const activeProduct = products[activeProductIndex];
-  const isCbtProduct = activeProduct.name === "CBT Assess";
-  const currentScreenshot = cbtScreenshots[activeSlide];
+  const activeScreenshots = productScreenshots[activeProduct.id];
+  const currentScreenshot = activeScreenshots[activeSlide];
 
   useEffect(() => {
-    if (!isCbtProduct) {
-      return undefined;
-    }
-
     const interval = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % cbtScreenshots.length);
+      setActiveSlide((current) => (current + 1) % activeScreenshots.length);
     }, 3600);
 
     return () => window.clearInterval(interval);
-  }, [isCbtProduct]);
+  }, [activeScreenshots.length]);
 
   const goToPrevious = () => {
-    setActiveSlide((current) => (current - 1 + cbtScreenshots.length) % cbtScreenshots.length);
+    setActiveSlide((current) => (current - 1 + activeScreenshots.length) % activeScreenshots.length);
   };
 
   const goToNext = () => {
-    setActiveSlide((current) => (current + 1) % cbtScreenshots.length);
+    setActiveSlide((current) => (current + 1) % activeScreenshots.length);
   };
 
   const selectProduct = (index: number) => {
@@ -711,74 +641,68 @@ function ProductShowcase() {
                 </span>
               </div>
 
-              {isCbtProduct ? (
-                <div>
-                  <button
-                    type="button"
-                    onClick={() => setLightboxOpen(true)}
-                    className="relative mt-3 block aspect-[16/9] min-h-[260px] w-full overflow-hidden rounded-2xl bg-slate-100 text-left sm:min-h-[360px] lg:min-h-[430px]"
-                    aria-label={`Perbesar screenshot ${currentScreenshot.title}`}
-                  >
-                    <Image
-                      src={currentScreenshot.src}
-                      alt={currentScreenshot.title}
-                      fill
-                      sizes="(min-width: 1280px) 760px, (min-width: 1024px) 64vw, 100vw"
-                      className="object-contain"
-                      priority={activeSlide === 0}
-                    />
-                  </button>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setLightboxOpen(true)}
+                  className="relative mt-3 block aspect-[16/9] min-h-[260px] w-full overflow-hidden rounded-2xl bg-slate-100 text-left sm:min-h-[360px] lg:min-h-[430px]"
+                  aria-label={`Perbesar screenshot ${currentScreenshot.title}`}
+                >
+                  <Image
+                    src={currentScreenshot.src}
+                    alt={currentScreenshot.alt}
+                    fill
+                    sizes="(min-width: 1280px) 760px, (min-width: 1024px) 64vw, 100vw"
+                    className="object-contain"
+                    priority={activeSlide === 0}
+                  />
+                </button>
 
-                  <div className="grid gap-4 px-1 py-5 md:grid-cols-[1fr_auto] md:items-center">
-                    <div>
-                      <h3 className="text-lg font-black text-slate-950 sm:text-xl">{currentScreenshot.title}</h3>
-                      <p className="mt-2 text-sm leading-7 text-slate-600 sm:text-base">{currentScreenshot.description}</p>
-                      <p className="mt-2 text-xs font-semibold text-slate-400">Klik gambar untuk memperbesar</p>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={goToPrevious}
-                        className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
-                        aria-label="Screenshot sebelumnya"
-                      >
-                        <ArrowRight className="h-4 w-4 rotate-180" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={goToNext}
-                        className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
-                        aria-label="Screenshot berikutnya"
-                      >
-                        <ArrowRight className="h-4 w-4" />
-                      </button>
-                    </div>
+                <div className="grid gap-4 px-1 py-5 md:grid-cols-[1fr_auto] md:items-center">
+                  <div>
+                    <h3 className="text-lg font-black text-slate-950 sm:text-xl">{currentScreenshot.title}</h3>
+                    <p className="mt-2 text-sm leading-7 text-slate-600 sm:text-base">{currentScreenshot.description}</p>
+                    <p className="mt-2 text-xs font-semibold text-slate-400">Klik gambar untuk memperbesar</p>
                   </div>
 
-                  <div className="flex justify-center gap-2 pb-3">
-                    {cbtScreenshots.map((screenshot, index) => (
-                      <button
-                        key={screenshot.src}
-                        type="button"
-                        onClick={() => setActiveSlide(index)}
-                        className={`h-2 rounded-full transition-all ${
-                          index === activeSlide ? "w-8 bg-cyan-500" : "w-2 bg-slate-300 hover:bg-cyan-300"
-                        }`}
-                        aria-label={`Tampilkan ${screenshot.title}`}
-                      />
-                    ))}
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={goToPrevious}
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
+                      aria-label="Screenshot sebelumnya"
+                    >
+                      <ArrowRight className="h-4 w-4 rotate-180" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={goToNext}
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
+                      aria-label="Screenshot berikutnya"
+                    >
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
                   </div>
                 </div>
-              ) : (
-                <div className="mt-3 rounded-2xl bg-slate-50 p-4">
-                  <ProductIllustration productName={activeProduct.name} />
-                  <div className="mt-5 rounded-2xl border border-dashed border-slate-300 bg-white p-5 text-center">
-                    <h3 className="text-xl font-black text-slate-950">{activeProduct.name} Preview</h3>
-                    <p className="mt-2 leading-7 text-slate-600">Screenshot produk akan ditambahkan.</p>
-                  </div>
+
+                <div className="flex gap-3 overflow-x-auto px-1 pb-3">
+                  {activeScreenshots.map((screenshot, index) => (
+                    <button
+                      key={screenshot.src}
+                      type="button"
+                      onClick={() => setActiveSlide(index)}
+                      className={`relative h-16 w-28 flex-none overflow-hidden rounded-xl border transition-all sm:h-20 sm:w-36 ${
+                        index === activeSlide
+                          ? "border-cyan-400 ring-4 ring-cyan-100"
+                          : "border-slate-200 opacity-70 hover:border-cyan-300 hover:opacity-100"
+                      }`}
+                      aria-label={`Tampilkan ${screenshot.title}`}
+                    >
+                      <Image src={screenshot.src} alt={screenshot.alt} fill sizes="144px" className="object-cover" />
+                    </button>
+                  ))}
                 </div>
-              )}
+              </div>
             </div>
           </motion.div>
 
@@ -788,7 +712,7 @@ function ProductShowcase() {
         </div>
       </div>
 
-      {lightboxOpen && isCbtProduct ? (
+      {lightboxOpen ? (
         <div
           className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm"
           onClick={() => setLightboxOpen(false)}
@@ -809,15 +733,35 @@ function ProductShowcase() {
             <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-100">
               <Image
                 src={currentScreenshot.src}
-                alt={currentScreenshot.title}
+                alt={currentScreenshot.alt}
                 fill
                 sizes="100vw"
                 className="object-contain"
               />
             </div>
-            <div className="p-4">
-              <h3 className="text-2xl font-black text-slate-950">{currentScreenshot.title}</h3>
-              <p className="mt-2 leading-7 text-slate-600">{currentScreenshot.description}</p>
+            <div className="grid gap-4 p-4 md:grid-cols-[1fr_auto] md:items-center">
+              <div>
+                <h3 className="text-2xl font-black text-slate-950">{currentScreenshot.title}</h3>
+                <p className="mt-2 leading-7 text-slate-600">{currentScreenshot.description}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={goToPrevious}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
+                  aria-label="Screenshot sebelumnya"
+                >
+                  <ArrowRight className="h-4 w-4 rotate-180" />
+                </button>
+                <button
+                  type="button"
+                  onClick={goToNext}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
+                  aria-label="Screenshot berikutnya"
+                >
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -949,16 +893,17 @@ export default function Home() {
           <SectionHeader
             eyebrow="Preview Platform"
             title="Preview Platform DigitalTech Assess Suite"
-            description="Ilustrasi antarmuka sementara untuk menggambarkan pengalaman dashboard, rubrik, dan station digital sebelum screenshot asli aplikasi dipasang."
+            description="Cuplikan antarmuka asli untuk CBT Assess, Tutor Assess, dan OSCE Assess yang dapat dipakai sebagai bahan presentasi produk."
           />
 
           <div className="grid gap-6 lg:grid-cols-3">
-            {platformPreviews.map((preview, index) => {
-              const Icon = preview.icon;
+            {products.map((product, index) => {
+              const Icon = product.icon;
+              const screenshot = productScreenshots[product.id][0];
 
               return (
                 <motion.article
-                  key={preview.title}
+                  key={product.id}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.25 }}
@@ -971,12 +916,21 @@ export default function Home() {
                       <Icon className="h-5 w-5" />
                     </div>
                     <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-600">
-                      Preview
+                      Screenshot
                     </span>
                   </div>
-                  <PlatformPreview type={preview.type} />
-                  <h3 className="mt-6 text-xl font-black text-slate-950">{preview.title}</h3>
-                  <p className="mt-3 leading-7 text-slate-600">{preview.description}</p>
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+                    <Image
+                      src={screenshot.src}
+                      alt={screenshot.alt}
+                      fill
+                      sizes="(min-width: 1024px) 380px, 100vw"
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="mt-6 text-xl font-black text-slate-950">{product.name}</h3>
+                  <p className="mt-2 text-sm font-black text-cyan-600">{screenshot.title}</p>
+                  <p className="mt-3 leading-7 text-slate-600">{screenshot.description}</p>
                 </motion.article>
               );
             })}
