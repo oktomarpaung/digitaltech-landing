@@ -633,8 +633,8 @@ function Logo() {
         width={240}
         height={80}
         priority
-        sizes="(min-width: 768px) 230px, 170px"
-        className="h-auto w-[170px] object-contain md:w-[230px]"
+        sizes="(min-width: 1024px) 280px, (min-width: 768px) 245px, 175px"
+        className="h-auto w-[175px] object-contain md:w-[245px] lg:w-[280px]"
       />
     </a>
   );
