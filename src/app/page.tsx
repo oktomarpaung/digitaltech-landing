@@ -70,6 +70,14 @@ type ProductScreenshot = {
   alt: string;
 };
 
+type DemoFormState = {
+  name: string;
+  institution: string;
+  position: string;
+  whatsapp: string;
+  email: string;
+};
+
 const products: Product[] = [
   {
     id: "cbt",
@@ -548,12 +556,16 @@ const faqs = [
   ],
 ];
 
+const whatsappPhone = "628139788650";
+const officialEmail = "admin@digitaltechsolusi.com";
+
 const companyHighlights = [
   ["Legal entity", "PT DigitalTech Solusi Nusantara"],
   ["Fokus", "Assessment technology for education and healthcare"],
   ["Produk utama", "CBT Assess, OSCE Assess, Tutor Assess"],
   ["Target", "Institusi pendidikan dan kesehatan"],
   ["Lokasi", "Medan, Indonesia"],
+  ["Kontak resmi", `WhatsApp: 0813-9788-650 | Email: ${officialEmail}`],
 ];
 
 const navItems = [
@@ -587,10 +599,26 @@ const socialProof = [
   "Rumah Sakit Pendidikan",
   "Pusat CBT",
 ];
-const demoFields = ["Nama", "Institusi", "Jabatan", "Nomor WhatsApp", "Email"];
-const productOptions = ["Pilih produk yang diminati", "CBT Assess", "OSCE Assess", "Tutor Assess", "Bundle 3 Produk"];
+const demoFields: Array<{
+  label: string;
+  name: keyof DemoFormState;
+  placeholder: string;
+  type: string;
+  required?: boolean;
+  className?: string;
+}> = [
+  { label: "Nama", name: "name", placeholder: "Nama lengkap", type: "text", required: true },
+  { label: "Institusi", name: "institution", placeholder: "Nama institusi", type: "text", required: true },
+  { label: "Jabatan", name: "position", placeholder: "Jabatan", type: "text" },
+  { label: "Nomor WhatsApp", name: "whatsapp", placeholder: "0813-9788-650", type: "text", required: true },
+  { label: "Email", name: "email", placeholder: "nama@institusi.ac.id", type: "email", className: "sm:col-span-2" },
+];
+const demoProductOptions = ["CBT Assess", "OSCE Assess", "Tutor Assess", "Bundle 3 Produk"];
 const whatsappUrl =
   "https://wa.me/628139788650?text=Halo%20PT%20DigitalTech%20Solusi%20Nusantara%2C%20saya%20ingin%20request%20demo%20CBT%2C%20OSCE%2C%20atau%20Tutor%20Assess.";
+const generalWhatsappUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
+  "Halo DigitalTech Solusi Nusantara, saya ingin berkonsultasi mengenai CBT Assess, OSCE Assess, dan Tutor Assess."
+)}`;
 const fadeUp = {
   hidden: { opacity: 0, y: 22 },
   visible: { opacity: 1, y: 0 },
@@ -1022,6 +1050,60 @@ function ProductShowcase() {
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [demoForm, setDemoForm] = useState<DemoFormState>({
+    name: "",
+    institution: "",
+    position: "",
+    whatsapp: "",
+    email: "",
+  });
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  const [formError, setFormError] = useState("");
+
+  const updateDemoField = (field: keyof DemoFormState, value: string) => {
+    setDemoForm((current) => ({ ...current, [field]: value }));
+    if (formError) {
+      setFormError("");
+    }
+  };
+
+  const toggleProduct = (product: string) => {
+    setSelectedProducts((current) =>
+      current.includes(product) ? current.filter((item) => item !== product) : [...current, product]
+    );
+    if (formError) {
+      setFormError("");
+    }
+  };
+
+  const submitDemoRequest = () => {
+    const name = demoForm.name.trim();
+    const institution = demoForm.institution.trim();
+    const whatsapp = demoForm.whatsapp.trim();
+
+    if (!name || !institution || !whatsapp || selectedProducts.length === 0) {
+      setFormError("Mohon isi Nama, Institusi, Nomor WhatsApp, dan pilih minimal satu produk.");
+      return;
+    }
+
+    const message = [
+      "Halo DigitalTech Solusi Nusantara, saya ingin mengajukan permintaan demo.",
+      "",
+      `Nama: ${name}`,
+      `Institusi: ${institution}`,
+      `Jabatan: ${demoForm.position.trim() || "-"}`,
+      `Nomor WhatsApp: ${whatsapp}`,
+      `Email: ${demoForm.email.trim() || "-"}`,
+      `Produk yang diminati: ${selectedProducts.join(", ")}`,
+      "",
+      "Kebutuhan:",
+      "Saya ingin mengetahui demo produk, konsultasi kebutuhan, dan proposal implementasi.",
+      "",
+      "Mohon informasi jadwal demo yang tersedia. Terima kasih.",
+    ].join("\n");
+
+    window.open(`https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <main id="home" className="min-h-screen overflow-hidden bg-slate-50 text-slate-950">
@@ -1768,7 +1850,7 @@ export default function Home() {
               </div>
 
               <a
-                href={whatsappUrl}
+                href={generalWhatsappUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-7 inline-flex items-center gap-2 rounded-2xl border border-green-200 bg-white px-5 py-3 text-sm font-black text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-green-50"
@@ -1776,45 +1858,89 @@ export default function Home() {
                 <WhatsAppIcon className="h-5 w-5" />
                 Hubungi langsung via WhatsApp: 0813-9788-650
               </a>
+              <a
+                href={`mailto:${officialEmail}`}
+                className="mt-3 inline-flex items-center gap-2 rounded-2xl border border-cyan-100 bg-white px-5 py-3 text-sm font-black text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:bg-cyan-50"
+              >
+                Atau kirim email ke {officialEmail}
+              </a>
             </div>
 
-            <form className="rounded-3xl border border-slate-200 bg-white p-4 shadow-xl shadow-slate-200/70 sm:p-6">
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                submitDemoRequest();
+              }}
+              className="rounded-3xl border border-slate-200 bg-white p-4 shadow-xl shadow-slate-200/70 sm:p-6"
+            >
               <div className="grid gap-4 sm:grid-cols-2">
                 {demoFields.map((field) => (
-                  <label key={field} className={field === "Email" ? "sm:col-span-2" : undefined}>
-                    <span className="text-sm font-bold text-slate-700">{field}</span>
+                  <label key={field.name} className={field.className}>
+                    <span className="text-sm font-bold text-slate-700">
+                      {field.label}
+                      {field.required ? <span className="text-cyan-600"> *</span> : null}
+                    </span>
                     <input
-                      type={field === "Email" ? "email" : "text"}
-                      placeholder={field}
+                      type={field.type}
+                      value={demoForm[field.name]}
+                      onChange={(event) => updateDemoField(field.name, event.target.value)}
+                      placeholder={field.placeholder}
                       className="mt-2 h-12 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-100"
                     />
                   </label>
                 ))}
 
-                <label className="sm:col-span-2">
+                <div className="sm:col-span-2">
                   <span className="text-sm font-bold text-slate-700">Produk yang diminati</span>
-                  <select className="mt-2 h-12 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-slate-950 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-100">
-                    {productOptions.map((option, index) => (
-                      <option key={option} value={index === 0 ? "" : option} disabled={index === 0}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                  <div className="mt-2 grid gap-3 sm:grid-cols-2">
+                    {demoProductOptions.map((product) => {
+                      const isSelected = selectedProducts.includes(product);
+
+                      return (
+                        <button
+                          key={product}
+                          type="button"
+                          aria-pressed={isSelected}
+                          onClick={() => toggleProduct(product)}
+                          className={`flex min-h-14 items-center gap-3 rounded-2xl border px-4 py-3 text-left text-sm font-black transition-all ${
+                            isSelected
+                              ? "border-cyan-300 bg-gradient-to-r from-cyan-50 to-blue-50 text-slate-950 shadow-lg shadow-cyan-100/70"
+                              : "border-slate-200 bg-white text-slate-700 hover:border-cyan-200 hover:bg-cyan-50"
+                          }`}
+                        >
+                          <span
+                            className={`flex h-6 w-6 flex-none items-center justify-center rounded-full border transition ${
+                              isSelected
+                                ? "border-cyan-500 bg-cyan-500 text-white"
+                                : "border-slate-300 bg-white text-transparent"
+                            }`}
+                          >
+                            <Check className="h-4 w-4" />
+                          </span>
+                          {product}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
 
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
+              {formError ? (
+                <p className="mt-4 rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm font-bold text-rose-600">
+                  {formError}
+                </p>
+              ) : null}
+
+              <button
+                type="submit"
                 className="mt-5 inline-flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-5 font-black text-white shadow-lg shadow-cyan-200/70 transition-all hover:-translate-y-0.5 hover:from-cyan-600 hover:to-blue-700"
               >
                 Kirim Permintaan Demo
                 <ArrowRight className="h-5 w-5" />
-              </a>
+              </button>
 
               <a
-                href={whatsappUrl}
+                href={generalWhatsappUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-green-200 bg-white px-5 py-3 text-sm font-black text-slate-700 transition hover:bg-green-50"
@@ -1851,6 +1977,12 @@ export default function Home() {
             >
               <WhatsAppIcon className="h-5 w-5" />
               WhatsApp Demo: 0813-9788-650
+            </a>
+            <a
+              href={`mailto:${officialEmail}`}
+              className="mt-2 block text-sm font-semibold text-slate-600 transition hover:text-cyan-700"
+            >
+              Email: {officialEmail}
             </a>
           </div>
 
