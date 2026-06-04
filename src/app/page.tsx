@@ -13,6 +13,7 @@ import {
   GraduationCap,
   PackageCheck,
   LockKeyhole,
+  Menu,
   MonitorSmartphone,
   ShieldCheck,
   Sparkles,
@@ -570,26 +571,15 @@ const companyHighlights = [
 const navItems = [
   { label: "Produk", href: "#produk" },
   { label: "Fitur", href: "#fitur" },
-  { label: "Solusi", href: "#solusi" },
+  { label: "Solusi", href: "#use-case" },
   { label: "Harga", href: "#harga" },
   { label: "Tentang Kami", href: "#tentang" },
-];
-
-const mobileNavItems = [
-  { label: "Produk", href: "#produk", icon: ClipboardCheck },
-  { label: "Fitur", href: "#fitur", icon: Sparkles },
-  { label: "Solusi", href: "#solusi", icon: PackageCheck },
-  { label: "Harga", href: "#harga", icon: BarChart3 },
-  { label: "Tentang", href: "#tentang", icon: UsersRound },
-  { label: "FAQ", href: "#faq", icon: BookOpenCheck },
-  { label: "Demo", href: "#demo", icon: ArrowRight },
-  { label: "Login", href: "#", icon: LockKeyhole },
 ];
 
 const floatingNavItems = [
   { label: "Produk", href: "#produk" },
   { label: "Keunggulan", href: "#keunggulan" },
-  { label: "Solusi", href: "#solusi" },
+  { label: "Solusi", href: "#use-case" },
   { label: "Harga", href: "#harga" },
   { label: "FAQ", href: "#faq" },
   { label: "Demo", href: "#demo" },
@@ -643,8 +633,8 @@ function Logo() {
         width={240}
         height={80}
         priority
-        sizes="(min-width: 1024px) 285px, (min-width: 768px) 255px, 185px"
-        className="h-auto w-[185px] object-contain md:w-[255px] lg:w-[285px]"
+        sizes="(min-width: 1024px) 280px, (min-width: 768px) 245px, 175px"
+        className="h-auto w-[175px] object-contain md:w-[245px] lg:w-[280px]"
       />
     </a>
   );
@@ -1059,6 +1049,7 @@ function ProductShowcase() {
 }
 
 export default function Home() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [demoForm, setDemoForm] = useState<DemoFormState>({
     name: "",
     institution: "",
@@ -1116,11 +1107,9 @@ export default function Home() {
 
   return (
     <main id="home" className="min-h-screen overflow-hidden bg-slate-50 text-slate-950">
-      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 shadow-sm shadow-slate-200/60 backdrop-blur-xl">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-          <div className="min-w-0 flex-1 lg:flex-none">
-            <Logo />
-          </div>
+      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/85 backdrop-blur-xl">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 sm:px-6 lg:px-8">
+          <Logo />
 
           <div className="hidden items-center gap-7 lg:flex">
             {navItems.map((item) => (
@@ -1139,32 +1128,37 @@ export default function Home() {
             </a>
           </div>
 
-          <a
-            href="#demo"
-            className="inline-flex h-11 flex-none items-center justify-center rounded-full bg-[#0F172A] px-4 text-sm font-black text-white shadow-lg shadow-slate-300/70 transition hover:bg-cyan-600 sm:px-5 lg:hidden"
+          <button
+            type="button"
+            aria-label={isMenuOpen ? "Tutup menu" : "Buka menu"}
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((current) => !current)}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm transition hover:border-cyan-300 lg:hidden"
           >
-            Coba Demo
-          </a>
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </nav>
 
-        <div className="mx-auto max-w-7xl px-4 pb-3 sm:px-6 lg:hidden">
-          <div className="scrollbar-hide flex gap-2 overflow-x-auto overscroll-x-contain">
-            {mobileNavItems.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <a
-                  key={`${item.label}-${item.href}`}
-                  href={item.href}
-                  className="inline-flex h-10 flex-none items-center gap-2 rounded-full border border-slate-200 bg-white px-4 text-xs font-black text-slate-700 shadow-sm transition hover:border-cyan-200 hover:bg-cyan-50 hover:text-cyan-700"
-                >
-                  <Icon className="h-3.5 w-3.5 text-cyan-600" />
-                  {item.label}
-                </a>
-              );
-            })}
-          </div>
-        </div>
+        {isMenuOpen ? (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="mx-5 mb-4 rounded-xl border border-slate-200 bg-white p-3 shadow-xl shadow-slate-200/80 lg:hidden"
+          >
+            {[...navItems, { label: "Login", href: "#" }, { label: "Coba Demo", href: "#demo" }].map((item) => (
+              <a
+                key={`${item.label}-${item.href}`}
+                href={item.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center justify-between rounded-lg px-4 py-3 text-sm font-bold text-slate-700 transition hover:bg-cyan-50 hover:text-cyan-700"
+              >
+                {item.label}
+                <ArrowRight className="h-4 w-4 text-cyan-600" />
+              </a>
+            ))}
+          </motion.div>
+        ) : null}
       </header>
 
       <FloatingSectionNav />
