@@ -316,6 +316,29 @@ const cbtFeatureHighlights: Feature[] = [
   },
 ];
 
+const aiWordImportProblems = [
+  "Soal lama tersimpan dalam file Word",
+  "Format soal antar dosen berbeda-beda",
+  "Admin lelah copy-paste manual",
+  "Persiapan ujian sering dikejar waktu",
+  "Risiko salah input soal dan kunci jawaban tinggi",
+];
+
+const aiWordImportFlow = [
+  "Upload Word",
+  "AI membaca struktur soal",
+  "Preview & koreksi",
+  "Simpan ke bank soal",
+];
+
+const aiWordImportHighlights = [
+  "Deteksi soal dan opsi",
+  "Deteksi kunci jawaban",
+  "Confidence score",
+  "Preview koreksi sebelum simpan",
+  "Cocok untuk migrasi soal lama",
+];
+
 const pricingPlans: PricingPlan[] = [
   {
     name: "CBT Assess",
@@ -1314,11 +1337,121 @@ export default function Home() {
 
       <section id="fitur-cbt" className="border-y border-slate-200 bg-gradient-to-b from-cyan-50/70 to-white px-5 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow="CBT Assess"
-            title="Fitur Unggulan CBT Assess"
-            description="Dirancang untuk membantu institusi menyelenggarakan ujian online yang aman, fleksibel, terdokumentasi, dan mudah dipantau."
-          />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            variants={fadeUp}
+            className="relative overflow-hidden rounded-[2rem] border border-cyan-200 bg-gradient-to-br from-white via-cyan-50 to-violet-50 p-6 shadow-xl shadow-cyan-100/70 sm:p-8 lg:p-10"
+          >
+            <div className="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-cyan-200/40 blur-3xl" />
+            <div className="absolute -bottom-28 left-1/3 h-64 w-64 rounded-full bg-violet-200/30 blur-3xl" />
+
+            <div className="relative grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-full bg-slate-950 px-3 py-1.5 text-xs font-black uppercase tracking-wide text-white">
+                    Fitur Pembeda CBT Assess
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-200 bg-white/80 px-3 py-1.5 text-xs font-black text-cyan-700 shadow-sm">
+                    <Sparkles className="h-3.5 w-3.5" />
+                    AI Word Question Import
+                  </span>
+                </div>
+
+                <h2 className="mt-6 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+                  Impor Soal Word Berbasis AI
+                </h2>
+                <p className="mt-5 text-lg font-bold leading-8 text-slate-800">
+                  Ubah file soal Word dosen menjadi bank soal CBT Assess secara otomatis, lengkap dengan deteksi opsi,
+                  kunci jawaban, confidence score, dan preview koreksi.
+                </p>
+                <p className="mt-4 leading-8 text-slate-600">
+                  Dosen tidak perlu lagi menyalin soal satu per satu. Cukup upload file Word, CBT Assess akan membantu
+                  membaca struktur soal, mendeteksi opsi dan kunci jawaban, lalu menampilkan preview koreksi sebelum
+                  soal disimpan ke bank soal.
+                </p>
+
+                <div className="mt-7 rounded-2xl border border-white/80 bg-white/70 p-5 shadow-sm backdrop-blur">
+                  <h3 className="font-black text-slate-950">Mengatasi Masalah Nyata Panitia Ujian</h3>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    {aiWordImportProblems.map((problem) => (
+                      <div key={problem} className="flex items-start gap-2 text-sm font-semibold leading-6 text-slate-700">
+                        <Check className="mt-1 h-4 w-4 flex-none text-cyan-600" />
+                        <span>{problem}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href={cbtDemoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-6 text-sm font-black text-white shadow-lg shadow-slate-300/70 transition-all hover:-translate-y-0.5 hover:bg-slate-800"
+                  >
+                    Lihat Demo CBT Assess
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                  <a
+                    href="#demo"
+                    className="inline-flex h-12 items-center justify-center rounded-2xl border border-cyan-200 bg-white/80 px-6 text-sm font-black text-slate-950 shadow-sm transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-50"
+                  >
+                    Jadwalkan Demo
+                  </a>
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-white/80 bg-white/75 p-5 shadow-lg shadow-slate-200/60 backdrop-blur sm:p-6">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-200">
+                    <Sparkles className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-wide text-cyan-600">AI-Powered Workflow</p>
+                    <h3 className="mt-1 text-xl font-black text-slate-950">Dari Word ke Bank Soal</h3>
+                  </div>
+                </div>
+
+                <div className="mt-6 grid grid-cols-2 gap-3">
+                  {aiWordImportFlow.map((step, index) => (
+                    <div key={step} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-cyan-50 text-xs font-black text-cyan-700">
+                        {index + 1}
+                      </span>
+                      <p className="mt-3 text-sm font-black leading-6 text-slate-800">{step}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 rounded-2xl border border-violet-100 bg-violet-50/70 p-5">
+                  <p className="text-sm font-black text-slate-950">Highlight fitur</p>
+                  <div className="mt-4 grid gap-3">
+                    {aiWordImportHighlights.map((highlight) => (
+                      <div key={highlight} className="flex items-center gap-3 text-sm font-semibold text-slate-700">
+                        <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-white text-violet-600 shadow-sm">
+                          <Check className="h-3.5 w-3.5" />
+                        </span>
+                        {highlight}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          <div className="mx-auto mb-12 mt-16 max-w-3xl text-center">
+            <p className="text-sm font-bold uppercase tracking-wide text-cyan-600">CBT Assess</p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+              12 Fitur Inti CBT Assess
+            </h2>
+            <p className="mt-5 text-base leading-8 text-slate-600 sm:text-lg">
+              Fitur operasional lengkap untuk mendukung persiapan, pelaksanaan, pemantauan, dan evaluasi ujian online.
+            </p>
+          </div>
 
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {cbtFeatureHighlights.map((feature, index) => {
@@ -1342,24 +1475,6 @@ export default function Home() {
                 </motion.article>
               );
             })}
-          </div>
-
-          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-            <a
-              href={cbtDemoUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-6 text-sm font-black text-white shadow-lg shadow-slate-300/70 transition-all hover:-translate-y-0.5 hover:bg-slate-800"
-            >
-              Lihat Demo CBT Assess
-              <ArrowRight className="h-4 w-4" />
-            </a>
-            <a
-              href="#demo"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-cyan-200 bg-white px-6 text-sm font-black text-slate-950 shadow-sm transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-50"
-            >
-              Jadwalkan Demo
-            </a>
           </div>
         </div>
       </section>
