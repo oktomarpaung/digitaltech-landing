@@ -82,8 +82,18 @@ const products: Product[] = [
   {
     id: "cbt",
     name: "CBT Assess",
-    description: "Computer Based Test untuk ujian online yang aman dan fleksibel.",
-    features: ["Berbagai tipe soal", "Acak soal & opsi", "Proctoring online", "Laporan hasil instan"],
+    description:
+      "CBT Assess adalah platform ujian online untuk institusi pendidikan yang membutuhkan sistem CBT aman, fleksibel, dan mudah dipantau. Mulai dari import soal, generate akun peserta, kartu login PDF, pelaksanaan ujian, autosave jawaban, monitoring real-time, hingga analisis butir dan export hasil dapat dilakukan dalam satu sistem.",
+    features: [
+      "Berbagai tipe soal & lampiran",
+      "Acak soal dan opsi",
+      "Login peserta dengan kartu ujian",
+      "Autosave & lanjutkan ujian",
+      "Proteksi sesi ganda",
+      "Monitoring real-time proktor",
+      "Analisis butir otomatis",
+      "Hasil & export instan",
+    ],
     icon: ClipboardCheck,
   },
   {
@@ -105,31 +115,31 @@ const products: Product[] = [
 const cbtScreenshots: ProductScreenshot[] = [
   {
     title: "Ujian Peserta",
-    description: "Tampilan ujian online dengan timer, lampiran gambar/PDF, navigasi soal, dan submit.",
+    description: "Tampilan ujian peserta dengan timer, lampiran gambar/PDF, autosave, navigasi soal, dan submit.",
     src: "/screenshots/cbt/cbt-ujian-peserta.png",
     alt: "CBT Assess ujian online peserta screenshot",
   },
   {
     title: "Dashboard Admin",
-    description: "Pantau bank soal, ujian aktif, peserta, hasil, dan analisis dari satu halaman.",
+    description: "Admin dapat mengelola ujian, peserta, bank soal, hasil, dan pengaturan sistem.",
     src: "/screenshots/cbt/cbt-dashboard.png",
     alt: "CBT Assess dashboard admin screenshot",
   },
   {
     title: "Hasil Ujian",
-    description: "Rekap nilai, status submit, skor, detail jawaban, dan export hasil.",
+    description: "Hasil ujian dapat dilihat otomatis dan diekspor untuk dokumentasi.",
     src: "/screenshots/cbt/cbt-hasil-ujian.png",
     alt: "CBT Assess hasil ujian screenshot",
   },
   {
     title: "Bank Soal",
-    description: "Kelola soal, import Excel, filter topik, status soal, tingkat kesulitan, dan kunci jawaban.",
+    description: "Bank soal mendukung import Excel, metadata soal, tingkat kesulitan, dan status soal.",
     src: "/screenshots/cbt/cbt-bank-soal.png",
     alt: "CBT Assess bank soal screenshot",
   },
   {
     title: "Analisis Butir",
-    description: "Evaluasi tingkat kesukaran, daya beda, distribusi opsi, dan rekomendasi revisi soal.",
+    description: "Analisis butir membantu mengevaluasi tingkat kesukaran, daya beda, distribusi opsi, dan rekomendasi soal.",
     src: "/screenshots/cbt/cbt-analisis-butir.png",
     alt: "CBT Assess analisis butir screenshot",
   },
@@ -238,6 +248,69 @@ const features: Feature[] = [
     title: "Dukungan Profesional",
     description: "Export laporan dan pendampingan operasional untuk tim akademik, admin, dan manajemen.",
     icon: UsersRound,
+  },
+];
+
+const cbtFeatureHighlights: Feature[] = [
+  {
+    title: "Bank Soal Terstruktur",
+    description: "Kelola soal berdasarkan blok, topik, tingkat kesulitan, dosen, status, dan metadata soal.",
+    icon: ClipboardCheck,
+  },
+  {
+    title: "Import Soal Excel",
+    description: "Upload soal secara massal melalui template Excel agar persiapan ujian lebih cepat.",
+    icon: CloudCog,
+  },
+  {
+    title: "Mode Fleksibel Soal",
+    description: "Soal dengan metadata belum lengkap tetap dapat digunakan selama konten dan kunci jawabannya valid.",
+    icon: BookOpenCheck,
+  },
+  {
+    title: "Akun & Kartu Login PDF",
+    description: "Generate akun peserta otomatis dan siapkan kartu login PDF untuk setiap ujian.",
+    icon: UsersRound,
+  },
+  {
+    title: "Randomisasi Aman",
+    description: "Urutan soal dan opsi dapat diacak untuk setiap peserta.",
+    icon: Sparkles,
+  },
+  {
+    title: "Urutan Tersimpan per Peserta",
+    description: "Randomisasi tetap konsisten saat peserta refresh, logout, atau login kembali.",
+    icon: LockKeyhole,
+  },
+  {
+    title: "Autosave Jawaban",
+    description: "Jawaban peserta tersimpan otomatis selama ujian berlangsung dan dapat dilanjutkan.",
+    icon: CloudCog,
+  },
+  {
+    title: "Session Lock",
+    description: "Membantu mencegah ujian yang sama dibuka bersamaan dari perangkat atau browser lain.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Monitoring Real-Time",
+    description: "Pantau status login, progres jawaban, aktivitas terakhir, submit, dan sesi terkunci.",
+    icon: MonitorSmartphone,
+  },
+  {
+    title: "Analisis Butir",
+    description: "Hitung indeks kesukaran, daya beda, distribusi opsi, dan rekomendasi butir soal.",
+    icon: BarChart3,
+  },
+  {
+    title: "Audit Log & Role Management",
+    description: "Catat aktivitas penting dan atur akses super admin, admin, proktor, dosen, serta peserta.",
+    icon: LockKeyhole,
+  },
+  {
+    title: "Export Laporan",
+    description: "Ekspor hasil ujian, data dan akun peserta, serta analisis butir ke Excel atau CSV.",
+    icon: PackageCheck,
   },
 ];
 
@@ -407,13 +480,14 @@ const useCases = [
     problem:
       "Ujian berbasis kertas membutuhkan banyak persiapan, koreksi manual, dan rekap nilai yang memakan waktu.",
     solution:
-      "CBT Assess membantu institusi menyelenggarakan ujian online, mengelola bank soal, mengatur peserta, menampilkan hasil ujian, dan melakukan analisis butir secara lebih cepat.",
+      "CBT Assess membantu institusi menyelenggarakan ujian online mulai dari persiapan bank soal, import soal Excel, generate akun peserta, kartu login PDF, pelaksanaan ujian, monitoring proktor, rekap nilai otomatis, hingga analisis butir.",
     benefits: [
-      "Ujian lebih paperless",
-      "Rekap nilai otomatis",
-      "Bank soal lebih terstruktur",
-      "Analisis butir lebih mudah",
-      "Hasil dapat diekspor",
+      "PMB / seleksi masuk mahasiswa baru",
+      "Ujian blok",
+      "Try out internal",
+      "Ujian semester",
+      "Ujian kompetensi internal",
+      "Bank soal institusi",
     ],
     icon: ClipboardCheck,
   },
@@ -459,33 +533,33 @@ const beforeAfterRows = [
 
 const securityFeatures: Feature[] = [
   {
-    title: "Akses Berbasis Role",
+    title: "Session Lock",
     description:
-      "Setiap pengguna dapat memiliki peran berbeda, seperti admin, dosen, tutor, penguji, peserta, koordinator, atau viewer.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Data Tersimpan Terstruktur",
-    description:
-      "Data mahasiswa, nilai, rubrik, hasil ujian, dan rekap asesmen disimpan secara terorganisir agar mudah ditelusuri kembali.",
-    icon: ClipboardCheck,
-  },
-  {
-    title: "Kontrol Akses Pengguna",
-    description:
-      "Akses sistem dapat dibatasi sesuai kebutuhan institusi, sehingga pengguna hanya melihat menu dan data yang sesuai dengan perannya.",
+      "Membantu mencegah peserta membuka ujian yang sama dari perangkat atau browser lain secara bersamaan.",
     icon: LockKeyhole,
   },
   {
-    title: "Dukungan Backup dan Export",
+    title: "Audit Log Aktivitas",
     description:
-      "Data hasil asesmen dapat disiapkan untuk kebutuhan dokumentasi, pelaporan, audit internal, atau arsip akademik.",
-    icon: BarChart3,
+      "Aktivitas penting admin dan peserta tercatat untuk mendukung keamanan dan ketertelusuran pelaksanaan ujian.",
+    icon: ClipboardCheck,
   },
   {
-    title: "Implementasi Fleksibel",
+    title: "Role-Based Access",
     description:
-      "Platform dapat disesuaikan dengan kebijakan institusi, baik untuk penggunaan cloud, server mandiri, maupun skema implementasi khusus.",
+      "Kontrol akses untuk super admin, admin, proktor, dosen, dan peserta sesuai tanggung jawabnya.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Randomisasi Tersimpan",
+    description:
+      "Urutan soal dan opsi dapat diacak serta tetap konsisten untuk setiap peserta saat login kembali.",
+    icon: Sparkles,
+  },
+  {
+    title: "Data Cloud Terstruktur",
+    description:
+      "Data ujian tersimpan terstruktur pada database cloud PostgreSQL untuk mendukung operasional dan dokumentasi institusi.",
     icon: CloudCog,
   },
 ];
@@ -558,6 +632,7 @@ const faqs = [
 
 const whatsappPhone = "628139788650";
 const officialEmail = "admin@digitaltechsolusi.com";
+const cbtDemoUrl = "https://cbt.digitaltechsolusi.com";
 
 const companyHighlights = [
   ["Legal entity", "PT DigitalTech Solusi Nusantara"],
@@ -802,7 +877,7 @@ function ProductBenefitList({ product }: { product: Product }) {
   return (
     <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/70">
       <p className="text-sm font-black uppercase tracking-wide text-cyan-600">Benefit utama</p>
-      <div className="mt-4 space-y-3">
+      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
         {product.features.map((feature) => (
           <div key={feature} className="flex items-start gap-3 text-sm font-semibold text-slate-700">
             <Check className="mt-0.5 h-4 w-4 flex-none text-cyan-600" />
@@ -886,13 +961,26 @@ function ProductShowcase() {
               })}
             </div>
 
-            <a
-              href="#demo"
-              className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 text-sm font-black text-white shadow-lg shadow-slate-200/80 transition-all hover:-translate-y-0.5 hover:bg-slate-800"
-            >
-              Jadwalkan Demo
-              <ArrowRight className="h-4 w-4" />
-            </a>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+              {activeProduct.id === "cbt" ? (
+                <a
+                  href={cbtDemoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 text-sm font-black text-white shadow-lg shadow-slate-200/80 transition-all hover:-translate-y-0.5 hover:bg-slate-800"
+                >
+                  Lihat Demo CBT Assess
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              ) : null}
+              <a
+                href="#demo"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-cyan-200 bg-white px-5 text-sm font-black text-slate-950 shadow-sm transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-50"
+              >
+                Jadwalkan Demo
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
 
             <div className="mt-7 hidden lg:block">
               <ProductBenefitList product={activeProduct} />
@@ -1219,6 +1307,58 @@ export default function Home() {
       </section>
 
       <ProductShowcase />
+
+      <section id="fitur-cbt" className="border-y border-slate-200 bg-gradient-to-b from-cyan-50/70 to-white px-5 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="CBT Assess"
+            title="Fitur Unggulan CBT Assess"
+            description="Dirancang untuk membantu institusi menyelenggarakan ujian online yang aman, fleksibel, terdokumentasi, dan mudah dipantau."
+          />
+
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {cbtFeatureHighlights.map((feature, index) => {
+              const Icon = feature.icon;
+
+              return (
+                <motion.article
+                  key={feature.title}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.18 }}
+                  transition={{ delay: index * 0.025, duration: 0.45, ease: "easeOut" }}
+                  variants={fadeUp}
+                  className="group rounded-3xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/70 transition hover:-translate-y-1 hover:border-cyan-200 hover:shadow-xl hover:shadow-cyan-100/60"
+                >
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-600 ring-1 ring-cyan-100 transition group-hover:bg-cyan-500 group-hover:text-white">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mt-5 text-lg font-black text-slate-950">{feature.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">{feature.description}</p>
+                </motion.article>
+              );
+            })}
+          </div>
+
+          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+            <a
+              href={cbtDemoUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-6 text-sm font-black text-white shadow-lg shadow-slate-300/70 transition-all hover:-translate-y-0.5 hover:bg-slate-800"
+            >
+              Lihat Demo CBT Assess
+              <ArrowRight className="h-4 w-4" />
+            </a>
+            <a
+              href="#demo"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-cyan-200 bg-white px-6 text-sm font-black text-slate-950 shadow-sm transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-50"
+            >
+              Jadwalkan Demo
+            </a>
+          </div>
+        </div>
+      </section>
 
       <section className="border-y border-slate-200 bg-slate-50 px-5 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
