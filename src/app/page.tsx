@@ -43,6 +43,8 @@ type PricingPlan = {
   price: string;
   description: string;
   suitableFor: string[];
+  bonusLabel?: string;
+  note?: string;
   icon: LucideIcon;
   accent: {
     border: string;
@@ -364,11 +366,13 @@ const pricingPlans: PricingPlan[] = [
     },
   },
   {
-    name: "Bundle 3 Produk",
+    name: "Paket CBT + OSCE Assess",
     price: "Mulai dari Rp60 Juta",
     description:
-      "Paket lengkap CBT Assess, OSCE Assess, dan Tutor Assess untuk ekosistem asesmen terintegrasi.",
-    suitableFor: ["Fakultas kedokteran", "Transformasi asesmen", "Multi-unit akademik", "Ekosistem terpadu"],
+      "Paket implementasi CBT Assess dan OSCE Assess untuk institusi pendidikan kesehatan, termasuk bonus Tutor Assess untuk mendukung penilaian tutorial/PBL secara digital.",
+    suitableFor: ["Fakultas kedokteran", "Prodi kesehatan", "Ujian CBT & OSCE", "Bonus Tutor Assess"],
+    bonusLabel: "Free Tutor Assess",
+    note: "*Ketentuan bonus menyesuaikan skema implementasi dan durasi layanan.",
     icon: PackageCheck,
     accent: {
       border: "border-cyan-300",
@@ -1701,7 +1705,15 @@ export default function Home() {
                   <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${plan.accent.iconBackground}`}>
                     <Icon className={`h-7 w-7 ${plan.accent.text}`} />
                   </div>
-                  <h3 className="mt-6 text-2xl font-black text-slate-950">{plan.name}</h3>
+                  {plan.bonusLabel ? (
+                    <span className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700 shadow-sm shadow-emerald-100">
+                      <Sparkles className="h-3.5 w-3.5" />
+                      {plan.bonusLabel}
+                    </span>
+                  ) : null}
+                  <h3 className={`${plan.bonusLabel ? "mt-3" : "mt-6"} text-2xl font-black text-slate-950`}>
+                    {plan.name}
+                  </h3>
                   <p className="mt-5 text-xs font-black uppercase tracking-wide text-slate-500">Harga dasar produk</p>
                   <p className={`mt-2 text-3xl font-black leading-tight ${plan.accent.text}`}>{plan.price}</p>
                   <p className="mt-4 leading-7 text-slate-600">{plan.description}</p>
@@ -1734,6 +1746,9 @@ export default function Home() {
                       Lihat Detail
                     </a>
                   </div>
+                  {plan.note ? (
+                    <p className="mt-4 text-xs font-medium leading-5 text-slate-500">{plan.note}</p>
+                  ) : null}
                 </motion.article>
               );
             })}
