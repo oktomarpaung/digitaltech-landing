@@ -342,10 +342,10 @@ const aiWordImportHighlights = [
 const pricingPlans: PricingPlan[] = [
   {
     name: "CBT Assess",
-    price: "Mulai dari Rp25 Juta",
+    price: "Mulai dari Rp45 Juta",
     description:
-      "Platform Computer Based Test untuk ujian online, bank soal, rekap nilai, dan analisis hasil.",
-    suitableFor: ["Ujian blok", "Try out internal", "Pusat CBT", "Bank soal institusi"],
+      "Platform Computer Based Test untuk ujian online, bank soal, manajemen peserta, pelaksanaan ujian, hasil ujian, analisis butir, export laporan, serta fitur Impor Soal Word Berbasis AI.",
+    suitableFor: ["PMB / seleksi masuk", "Ujian blok", "Ujian semester", "Ujian teori", "Bank soal institusi"],
     icon: ClipboardCheck,
     accent: {
       border: "border-blue-200",
@@ -358,10 +358,10 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: "OSCE Assess",
-    price: "Mulai dari Rp35 Juta",
+    price: "Mulai dari Rp45 Juta",
     description:
-      "Platform penilaian OSCE digital untuk station, rubrik, penguji, dan rekap hasil real-time.",
-    suitableFor: ["Skills lab", "Ujian station", "Program profesi dokter", "Tim OSCE"],
+      "Platform penilaian OSCE digital untuk pengelolaan kegiatan OSCE, station, rubrik/checklist, sesi, peserta, penguji, penugasan station, dan rekap penilaian OSCE.",
+    suitableFor: ["OSCE semester", "Ujian keterampilan blok", "Simulasi UKMPPD internal", "Ujian praktik klinik berbasis station"],
     icon: Stethoscope,
     accent: {
       border: "border-teal-200",
@@ -376,8 +376,8 @@ const pricingPlans: PricingPlan[] = [
     name: "Tutor Assess",
     price: "Mulai dari Rp15 Juta",
     description:
-      "Platform penilaian tutorial/PBL berbasis rubrik untuk tutor, dosen, dan pengelola blok.",
-    suitableFor: ["Tutorial/PBL", "Koordinator blok", "Tutor dan dosen", "Evaluasi mahasiswa"],
+      "Platform penilaian tutorial/PBL untuk kehadiran, aktivitas diskusi, learning issue, sikap profesional, catatan tutor, dan rekap nilai tutorial mahasiswa.",
+    suitableFor: ["Tutorial/PBL", "Koordinator blok", "Tutor dan dosen", "Evaluasi performa mahasiswa"],
     icon: BookOpenCheck,
     accent: {
       border: "border-purple-200",
@@ -390,12 +390,12 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Paket CBT + OSCE Assess",
-    price: "Mulai dari Rp60 Juta",
+    price: "Rp90 Juta",
     description:
-      "Paket implementasi CBT Assess dan OSCE Assess untuk institusi pendidikan kesehatan, termasuk bonus Tutor Assess untuk mendukung penilaian tutorial/PBL secara digital.",
-    suitableFor: ["Fakultas kedokteran", "Prodi kesehatan", "Ujian CBT & OSCE", "Bonus Tutor Assess"],
+      "Paket implementasi CBT Assess dan OSCE Assess untuk institusi pendidikan kesehatan, termasuk bonus penggunaan Tutor Assess tanpa biaya lisensi tambahan sebagai bagian dari ekosistem Digital Assessment Suite.",
+    suitableFor: ["Fakultas kedokteran", "Prodi kesehatan", "Ujian CBT & OSCE", "Ekosistem asesmen terpadu"],
     bonusLabel: "Free Tutor Assess",
-    note: "*Ketentuan bonus menyesuaikan skema implementasi dan durasi layanan.",
+    note: "Termasuk bonus Tutor Assess sesuai ruang lingkup implementasi yang disepakati.",
     icon: PackageCheck,
     accent: {
       border: "border-cyan-300",
@@ -1794,7 +1794,7 @@ export default function Home() {
           <SectionHeader
             eyebrow="Harga"
             title="Paket yang Fleksibel untuk Institusi"
-            description="Pilih produk terlebih dahulu. Nominal berikut adalah harga dasar aplikasi; estimasi final disesuaikan dengan skema implementasi, jumlah pengguna, kebutuhan fitur, dan dukungan yang diperlukan."
+            description="Nominal berikut merupakan acuan lisensi dan implementasi awal. Estimasi final disesuaikan dengan ruang lingkup produk, skema implementasi, jumlah pengguna, serta kebutuhan institusi."
           />
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
@@ -1829,7 +1829,7 @@ export default function Home() {
                   <h3 className={`${plan.bonusLabel ? "mt-3" : "mt-6"} text-2xl font-black text-slate-950`}>
                     {plan.name}
                   </h3>
-                  <p className="mt-5 text-xs font-black uppercase tracking-wide text-slate-500">Harga dasar produk</p>
+                  <p className="mt-5 text-xs font-black uppercase tracking-wide text-slate-500">Lisensi / implementasi awal</p>
                   <p className={`mt-2 text-3xl font-black leading-tight ${plan.accent.text}`}>{plan.price}</p>
                   <p className="mt-4 leading-7 text-slate-600">{plan.description}</p>
 
