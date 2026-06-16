@@ -115,19 +115,6 @@ const products: Product[] = [
     icon: ClipboardCheck,
   },
   {
-    id: "tutor",
-    name: "Tutor Assess",
-    description: "Penilaian kinerja tutor/pendidik secara objektif dan terstruktur.",
-    features: [
-      "Penilaian Tutorial I & II",
-      "Rubrik aktif",
-      "Absensi dan skor 1/2/3",
-      "Draft, submit final, read-only",
-      "Rekap nilai tutorial",
-    ],
-    icon: BookOpenCheck,
-  },
-  {
     id: "osce",
     name: "OSCE Assess",
     description: "Objective Structured Clinical Examination secara digital dan terstandar.",
@@ -139,6 +126,19 @@ const products: Product[] = [
       "Rekap nilai OSCE",
     ],
     icon: GraduationCap,
+  },
+  {
+    id: "tutor",
+    name: "Tutor Assess",
+    description: "Penilaian kinerja tutor/pendidik secara objektif dan terstruktur.",
+    features: [
+      "Penilaian Tutorial I & II",
+      "Rubrik aktif",
+      "Absensi dan skor 1/2/3",
+      "Draft, submit final, read-only",
+      "Rekap nilai tutorial",
+    ],
+    icon: BookOpenCheck,
   },
 ];
 
