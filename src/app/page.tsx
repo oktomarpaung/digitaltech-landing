@@ -106,10 +106,8 @@ const products: Product[] = [
       "CBT Assess adalah platform ujian online untuk institusi pendidikan yang membutuhkan sistem CBT aman, fleksibel, dan mudah dipantau. Mulai dari import soal, generate akun peserta, kartu login PDF, pelaksanaan ujian, autosave jawaban, monitoring real-time, hingga analisis butir dan export hasil dapat dilakukan dalam satu sistem.",
     features: [
       "Berbagai tipe soal & lampiran",
-      "Acak soal dan opsi",
-      "Login peserta dengan kartu ujian",
-      "Autosave & lanjutkan ujian",
-      "Proteksi sesi ganda",
+      "Import soal Word berbasis AI",
+      "Import Excel template",
       "Monitoring real-time proktor",
       "Analisis butir otomatis",
       "Hasil & export instan",
@@ -120,48 +118,64 @@ const products: Product[] = [
     id: "tutor",
     name: "Tutor Assess",
     description: "Penilaian kinerja tutor/pendidik secara objektif dan terstruktur.",
-    features: ["Instrumen penilaian lengkap", "Observasi & feedback", "Rekap otomatis", "Analitik kinerja tutor"],
+    features: [
+      "Penilaian Tutorial I & II",
+      "Rubrik aktif",
+      "Absensi dan skor 1/2/3",
+      "Draft, submit final, read-only",
+      "Rekap nilai tutorial",
+    ],
     icon: BookOpenCheck,
   },
   {
     id: "osce",
     name: "OSCE Assess",
     description: "Objective Structured Clinical Examination secara digital dan terstandar.",
-    features: ["Manajemen station OSCE", "Penilaian real-time", "Rubrik terstruktur", "Laporan komprehensif"],
+    features: [
+      "Manajemen station",
+      "Rubrik/checklist OSCE",
+      "Examiner scoring",
+      "Rotasi peserta",
+      "Rekap nilai OSCE",
+    ],
     icon: GraduationCap,
   },
 ];
 
 const cbtScreenshots: ProductScreenshot[] = [
   {
-    title: "Ujian Peserta",
-    description: "Tampilan ujian peserta dengan timer, lampiran gambar/PDF, autosave, navigasi soal, dan submit.",
-    src: "/screenshots/cbt/cbt-ujian-peserta.png",
-    alt: "CBT Assess ujian online peserta screenshot",
+    title: "Impor Soal Word Berbasis AI",
+    description:
+      "Preview AI membaca soal dari file Word, mendeteksi opsi, kunci jawaban, media, tabel, rumus, dan status review sebelum disimpan ke bank soal.",
+    src: "/screenshots/cbt/cbt-word-ai-preview.png",
+    alt: "CBT Assess impor soal Word berbasis AI screenshot",
   },
   {
-    title: "Dashboard Admin",
-    description: "Admin dapat mengelola ujian, peserta, bank soal, hasil, dan pengaturan sistem.",
-    src: "/screenshots/cbt/cbt-dashboard.png",
-    alt: "CBT Assess dashboard admin screenshot",
-  },
-  {
-    title: "Hasil Ujian",
-    description: "Hasil ujian dapat dilihat otomatis dan diekspor untuk dokumentasi.",
-    src: "/screenshots/cbt/cbt-hasil-ujian.png",
-    alt: "CBT Assess hasil ujian screenshot",
-  },
-  {
-    title: "Bank Soal",
-    description: "Bank soal mendukung import Excel, metadata soal, tingkat kesulitan, dan status soal.",
+    title: "Bank Soal Terstruktur",
+    description:
+      "Kelola bank soal berdasarkan blok, mata kuliah, tingkat kesulitan, status, dan metadata soal.",
     src: "/screenshots/cbt/cbt-bank-soal.png",
-    alt: "CBT Assess bank soal screenshot",
+    alt: "CBT Assess bank soal terstruktur screenshot",
+  },
+  {
+    title: "Monitoring Ujian",
+    description:
+      "Pantau peserta, sesi ujian, status pengerjaan, dan aktivitas proktor secara real-time.",
+    src: "/screenshots/cbt/cbt-dashboard.png",
+    alt: "CBT Assess monitoring ujian screenshot",
   },
   {
     title: "Analisis Butir",
-    description: "Analisis butir membantu mengevaluasi tingkat kesukaran, daya beda, distribusi opsi, dan rekomendasi soal.",
+    description:
+      "Evaluasi kualitas soal dengan analisis hasil, distribusi jawaban, dan performa peserta.",
     src: "/screenshots/cbt/cbt-analisis-butir.png",
     alt: "CBT Assess analisis butir screenshot",
+  },
+  {
+    title: "Hasil & Export",
+    description: "Rekap hasil ujian dan export nilai untuk kebutuhan akademik.",
+    src: "/screenshots/cbt/cbt-hasil-ujian.png",
+    alt: "CBT Assess hasil dan export nilai screenshot",
   },
 ];
 
@@ -241,6 +255,12 @@ const productScreenshots: Record<Product["id"], ProductScreenshot[]> = {
   cbt: cbtScreenshots,
   tutor: tutorScreenshots,
   osce: osceScreenshots,
+};
+
+const productShowcaseBadges: Record<Product["id"], string[]> = {
+  cbt: ["AI-assisted Import", "Structured Question Bank", "Real-time Monitoring", "Analytics Ready"],
+  tutor: ["Tutorial I & II", "Rubrik Aktif", "Draft & Final Submit", "Rekap Nilai"],
+  osce: ["Station OSCE", "Rubrik Digital", "Examiner Scoring", "Rekap Nilai"],
 };
 
 const features: Feature[] = [
@@ -975,11 +995,21 @@ function DashboardMockup() {
 
 function ProductBenefitList({ product }: { product: Product }) {
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/70">
-      <p className="text-sm font-black uppercase tracking-wide text-cyan-600">Benefit utama</p>
+    <div className="rounded-3xl border border-cyan-100 bg-white/85 p-5 shadow-xl shadow-cyan-100/50 backdrop-blur">
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-sm font-black uppercase tracking-wide text-cyan-600">Benefit utama</p>
+        {product.id === "cbt" ? (
+          <span className="rounded-full bg-slate-950 px-3 py-1 text-[0.68rem] font-black uppercase tracking-wide text-white">
+            Produk utama
+          </span>
+        ) : null}
+      </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
         {product.features.map((feature) => (
-          <div key={feature} className="flex items-start gap-3 text-sm font-semibold text-slate-700">
+          <div
+            key={feature}
+            className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 px-3 py-3 text-sm font-semibold text-slate-700"
+          >
             <Check className="mt-0.5 h-4 w-4 flex-none text-cyan-600" />
             <span>{feature}</span>
           </div>
@@ -997,6 +1027,10 @@ function ProductShowcase() {
   const activeProduct = products[activeProductIndex];
   const activeScreenshots = productScreenshots[activeProduct.id];
   const currentScreenshot = activeScreenshots[activeSlide];
+  const activeBadges = productShowcaseBadges[activeProduct.id];
+  const primaryDemoLabel = `Lihat Demo ${activeProduct.name}`;
+  const primaryDemoHref = activeProduct.id === "cbt" ? cbtDemoUrl : "#demo";
+  const isExternalDemo = activeProduct.id === "cbt";
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -1021,9 +1055,14 @@ function ProductShowcase() {
   };
 
   return (
-    <section id="produk" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
-      <div id="solusi" className="mx-auto max-w-7xl xl:pr-32">
-        <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
+    <section
+      id="produk"
+      className="relative overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 py-20 sm:px-6 lg:px-8"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(6,182,212,0.16),transparent_30%),radial-gradient(circle_at_86%_24%,rgba(59,130,246,0.14),transparent_28%),linear-gradient(rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:auto,auto,42px_42px,42px_42px]" />
+      <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-200/30 blur-3xl" />
+      <div id="solusi" className="relative mx-auto max-w-7xl xl:pr-28">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-12">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -1031,13 +1070,16 @@ function ProductShowcase() {
             transition={{ duration: 0.55, ease: "easeOut" }}
             variants={fadeUp}
           >
-            <p className="text-sm font-black uppercase tracking-wide text-cyan-600">Product Showcase</p>
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white/80 px-4 py-2 text-xs font-black uppercase tracking-wide text-cyan-700 shadow-sm backdrop-blur">
+              <Sparkles className="h-4 w-4" />
+              Product Showcase
+            </div>
             <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
               Satu Ekosistem untuk Asesmen Akademik Digital
             </h2>
             <p className="mt-5 text-base leading-8 text-slate-600 sm:text-lg">
-              Lihat bagaimana DigitalTech Solusi Nusantara membantu institusi mengelola CBT, OSCE, dan penilaian tutorial
-              secara paperless, terukur, dan terintegrasi.
+              DigitalTech Solusi Nusantara membantu institusi mengelola CBT, OSCE, dan penilaian tutorial secara
+              paperless, terukur, dan terintegrasi.
             </p>
 
             <div className="mt-7 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
@@ -1051,8 +1093,8 @@ function ProductShowcase() {
                     onClick={() => selectProduct(index)}
                     className={`rounded-full border px-4 py-3 text-sm font-black transition-all ${
                       isActive
-                        ? "border-cyan-400 bg-cyan-500 text-white shadow-lg shadow-cyan-100"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-700"
+                        ? "border-cyan-300 bg-gradient-to-r from-slate-950 via-blue-900 to-cyan-600 text-white shadow-xl shadow-cyan-200/70"
+                        : "border-slate-200 bg-white/80 text-slate-700 shadow-sm backdrop-blur hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-700"
                     }`}
                   >
                     {product.name}
@@ -1062,24 +1104,33 @@ function ProductShowcase() {
             </div>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-              {activeProduct.id === "cbt" ? (
-                <a
-                  href={cbtDemoUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-5 text-sm font-black text-white shadow-lg shadow-slate-200/80 transition-all hover:-translate-y-0.5 hover:bg-slate-800"
-                >
-                  Lihat Demo CBT Assess
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-              ) : null}
+              <a
+                href={primaryDemoHref}
+                target={isExternalDemo ? "_blank" : undefined}
+                rel={isExternalDemo ? "noopener noreferrer" : undefined}
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-slate-950 via-blue-900 to-cyan-600 px-5 text-sm font-black text-white shadow-xl shadow-cyan-200/70 transition-all hover:-translate-y-0.5 hover:shadow-cyan-300/70"
+              >
+                {primaryDemoLabel}
+                <ArrowRight className="h-4 w-4" />
+              </a>
               <a
                 href="#demo"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-cyan-200 bg-white px-5 text-sm font-black text-slate-950 shadow-sm transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-50"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-cyan-200 bg-white/85 px-5 text-sm font-black text-slate-950 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-50"
               >
                 Jadwalkan Demo
                 <ArrowRight className="h-4 w-4" />
               </a>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              {activeBadges.map((badge) => (
+                <span
+                  key={badge}
+                  className="rounded-full border border-cyan-100 bg-white/80 px-3 py-1.5 text-xs font-black text-slate-700 shadow-sm backdrop-blur"
+                >
+                  {badge}
+                </span>
+              ))}
             </div>
 
             <div className="mt-7 hidden lg:block">
@@ -1093,25 +1144,31 @@ function ProductShowcase() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.55, ease: "easeOut" }}
             variants={fadeUp}
-            className="min-w-0"
+            className="relative min-w-0"
           >
-            <div className="rounded-3xl border border-slate-200 bg-white p-2 shadow-2xl shadow-cyan-100/70 sm:p-3">
-              <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+            <div className="absolute -inset-5 rounded-[2rem] bg-gradient-to-r from-cyan-200/40 via-blue-200/30 to-violet-200/40 blur-3xl" />
+            <div className="relative rounded-[2rem] border border-white/70 bg-white/80 p-2 shadow-2xl shadow-cyan-200/70 backdrop-blur-xl sm:p-3">
+              <div className="flex items-center justify-between border-b border-slate-200/80 px-4 py-3">
                 <div className="flex items-center gap-2">
                   <span className="h-3 w-3 rounded-full bg-red-400" />
                   <span className="h-3 w-3 rounded-full bg-yellow-400" />
                   <span className="h-3 w-3 rounded-full bg-green-400" />
                 </div>
-                <span className="rounded-full bg-cyan-50 px-3 py-1 text-xs font-black text-cyan-700">
-                  {activeProduct.name}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="hidden rounded-full bg-slate-100 px-3 py-1 text-xs font-black text-slate-600 sm:inline-flex">
+                    Live Preview
+                  </span>
+                  <span className="rounded-full bg-gradient-to-r from-cyan-500 to-emerald-400 px-3 py-1 text-xs font-black text-white shadow-lg shadow-cyan-100">
+                    {activeProduct.name}
+                  </span>
+                </div>
               </div>
 
               <div>
                 <button
                   type="button"
                   onClick={() => setLightboxOpen(true)}
-                  className="relative mt-3 block aspect-[16/9] min-h-[260px] w-full overflow-hidden rounded-2xl bg-slate-100 text-left sm:min-h-[360px] lg:min-h-[430px]"
+                  className="relative mt-3 block aspect-[16/9] min-h-[280px] w-full overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white text-left shadow-inner sm:min-h-[380px] lg:min-h-[460px]"
                   aria-label={`Perbesar screenshot ${currentScreenshot.title}`}
                 >
                   <Image
@@ -1119,23 +1176,30 @@ function ProductShowcase() {
                     alt={currentScreenshot.alt}
                     fill
                     sizes="(min-width: 1280px) 760px, (min-width: 1024px) 64vw, 100vw"
-                    className="object-contain"
+                    className="object-contain p-2"
                     priority={activeSlide === 0}
                   />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-between p-4">
+                    <span className="rounded-full border border-white/80 bg-white/85 px-3 py-1 text-xs font-black text-slate-700 shadow-sm backdrop-blur">
+                      {currentScreenshot.title}
+                    </span>
+                    <span className="hidden rounded-full bg-slate-950/85 px-3 py-1 text-xs font-black text-white backdrop-blur sm:inline-flex">
+                      Klik untuk memperbesar
+                    </span>
+                  </div>
                 </button>
 
                 <div className="grid gap-4 px-1 py-5 md:grid-cols-[1fr_auto] md:items-center">
                   <div>
-                    <h3 className="text-lg font-black text-slate-950 sm:text-xl">{currentScreenshot.title}</h3>
+                    <h3 className="text-xl font-black text-slate-950 sm:text-2xl">{currentScreenshot.title}</h3>
                     <p className="mt-2 text-sm leading-7 text-slate-600 sm:text-base">{currentScreenshot.description}</p>
-                    <p className="mt-2 text-xs font-semibold text-slate-400">Klik gambar untuk memperbesar</p>
                   </div>
 
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={goToPrevious}
-                      className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-700"
                       aria-label="Screenshot sebelumnya"
                     >
                       <ArrowRight className="h-4 w-4 rotate-180" />
@@ -1143,7 +1207,7 @@ function ProductShowcase() {
                     <button
                       type="button"
                       onClick={goToNext}
-                      className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-700"
                       aria-label="Screenshot berikutnya"
                     >
                       <ArrowRight className="h-4 w-4" />
@@ -1151,20 +1215,24 @@ function ProductShowcase() {
                   </div>
                 </div>
 
-                <div className="flex gap-3 overflow-x-auto px-1 pb-3">
+                <div className="grid gap-3 px-1 pb-3 sm:grid-cols-2 xl:grid-cols-5">
                   {activeScreenshots.map((screenshot, index) => (
                     <button
                       key={screenshot.src}
                       type="button"
                       onClick={() => setActiveSlide(index)}
-                      className={`relative h-16 w-28 flex-none overflow-hidden rounded-xl border transition-all sm:h-20 sm:w-36 ${
+                      className={`group relative h-20 overflow-hidden rounded-2xl border bg-white text-left transition-all sm:h-24 ${
                         index === activeSlide
-                          ? "border-cyan-400 ring-4 ring-cyan-100"
-                          : "border-slate-200 opacity-70 hover:border-cyan-300 hover:opacity-100"
+                          ? "border-cyan-400 shadow-lg shadow-cyan-100 ring-4 ring-cyan-100"
+                          : "border-slate-200 opacity-75 hover:border-cyan-300 hover:opacity-100"
                       }`}
                       aria-label={`Tampilkan ${screenshot.title}`}
                     >
-                      <Image src={screenshot.src} alt={screenshot.alt} fill sizes="144px" className="object-cover" />
+                      <Image src={screenshot.src} alt={screenshot.alt} fill sizes="180px" className="object-cover object-top" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/15 to-transparent" />
+                      <span className="absolute inset-x-2 bottom-2 line-clamp-2 text-xs font-black leading-4 text-white">
+                        {screenshot.title}
+                      </span>
                     </button>
                   ))}
                 </div>
