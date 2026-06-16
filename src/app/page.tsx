@@ -43,6 +43,7 @@ type PricingPlan = {
   price: string;
   description: string;
   suitableFor: string[];
+  highlights: string[];
   bonusLabel?: string;
   note?: string;
   icon: LucideIcon;
@@ -380,10 +381,17 @@ const aiWordImportHighlights = [
 const pricingPlans: PricingPlan[] = [
   {
     name: "CBT Assess",
-    price: "Mulai dari Rp45 Juta",
+    price: "Mulai dari Rp55 Juta",
     description:
       "Platform Computer Based Test untuk ujian online, bank soal, manajemen peserta, pelaksanaan ujian, hasil ujian, analisis butir, export laporan, serta fitur Impor Soal Word Berbasis AI.",
-    suitableFor: ["PMB / seleksi masuk", "Ujian blok", "Ujian semester", "Ujian teori", "Bank soal institusi"],
+    suitableFor: ["PMB / Seleksi masuk", "Ujian blok", "Ujian semester", "Ujian teori", "Bank soal institusi"],
+    highlights: [
+      "Bank soal terstruktur",
+      "Import soal Word berbasis AI",
+      "Monitoring ujian",
+      "Analisis butir",
+      "Export nilai",
+    ],
     icon: ClipboardCheck,
     accent: {
       border: "border-blue-200",
@@ -396,10 +404,17 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: "OSCE Assess",
-    price: "Mulai dari Rp45 Juta",
+    price: "Mulai dari Rp55 Juta",
     description:
-      "Platform penilaian OSCE digital untuk pengelolaan kegiatan OSCE, station, rubrik/checklist, sesi, peserta, penguji, penugasan station, dan rekap penilaian OSCE.",
+      "Platform penilaian OSCE digital untuk pengelolaan station, rubrik/checklist, sesi, peserta, penguji, rotasi station, dan rekap penilaian OSCE.",
     suitableFor: ["OSCE semester", "Ujian keterampilan blok", "Simulasi UKMPPD internal", "Ujian praktik klinik berbasis station"],
+    highlights: [
+      "Manajemen station",
+      "Rubrik/checklist OSCE",
+      "Examiner scoring",
+      "Rotasi peserta",
+      "Rekap nilai OSCE",
+    ],
     icon: Stethoscope,
     accent: {
       border: "border-teal-200",
@@ -416,6 +431,13 @@ const pricingPlans: PricingPlan[] = [
     description:
       "Platform penilaian tutorial/PBL untuk kehadiran, aktivitas diskusi, learning issue, sikap profesional, catatan tutor, dan rekap nilai tutorial mahasiswa.",
     suitableFor: ["Tutorial/PBL", "Koordinator blok", "Tutor dan dosen", "Evaluasi performa mahasiswa"],
+    highlights: [
+      "Penilaian Tutorial I & II",
+      "Rubrik aktif",
+      "Draft dan submit final",
+      "Read-only final",
+      "Rekap nilai tutorial",
+    ],
     icon: BookOpenCheck,
     accent: {
       border: "border-purple-200",
@@ -428,10 +450,17 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Paket CBT + OSCE Assess",
-    price: "Rp90 Juta",
+    price: "Rp110 Juta",
     description:
       "Paket implementasi CBT Assess dan OSCE Assess untuk institusi pendidikan kesehatan, termasuk bonus penggunaan Tutor Assess tanpa biaya lisensi tambahan sebagai bagian dari ekosistem Digital Assessment Suite.",
     suitableFor: ["Fakultas kedokteran", "Prodi kesehatan", "Ujian CBT & OSCE", "Ekosistem asesmen terpadu"],
+    highlights: [
+      "CBT Assess",
+      "OSCE Assess",
+      "Free Tutor Assess",
+      "Ekosistem asesmen terpadu",
+      "Lebih efisien untuk institusi",
+    ],
     bonusLabel: "Free Tutor Assess",
     note: "Termasuk bonus Tutor Assess sesuai ruang lingkup implementasi yang disepakati.",
     icon: PackageCheck,
@@ -2166,16 +2195,21 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="harga" className="bg-white px-5 py-20 sm:px-6 lg:px-8 xl:pr-28">
-        <div className="mx-auto max-w-7xl">
+      <section
+        id="harga"
+        className="relative overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 py-20 sm:px-6 lg:px-8 xl:pr-28"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_15%,rgba(6,182,212,0.16),transparent_30%),radial-gradient(circle_at_82%_12%,rgba(16,185,129,0.14),transparent_26%),linear-gradient(rgba(15,23,42,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.035)_1px,transparent_1px)] bg-[size:auto,auto,44px_44px,44px_44px]" />
+        <div className="absolute bottom-10 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-200/30 blur-3xl" />
+        <div className="relative mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Harga"
+            eyebrow="HARGA"
             title="Paket yang Fleksibel untuk Institusi"
             description="Nominal berikut merupakan acuan lisensi dan implementasi awal. Estimasi final disesuaikan dengan ruang lingkup produk, skema implementasi, jumlah pengguna, serta kebutuhan institusi."
           />
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
-            {pricingPlans.map((plan) => {
+            {pricingPlans.map((plan, index) => {
               const Icon = plan.icon;
 
               return (
@@ -2184,33 +2218,41 @@ export default function Home() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.25 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  transition={{ delay: index * 0.04, duration: 0.5, ease: "easeOut" }}
                   variants={fadeUp}
-                  className={`relative flex h-full flex-col rounded-3xl border bg-gradient-to-br p-6 shadow-sm shadow-slate-200/70 transition hover:-translate-y-1 hover:shadow-xl ${plan.accent.border} ${plan.accent.background} ${plan.accent.shadow}`}
+                  className={`relative flex h-full flex-col overflow-hidden rounded-3xl border bg-gradient-to-br p-6 shadow-xl shadow-slate-200/60 backdrop-blur transition hover:-translate-y-1 hover:shadow-2xl ${plan.accent.border} ${plan.accent.background} ${plan.accent.shadow} ${
+                    plan.highlighted ? "ring-2 ring-cyan-200/80 xl:-mt-3 xl:pb-9" : ""
+                  }`}
                 >
+                  <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-white/70 blur-3xl" />
                   {plan.highlighted ? (
-                    <div className="absolute right-5 top-5 rounded-full bg-cyan-500 px-3 py-1 text-xs font-black text-white shadow-lg shadow-cyan-200">
+                    <div className="absolute -bottom-20 left-1/2 h-44 w-44 -translate-x-1/2 rounded-full bg-cyan-300/30 blur-3xl" />
+                  ) : null}
+                  {plan.highlighted ? (
+                    <div className="absolute right-5 top-5 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-400 px-3 py-1 text-xs font-black text-white shadow-lg shadow-cyan-200">
                       Paling Direkomendasikan
                     </div>
                   ) : null}
 
-                  <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${plan.accent.iconBackground}`}>
+                  <div className={`relative flex h-14 w-14 items-center justify-center rounded-2xl ${plan.accent.iconBackground} shadow-sm`}>
                     <Icon className={`h-7 w-7 ${plan.accent.text}`} />
                   </div>
                   {plan.bonusLabel ? (
-                    <span className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700 shadow-sm shadow-emerald-100">
+                    <span className="relative mt-4 inline-flex w-fit items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-black text-emerald-700 shadow-sm shadow-emerald-100">
                       <Sparkles className="h-3.5 w-3.5" />
                       {plan.bonusLabel}
                     </span>
                   ) : null}
-                  <h3 className={`${plan.bonusLabel ? "mt-3" : "mt-6"} text-2xl font-black text-slate-950`}>
+                  <h3 className={`relative ${plan.bonusLabel ? "mt-3" : "mt-6"} text-2xl font-black text-slate-950`}>
                     {plan.name}
                   </h3>
-                  <p className="mt-5 text-xs font-black uppercase tracking-wide text-slate-500">Lisensi / implementasi awal</p>
-                  <p className={`mt-2 text-3xl font-black leading-tight ${plan.accent.text}`}>{plan.price}</p>
-                  <p className="mt-4 leading-7 text-slate-600">{plan.description}</p>
+                  <p className="relative mt-5 text-xs font-black uppercase tracking-wide text-slate-500">
+                    Lisensi / Implementasi Awal
+                  </p>
+                  <p className={`relative mt-2 text-3xl font-black leading-tight ${plan.accent.text}`}>{plan.price}</p>
+                  <p className="relative mt-4 leading-7 text-slate-600">{plan.description}</p>
 
-                  <div className="mt-6 flex-1 rounded-2xl border border-white/80 bg-white/70 p-4">
+                  <div className="relative mt-6 rounded-2xl border border-white/80 bg-white/75 p-4 shadow-sm">
                     <p className="text-sm font-black text-slate-950">Cocok untuk</p>
                     <div className="mt-3 grid gap-2">
                       {plan.suitableFor.map((item) => (
@@ -2222,18 +2264,32 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="mt-8 grid gap-3">
+                  <div className="relative mt-4 flex-1 rounded-2xl border border-slate-200/70 bg-slate-50/75 p-4">
+                    <p className="text-sm font-black text-slate-950">Highlight fitur</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {plan.highlights.map((item) => (
+                        <span
+                          key={item}
+                          className={`rounded-full border px-3 py-1 text-xs font-black ${plan.accent.border} ${plan.accent.text} bg-white/80`}
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="relative mt-8 grid gap-3">
                     <a
                       href={whatsappUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex h-12 items-center justify-center rounded-lg bg-slate-950 px-5 font-bold text-white transition hover:bg-slate-800"
+                      className="inline-flex h-12 items-center justify-center rounded-2xl bg-slate-950 px-5 font-bold text-white shadow-lg shadow-slate-300/60 transition hover:-translate-y-0.5 hover:bg-slate-800"
                     >
                       Minta Proposal
                     </a>
                     <a
                       href="#demo"
-                      className={`inline-flex h-12 items-center justify-center rounded-lg border bg-white/70 px-5 font-bold text-slate-950 transition ${plan.accent.border} ${plan.accent.softHover}`}
+                      className={`inline-flex h-12 items-center justify-center rounded-2xl border bg-white/80 px-5 font-bold text-slate-950 shadow-sm transition hover:-translate-y-0.5 ${plan.accent.border} ${plan.accent.softHover}`}
                     >
                       Lihat Detail
                     </a>
