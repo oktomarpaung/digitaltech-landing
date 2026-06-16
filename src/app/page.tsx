@@ -72,6 +72,24 @@ type ProductScreenshot = {
   alt: string;
 };
 
+type FlyerMaterial = {
+  product: string;
+  category: string;
+  description: string;
+  badges: string[];
+  src: string;
+  alt: string;
+  demoHref: string;
+  demoExternal?: boolean;
+  accent: {
+    border: string;
+    background: string;
+    label: string;
+    badge: string;
+    glow: string;
+  };
+};
+
 type DemoFormState = {
   name: string;
   institution: string;
@@ -661,6 +679,61 @@ const whatsappPhone = "628139788650";
 const officialEmail = "admin@digitaltechsolusi.com";
 const cbtDemoUrl = "https://cbt.digitaltechsolusi.com";
 
+const flyerMaterials: FlyerMaterial[] = [
+  {
+    product: "CBT Assess",
+    category: "Computer Based Test",
+    description:
+      "Solusi ujian online dengan bank soal, import Word berbasis AI, monitoring peserta, analisis butir, dan export hasil.",
+    badges: ["AI Word Import", "Analisis Butir", "Monitoring Ujian"],
+    src: "/flyers/cbt-assess-flyer.png",
+    alt: "Flyer CBT Assess - PT DigitalTech Solusi Nusantara",
+    demoHref: cbtDemoUrl,
+    demoExternal: true,
+    accent: {
+      border: "border-blue-200",
+      background: "from-blue-50 to-white",
+      label: "text-blue-600",
+      badge: "border-blue-100 bg-blue-50 text-blue-700",
+      glow: "shadow-blue-100/80",
+    },
+  },
+  {
+    product: "OSCE Assess",
+    category: "OSCE Digital",
+    description:
+      "Platform web untuk pengaturan sesi OSCE, station, penguji, rubrik, penilaian per station, dan rekap nilai.",
+    badges: ["Setting Sesi", "Station OSCE", "Rubrik Digital"],
+    src: "/flyers/osce-assess-flyer.png",
+    alt: "Flyer OSCE Assess - PT DigitalTech Solusi Nusantara",
+    demoHref: "#demo",
+    accent: {
+      border: "border-teal-200",
+      background: "from-teal-50 to-white",
+      label: "text-teal-600",
+      badge: "border-teal-100 bg-teal-50 text-teal-700",
+      glow: "shadow-teal-100/80",
+    },
+  },
+  {
+    product: "Tutor Assess",
+    category: "Tutorial/PBL Assessment",
+    description:
+      "Sistem penilaian tutorial/PBL untuk absensi, rubrik, draft, submit final, rekap nilai, dan dokumentasi proses tutorial.",
+    badges: ["Tutorial I & II", "Rubrik Tutor", "Rekap Nilai"],
+    src: "/flyers/tutor-assess-flyer.png",
+    alt: "Flyer Tutor Assess - PT DigitalTech Solusi Nusantara",
+    demoHref: "#demo",
+    accent: {
+      border: "border-violet-200",
+      background: "from-violet-50 to-white",
+      label: "text-violet-600",
+      badge: "border-violet-100 bg-violet-50 text-violet-700",
+      glow: "shadow-violet-100/80",
+    },
+  },
+];
+
 const companyHighlights = [
   ["Legal entity", "PT DigitalTech Solusi Nusantara"],
   ["Fokus", "Assessment technology for education and healthcare"],
@@ -1174,6 +1247,27 @@ export default function Home() {
   });
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   const [formError, setFormError] = useState("");
+  const [activeFlyer, setActiveFlyer] = useState<FlyerMaterial | null>(null);
+
+  useEffect(() => {
+    if (!activeFlyer) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setActiveFlyer(null);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeFlyer]);
 
   const updateDemoField = (field: keyof DemoFormState, value: string) => {
     setDemoForm((current) => ({ ...current, [field]: value }));
@@ -1528,6 +1622,221 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section id="materi-produk" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            variants={fadeUp}
+            className="mx-auto mb-12 max-w-3xl text-center"
+          >
+            <p className="text-sm font-bold uppercase tracking-wide text-cyan-600">Materi Produk</p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+              Materi Produk DigitalTech Assess Suite
+            </h2>
+            <p className="mt-5 text-base leading-8 text-slate-600 sm:text-lg">
+              Materi visual resmi untuk membantu institusi memahami solusi CBT, OSCE, dan penilaian tutorial/PBL
+              dalam ekosistem DigitalTech Assess Suite.
+            </p>
+            <span className="mt-5 inline-flex rounded-full border border-cyan-100 bg-cyan-50 px-4 py-2 text-xs font-black uppercase tracking-wide text-cyan-700">
+              Siap untuk presentasi, WhatsApp, dan audiensi institusi
+            </span>
+          </motion.div>
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            {flyerMaterials.map((material, index) => (
+              <motion.article
+                key={material.product}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.22 }}
+                transition={{ delay: index * 0.06, duration: 0.5, ease: "easeOut" }}
+                variants={fadeUp}
+                className={`group flex h-full flex-col overflow-hidden rounded-3xl border bg-gradient-to-br p-5 shadow-sm shadow-slate-200/70 transition hover:-translate-y-1 hover:shadow-xl ${material.accent.border} ${material.accent.background} ${material.accent.glow}`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setActiveFlyer(material)}
+                  className="relative h-[360px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 text-left shadow-sm sm:h-[400px] lg:h-[380px] xl:h-[420px]"
+                  aria-label={`Lihat flyer ${material.product}`}
+                >
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-white via-cyan-50 to-slate-100 p-6 text-center">
+                    <Sparkles className={`h-9 w-9 ${material.accent.label}`} />
+                    <p className="mt-4 text-sm font-black uppercase tracking-wide text-slate-500">Preview Flyer</p>
+                    <p className="mt-2 text-2xl font-black text-slate-950">{material.product}</p>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                      Letakkan file resmi di <span className="font-mono text-xs">{material.src}</span>
+                    </p>
+                  </div>
+                  <Image
+                    src={material.src}
+                    alt={material.alt}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover object-top transition duration-500 group-hover:scale-[1.02]"
+                    onError={(event) => {
+                      event.currentTarget.style.display = "none";
+                    }}
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/70 to-transparent p-4">
+                    <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-black text-slate-950">
+                      Klik untuk memperbesar
+                    </span>
+                  </div>
+                </button>
+
+                <div className="flex flex-1 flex-col pt-6">
+                  <p className={`text-xs font-black uppercase tracking-wide ${material.accent.label}`}>
+                    {material.category}
+                  </p>
+                  <h3 className="mt-2 text-2xl font-black text-slate-950">{material.product}</h3>
+                  <p className="mt-3 leading-7 text-slate-600">{material.description}</p>
+
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {material.badges.map((badge) => (
+                      <span
+                        key={badge}
+                        className={`rounded-full border px-3 py-1 text-xs font-black ${material.accent.badge}`}
+                      >
+                        {badge}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 grid gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setActiveFlyer(material)}
+                      className="inline-flex h-12 items-center justify-center rounded-xl bg-slate-950 px-5 text-sm font-black text-white transition hover:bg-slate-800"
+                    >
+                      Lihat Flyer
+                    </button>
+                    <a
+                      href={material.demoHref}
+                      target={material.demoExternal ? "_blank" : undefined}
+                      rel={material.demoExternal ? "noopener noreferrer" : undefined}
+                      className={`inline-flex h-12 items-center justify-center rounded-xl border bg-white/75 px-5 text-sm font-black text-slate-950 transition ${material.accent.border}`}
+                    >
+                      Lihat Demo
+                    </a>
+                    <a
+                      href="#demo"
+                      className="inline-flex h-12 items-center justify-center rounded-xl border border-cyan-200 bg-cyan-50 px-5 text-sm font-black text-cyan-700 transition hover:bg-cyan-100"
+                    >
+                      Minta Proposal
+                    </a>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            variants={fadeUp}
+            className="mt-8 grid gap-4 rounded-3xl border border-cyan-100 bg-gradient-to-r from-cyan-50 via-white to-blue-50 p-5 shadow-sm shadow-cyan-100/70 md:grid-cols-[1fr_auto] md:items-center md:p-6"
+          >
+            <p className="text-center text-base font-black leading-7 text-slate-800 md:text-left">
+              Butuh proposal lengkap atau demo produk untuk institusi Anda?
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <a
+                href="#demo"
+                className="inline-flex h-12 items-center justify-center rounded-2xl bg-slate-950 px-5 text-sm font-black text-white shadow-lg shadow-slate-200/80 transition hover:-translate-y-0.5 hover:bg-slate-800"
+              >
+                Minta Proposal Kerja Sama
+              </a>
+              <a
+                href="#demo"
+                className="inline-flex h-12 items-center justify-center rounded-2xl border border-cyan-200 bg-white px-5 text-sm font-black text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-50"
+              >
+                Jadwalkan Demo
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {activeFlyer ? (
+        <div
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-slate-950/80 p-3 backdrop-blur-sm sm:p-5"
+          onClick={() => setActiveFlyer(null)}
+          role="presentation"
+        >
+          <div
+            className="relative flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Flyer ${activeFlyer.product}`}
+          >
+            <div className="flex items-start justify-between gap-4 border-b border-slate-200 px-5 py-4 sm:px-6">
+              <div>
+                <p className={`text-xs font-black uppercase tracking-wide ${activeFlyer.accent.label}`}>
+                  {activeFlyer.category}
+                </p>
+                <h3 className="mt-1 text-xl font-black text-slate-950 sm:text-2xl">{activeFlyer.product}</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveFlyer(null)}
+                className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-slate-950 text-white shadow-lg transition hover:bg-slate-800"
+                aria-label="Tutup flyer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="overflow-y-auto bg-slate-100 p-3 sm:p-5">
+              <div className="relative mx-auto min-h-[520px] max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-white via-cyan-50 to-slate-100 p-8 text-center">
+                  <Sparkles className={`h-10 w-10 ${activeFlyer.accent.label}`} />
+                  <p className="mt-4 text-sm font-black uppercase tracking-wide text-slate-500">Preview Flyer</p>
+                  <p className="mt-2 text-3xl font-black text-slate-950">{activeFlyer.product}</p>
+                  <p className="mt-3 max-w-md text-sm leading-7 text-slate-600">
+                    File flyer resmi belum ditemukan pada path <span className="font-mono text-xs">{activeFlyer.src}</span>.
+                  </p>
+                </div>
+                <Image
+                  src={activeFlyer.src}
+                  alt={activeFlyer.alt}
+                  width={900}
+                  height={1400}
+                  sizes="(min-width: 1024px) 760px, 92vw"
+                  className="relative z-10 h-auto w-full"
+                  onError={(event) => {
+                    event.currentTarget.style.display = "none";
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="grid gap-3 border-t border-slate-200 bg-white px-5 py-4 sm:flex sm:items-center sm:justify-end sm:px-6">
+              <a
+                href={activeFlyer.src}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 text-sm font-black text-slate-950 transition hover:bg-slate-50"
+              >
+                Buka Gambar Penuh
+              </a>
+              <a
+                href="#demo"
+                onClick={() => setActiveFlyer(null)}
+                className="inline-flex h-12 items-center justify-center rounded-2xl bg-slate-950 px-5 text-sm font-black text-white transition hover:bg-slate-800"
+              >
+                Minta Proposal / Jadwalkan Demo
+              </a>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <section id="keunggulan" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
