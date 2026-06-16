@@ -73,6 +73,12 @@ type ProductScreenshot = {
   alt: string;
 };
 
+type ProductMobileSummary = {
+  title: string;
+  description: string;
+  benefits: string[];
+};
+
 type FlyerMaterial = {
   product: string;
   category: string;
@@ -262,6 +268,27 @@ const productShowcaseBadges: Record<Product["id"], string[]> = {
   cbt: ["AI-assisted Import", "Structured Question Bank", "Real-time Monitoring", "Analytics Ready"],
   tutor: ["Tutorial I & II", "Rubrik Aktif", "Draft & Final Submit", "Rekap Nilai"],
   osce: ["Station OSCE", "Rubrik Digital", "Examiner Scoring", "Rekap Nilai"],
+};
+
+const productMobileSummaries: Record<Product["id"], ProductMobileSummary> = {
+  cbt: {
+    title: "CBT Assess",
+    description:
+      "Platform ujian online dengan bank soal, AI Word Import, kartu login peserta, monitoring real-time, analisis butir, dan export hasil.",
+    benefits: ["AI Word Import", "Kartu login peserta", "Autosave jawaban", "Analisis butir"],
+  },
+  osce: {
+    title: "OSCE Assess",
+    description:
+      "Platform digital untuk pengaturan sesi OSCE, station, penguji, rubrik, penilaian per station, QR/PIN akses, dan rekap nilai.",
+    benefits: ["Setting sesi OSCE", "Station aktif & istirahat", "Rubrik digital", "Rekap nilai"],
+  },
+  tutor: {
+    title: "Tutor Assess",
+    description:
+      "Sistem penilaian tutorial/PBL untuk absensi, rubrik, draft, submit final, rekap nilai, dan dokumentasi proses tutorial.",
+    benefits: ["Tutorial I & II", "Rubrik aktif", "Simpan draft", "Rekap nilai tutorial"],
+  },
 };
 
 const features: Feature[] = [
@@ -1057,6 +1084,7 @@ function ProductShowcase() {
   const activeScreenshots = productScreenshots[activeProduct.id];
   const currentScreenshot = activeScreenshots[activeSlide];
   const activeBadges = productShowcaseBadges[activeProduct.id];
+  const activeSummary = productMobileSummaries[activeProduct.id];
   const primaryDemoLabel = `Lihat Demo ${activeProduct.name}`;
   const primaryDemoHref = activeProduct.id === "cbt" ? cbtDemoUrl : "#demo";
   const isExternalDemo = activeProduct.id === "cbt";
@@ -1086,7 +1114,7 @@ function ProductShowcase() {
   return (
     <section
       id="produk"
-      className="relative overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 py-20 sm:px-6 lg:px-8"
+      className="relative overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 pb-28 pt-16 sm:px-6 sm:py-20 lg:px-8"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(6,182,212,0.16),transparent_30%),radial-gradient(circle_at_86%_24%,rgba(59,130,246,0.14),transparent_28%),linear-gradient(rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:auto,auto,42px_42px,42px_42px]" />
       <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-200/30 blur-3xl" />
@@ -1132,7 +1160,33 @@ function ProductShowcase() {
               })}
             </div>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+            <div className="mt-5 rounded-3xl border border-cyan-100 bg-white/90 p-4 shadow-xl shadow-cyan-100/50 backdrop-blur lg:hidden">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-wide text-cyan-600">Produk aktif</p>
+                  <h3 className="mt-1 text-2xl font-black text-slate-950">{activeSummary.title}</h3>
+                </div>
+                {activeProduct.id === "cbt" ? (
+                  <span className="rounded-full bg-slate-950 px-3 py-1 text-[0.68rem] font-black uppercase tracking-wide text-white">
+                    Utama
+                  </span>
+                ) : null}
+              </div>
+              <p className="mt-3 text-sm leading-6 text-slate-600">{activeSummary.description}</p>
+              <div className="mt-4 grid gap-2 min-[380px]:grid-cols-2">
+                {activeSummary.benefits.map((benefit) => (
+                  <div
+                    key={benefit}
+                    className="flex items-start gap-2 rounded-2xl border border-slate-100 bg-slate-50/90 px-3 py-2.5 text-xs font-black text-slate-700"
+                  >
+                    <Check className="mt-0.5 h-3.5 w-3.5 flex-none text-cyan-600" />
+                    <span>{benefit}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row lg:mt-6 lg:flex-col xl:flex-row">
               <a
                 href={primaryDemoHref}
                 target={isExternalDemo ? "_blank" : undefined}
@@ -1151,7 +1205,7 @@ function ProductShowcase() {
               </a>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2 lg:mt-6">
               {activeBadges.map((badge) => (
                 <span
                   key={badge}
@@ -1197,7 +1251,7 @@ function ProductShowcase() {
                 <button
                   type="button"
                   onClick={() => setLightboxOpen(true)}
-                  className="relative mt-3 block aspect-[16/9] min-h-[280px] w-full overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white text-left shadow-inner sm:min-h-[380px] lg:min-h-[460px]"
+                  className="relative mt-3 block h-[240px] w-full overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white text-left shadow-inner min-[390px]:h-[255px] sm:aspect-[16/9] sm:h-auto sm:min-h-[380px] lg:min-h-[460px]"
                   aria-label={`Perbesar screenshot ${currentScreenshot.title}`}
                 >
                   <Image
@@ -1205,11 +1259,11 @@ function ProductShowcase() {
                     alt={currentScreenshot.alt}
                     fill
                     sizes="(min-width: 1280px) 760px, (min-width: 1024px) 64vw, 100vw"
-                    className="object-contain p-2"
+                    className="object-contain object-top p-1.5 sm:p-2"
                     priority={activeSlide === 0}
                   />
-                  <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-between p-4">
-                    <span className="rounded-full border border-white/80 bg-white/85 px-3 py-1 text-xs font-black text-slate-700 shadow-sm backdrop-blur">
+                  <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-between p-3 sm:p-4">
+                    <span className="line-clamp-1 rounded-full border border-white/80 bg-white/85 px-3 py-1 text-xs font-black text-slate-700 shadow-sm backdrop-blur">
                       {currentScreenshot.title}
                     </span>
                     <span className="hidden rounded-full bg-slate-950/85 px-3 py-1 text-xs font-black text-white backdrop-blur sm:inline-flex">
@@ -1218,10 +1272,12 @@ function ProductShowcase() {
                   </div>
                 </button>
 
-                <div className="grid gap-4 px-1 py-5 md:grid-cols-[1fr_auto] md:items-center">
+                <div className="grid gap-3 px-1 py-4 sm:py-5 md:grid-cols-[1fr_auto] md:items-center">
                   <div>
-                    <h3 className="text-xl font-black text-slate-950 sm:text-2xl">{currentScreenshot.title}</h3>
-                    <p className="mt-2 text-sm leading-7 text-slate-600 sm:text-base">{currentScreenshot.description}</p>
+                    <h3 className="text-lg font-black text-slate-950 sm:text-2xl">{currentScreenshot.title}</h3>
+                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600 sm:line-clamp-none sm:text-base sm:leading-7">
+                      {currentScreenshot.description}
+                    </p>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -1244,13 +1300,13 @@ function ProductShowcase() {
                   </div>
                 </div>
 
-                <div className="grid gap-3 px-1 pb-3 sm:grid-cols-2 xl:grid-cols-5">
+                <div className="flex gap-2 overflow-x-auto px-1 pb-3 sm:grid sm:grid-cols-2 sm:gap-3 sm:overflow-visible xl:grid-cols-5">
                   {activeScreenshots.map((screenshot, index) => (
                     <button
                       key={screenshot.src}
                       type="button"
                       onClick={() => setActiveSlide(index)}
-                      className={`group relative h-20 overflow-hidden rounded-2xl border bg-white text-left transition-all sm:h-24 ${
+                      className={`group relative h-16 w-28 flex-none overflow-hidden rounded-2xl border bg-white text-left transition-all sm:h-24 sm:w-auto ${
                         index === activeSlide
                           ? "border-cyan-400 shadow-lg shadow-cyan-100 ring-4 ring-cyan-100"
                           : "border-slate-200 opacity-75 hover:border-cyan-300 hover:opacity-100"
@@ -1269,9 +1325,6 @@ function ProductShowcase() {
             </div>
           </motion.div>
 
-          <div className="lg:hidden">
-            <ProductBenefitList product={activeProduct} />
-          </div>
         </div>
       </div>
 
@@ -2661,7 +2714,7 @@ export default function Home() {
         target="_blank"
         rel="noreferrer"
         aria-label="Request demo via WhatsApp"
-        className="fixed bottom-4 right-4 z-50 inline-flex h-11 max-w-[calc(100vw-2rem)] items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#25D366] to-teal-500 px-3.5 text-xs font-black text-white shadow-2xl shadow-green-200/70 transition-all hover:-translate-y-1 hover:from-green-500 hover:to-teal-600 sm:bottom-8 sm:right-8 sm:h-14 sm:px-5 sm:text-sm"
+        className="fixed bottom-3 right-3 z-50 inline-flex h-10 max-w-[calc(100vw-1.5rem)] items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#25D366] to-teal-500 px-3 text-xs font-black text-white shadow-2xl shadow-green-200/70 transition-all hover:-translate-y-1 hover:from-green-500 hover:to-teal-600 sm:bottom-8 sm:right-8 sm:h-14 sm:px-5 sm:text-sm"
       >
         <WhatsAppIcon className="h-4 w-4 sm:h-5 sm:w-5" />
         <span>Request Demo</span>
