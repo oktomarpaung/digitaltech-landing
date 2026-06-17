@@ -17,6 +17,11 @@ export const metadata: Metadata = {
   title: "DigitalTech Solusi Nusantara | Platform Asesmen Digital",
   description:
     "Platform asesmen digital terintegrasi untuk CBT Assess, OSCE Assess, dan Tutor Assess bagi institusi pendidikan dan kesehatan.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
   alternates: {
     canonical: "https://digitaltechsolusi.com",
   },
