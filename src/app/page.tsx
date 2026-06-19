@@ -1121,7 +1121,7 @@ function ProductShowcase() {
   return (
     <section
       id="produk"
-      className="relative scroll-mt-28 overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 pb-28 pt-16 sm:px-6 sm:py-20 lg:scroll-mt-24 lg:px-8"
+      className="relative scroll-mt-36 overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 pb-28 pt-16 sm:px-6 sm:py-20 lg:scroll-mt-24 lg:px-8"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(6,182,212,0.16),transparent_30%),radial-gradient(circle_at_86%_24%,rgba(59,130,246,0.14),transparent_28%),linear-gradient(rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:auto,auto,42px_42px,42px_42px]" />
       <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-200/30 blur-3xl" />
@@ -1472,8 +1472,8 @@ export default function Home() {
   };
 
   return (
-    <main id="home" className="min-h-screen overflow-hidden bg-slate-50 text-slate-950">
-      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/85 backdrop-blur-xl">
+    <main id="home" className="min-h-screen overflow-hidden bg-slate-50 pt-[128px] text-slate-950 lg:pt-0">
+      <header className="fixed left-0 right-0 top-0 z-[60] border-b border-slate-200/70 bg-white/85 backdrop-blur-xl lg:sticky lg:left-auto lg:right-auto lg:z-50">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 sm:px-6 lg:px-8">
           <Logo />
 
@@ -1525,7 +1525,7 @@ export default function Home() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="mx-5 mb-4 rounded-xl border border-slate-200 bg-white p-3 shadow-xl shadow-slate-200/80 lg:hidden"
+            className="relative z-[80] mx-5 mb-4 rounded-xl border border-slate-200 bg-white p-3 shadow-xl shadow-slate-200/80 lg:hidden"
           >
             {[...navItems, { label: "Login", href: "#" }, { label: "Coba Demo", href: "#demo" }].map((item) => (
               <a
@@ -2077,7 +2077,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="solusi" className="scroll-mt-28 bg-white px-5 py-20 sm:px-6 lg:scroll-mt-24 lg:px-8">
+      <section id="solusi" className="scroll-mt-36 bg-white px-5 py-20 sm:px-6 lg:scroll-mt-24 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Use Case"
@@ -2198,7 +2198,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="fitur" className="scroll-mt-28 bg-white px-5 py-20 sm:px-6 lg:scroll-mt-24 lg:px-8">
+      <section id="fitur" className="scroll-mt-36 bg-white px-5 py-20 sm:px-6 lg:scroll-mt-24 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Keunggulan"
@@ -2272,7 +2272,7 @@ export default function Home() {
 
       <section
         id="harga"
-        className="relative scroll-mt-28 overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 py-20 sm:px-6 lg:scroll-mt-24 lg:px-8 xl:pr-28"
+        className="relative scroll-mt-36 overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 py-20 sm:px-6 lg:scroll-mt-24 lg:px-8 xl:pr-28"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_15%,rgba(6,182,212,0.16),transparent_30%),radial-gradient(circle_at_82%_12%,rgba(16,185,129,0.14),transparent_26%),linear-gradient(rgba(15,23,42,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.035)_1px,transparent_1px)] bg-[size:auto,auto,44px_44px,44px_44px]" />
         <div className="absolute bottom-10 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-200/30 blur-3xl" />
