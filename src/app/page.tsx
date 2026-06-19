@@ -822,7 +822,7 @@ const companyHighlights = [
 const navItems = [
   { label: "Produk", href: "#produk" },
   { label: "Fitur", href: "#fitur" },
-  { label: "Solusi", href: "#use-case" },
+  { label: "Solusi", href: "#solusi" },
   { label: "Harga", href: "#harga" },
   { label: "Tentang Kami", href: "#tentang" },
 ];
@@ -830,10 +830,17 @@ const navItems = [
 const floatingNavItems = [
   { label: "Produk", href: "#produk" },
   { label: "Keunggulan", href: "#keunggulan" },
-  { label: "Solusi", href: "#use-case" },
+  { label: "Solusi", href: "#solusi" },
   { label: "Harga", href: "#harga" },
   { label: "FAQ", href: "#faq" },
   { label: "Demo", href: "#demo" },
+];
+
+const mobileQuickNavItems = [
+  { label: "Produk", href: "#produk" },
+  { label: "Fitur", href: "#fitur" },
+  { label: "Solusi", href: "#solusi" },
+  { label: "Harga", href: "#harga" },
 ];
 
 const benefits = ["Aman & Terpercaya", "Cepat & Stabil", "Insight Real-time"];
@@ -1114,11 +1121,11 @@ function ProductShowcase() {
   return (
     <section
       id="produk"
-      className="relative overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 pb-28 pt-16 sm:px-6 sm:py-20 lg:px-8"
+      className="relative scroll-mt-28 overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 pb-28 pt-16 sm:px-6 sm:py-20 lg:scroll-mt-24 lg:px-8"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_20%,rgba(6,182,212,0.16),transparent_30%),radial-gradient(circle_at_86%_24%,rgba(59,130,246,0.14),transparent_28%),linear-gradient(rgba(15,23,42,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.04)_1px,transparent_1px)] bg-[size:auto,auto,42px_42px,42px_42px]" />
       <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-200/30 blur-3xl" />
-      <div id="solusi" className="relative mx-auto max-w-7xl xl:pr-28">
+      <div className="relative mx-auto max-w-7xl xl:pr-28">
         <div className="grid items-center gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-12">
           <motion.div
             initial="hidden"
@@ -1496,6 +1503,21 @@ export default function Home() {
           >
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
+        </nav>
+
+        <nav className="border-t border-slate-200/70 bg-white/90 backdrop-blur-xl lg:hidden" aria-label="Navigasi cepat mobile">
+          <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-5 py-1.5 sm:px-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {mobileQuickNavItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="flex h-8 min-w-[72px] flex-1 items-center justify-center rounded-full px-3 text-xs font-medium text-slate-600 transition hover:bg-cyan-50 hover:text-cyan-700"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
         </nav>
 
         {isMenuOpen ? (
@@ -2055,7 +2077,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="use-case" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
+      <section id="solusi" className="scroll-mt-28 bg-white px-5 py-20 sm:px-6 lg:scroll-mt-24 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Use Case"
@@ -2176,7 +2198,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="fitur" className="bg-white px-5 py-20 sm:px-6 lg:px-8">
+      <section id="fitur" className="scroll-mt-28 bg-white px-5 py-20 sm:px-6 lg:scroll-mt-24 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Keunggulan"
@@ -2250,7 +2272,7 @@ export default function Home() {
 
       <section
         id="harga"
-        className="relative overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 py-20 sm:px-6 lg:px-8 xl:pr-28"
+        className="relative scroll-mt-28 overflow-hidden bg-gradient-to-br from-white via-cyan-50/70 to-violet-50/60 px-5 py-20 sm:px-6 lg:scroll-mt-24 lg:px-8 xl:pr-28"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_15%,rgba(6,182,212,0.16),transparent_30%),radial-gradient(circle_at_82%_12%,rgba(16,185,129,0.14),transparent_26%),linear-gradient(rgba(15,23,42,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.035)_1px,transparent_1px)] bg-[size:auto,auto,44px_44px,44px_44px]" />
         <div className="absolute bottom-10 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-200/30 blur-3xl" />
