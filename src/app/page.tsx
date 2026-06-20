@@ -754,6 +754,13 @@ const faqs = [
 const whatsappPhone = "628139788650";
 const officialEmail = "admin@digitaltechsolusi.com";
 const cbtDemoUrl = "https://cbt.digitaltechsolusi.com";
+const osceDemoUrl = "https://osce.digitaltechsolusi.com";
+const tutorDemoUrl = "https://tutor.digitaltechsolusi.com";
+const productDemoUrls: Record<Product["id"], string> = {
+  cbt: cbtDemoUrl,
+  osce: osceDemoUrl,
+  tutor: tutorDemoUrl,
+};
 
 const flyerMaterials: FlyerMaterial[] = [
   {
@@ -782,7 +789,8 @@ const flyerMaterials: FlyerMaterial[] = [
     badges: ["Setting Sesi", "Station OSCE", "Rubrik Digital"],
     src: "/flyers/osce-assess-flyer.png",
     alt: "Flyer OSCE Assess - PT DigitalTech Solusi Nusantara",
-    demoHref: "#demo",
+    demoHref: osceDemoUrl,
+    demoExternal: true,
     accent: {
       border: "border-teal-200",
       background: "from-teal-50 to-white",
@@ -799,7 +807,8 @@ const flyerMaterials: FlyerMaterial[] = [
     badges: ["Tutorial I & II", "Rubrik Tutor", "Rekap Nilai"],
     src: "/flyers/tutor-assess-flyer.png",
     alt: "Flyer Tutor Assess - PT DigitalTech Solusi Nusantara",
-    demoHref: "#demo",
+    demoHref: tutorDemoUrl,
+    demoExternal: true,
     accent: {
       border: "border-violet-200",
       background: "from-violet-50 to-white",
@@ -1093,8 +1102,7 @@ function ProductShowcase() {
   const activeBadges = productShowcaseBadges[activeProduct.id];
   const activeSummary = productMobileSummaries[activeProduct.id];
   const primaryDemoLabel = `Lihat Demo ${activeProduct.name}`;
-  const primaryDemoHref = activeProduct.id === "cbt" ? cbtDemoUrl : "#demo";
-  const isExternalDemo = activeProduct.id === "cbt";
+  const primaryDemoHref = productDemoUrls[activeProduct.id];
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -1196,8 +1204,8 @@ function ProductShowcase() {
             <div className="mt-5 flex flex-col gap-3 sm:flex-row lg:mt-6 lg:flex-col xl:flex-row">
               <a
                 href={primaryDemoHref}
-                target={isExternalDemo ? "_blank" : undefined}
-                rel={isExternalDemo ? "noopener noreferrer" : undefined}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-slate-950 via-blue-900 to-cyan-600 px-5 text-sm font-black text-white shadow-xl shadow-cyan-200/70 transition-all hover:-translate-y-0.5 hover:shadow-cyan-300/70"
               >
                 {primaryDemoLabel}
